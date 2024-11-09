@@ -1,0 +1,138 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+#registerHd{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0 10px 5%;
+    box-shadow: 0.1px 0 2px black;
+    
+}
+#registerHd > h6{
+    align-self: center;
+    margin: 0;
+}
+.registerContainerSignup{
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+    gap: 10%;
+    background-color: #F8F9FA;
+}
+
+.registerError{
+    font-size: 10px;
+    color: red;
+    margin-top: 6px;
+}
+.loginForm{
+    
+    width: 40%;
+    
+}
+.loginTopBox{
+    font-size: 10px;
+}
+/* Hiding the login page*/
+#signInPage{
+    display: none;
+}
+.loginBtn{
+    color: blue;
+    text-decoration: underline;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+
+.loginPoster{
+    width: 30%;
+    
+}
+.loginPoster > img{
+    width: 100%;
+   
+}
+.formHd{
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+#signUpPh{
+    font-size: 10px;
+    margin-top: 5px;
+    color: #343A40;
+}
+.input-container{
+    margin-bottom: 10px;
+}
+.input-container > label{
+    display: block;
+    margin-bottom: 3px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.input-field , select{
+    height: 20px;
+    width: 100%;
+    font-size: 8px;
+    padding: 2px;
+}
+.input-field{
+    background-color: #e4eaf6;
+    border: 0;
+    border-radius: 2px;
+}
+
+#checkBox-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+#checkBox-container label{
+    font-size: 10px;
+}
+#checkBox-container input{
+    vertical-align: bottom;
+}
+#btn-container{
+    text-align: center;
+    margin: 5px;
+}
+.registerBtn{
+    background-color: #007BFF;
+    border: 0;
+    border-radius: 2px;
+    padding: 5px;
+    color: white;
+    font-size: 10px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.registerContainerLogin{
+    display : flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px;
+    gap: 10%;
+    background-color: #F8F9FA;
+    height : 90vh;
+}
+@media only screen and (max-width: 600px) {
+    .loginPoster{
+        display: none;
+    }
+    .loginForm{
+        width: 90%;
+    }
+}

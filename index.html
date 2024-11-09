@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./assets/style/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   
+    <script defer type="module" src="./assets/script/index.js"></script>
+    
+
+    
+      
+    </script>
+  </head>
+  <body>
+    <header id="registerHd">
+      <img src="./assets/Images/freshworks.png" alt="" width="20px" height="20px">
+      <h6>Event Management</h6>
+    </header>
+    <main>
+      <section id="signUpPage">
+        <section class="registerContainerSignup">
+          <div class="loginPoster">
+            <img src="./assets/Images/loginposter.jpg" alt="">
+          </div>
+          <div class="loginForm">
+            <div class="formHd">
+              <div>
+                <h3 class="getStartedHd">Let's Get Started <img src="./assets/Images/rocket_img.jpg" style="vertical-align: bottom;" alt="" width="20px" height="100%"></h3>
+                <p id="signUpPh">Sign Up your Account</p>
+              </div>
+              <div class="loginTopBox">
+                Already a user <span class="loginBtn" id="loginRedirect">Login</span>
+              </div>
+            </div>
+            <form action="">
+              <div class="input-container">
+                <label for="userName">UserName</label>
+                <input type="text" id="userNameSignUp" placeholder="Enter your Username" class="input-field" title="Please fill out this field">
+                <p id="UserNameError" class="registerError"></p>
+              </div>
+              <div class="input-container">
+                <label for="userMail">Email Address</label>
+                <input type="email" id="userMailSignUp" placeholder="Enter your email address" class="input-field" title="Please fill out this field">
+                <p id="UserMailErrorSignUp" class="registerError"></p>
+              </div>
+              <div class="input-container">
+                <label for="userPassword">Password</label>
+                <input type="password" id="userPasswordSignUp" placeholder="Enter your Password" class="input-field" title="Please fill out this field">
+                <p id="UserPassErrorSignUp" class="registerError"></p>
+              </div>
+              <div class="input-container">
+                <label for="confirmPass">Confirm Password</label>
+                <input type="password" id="confirmPassSignUp" placeholder="Re-enter your Password" class="input-field" title="Please fill out this field">
+                <p id="UserConfirmPassErrorSignUp" class="registerError"></p>
+              </div>
+              <div class="input-container">
+                <label for="district">Your Location</label>
+                <select name="district" id="district" class="input-field" title="Please select your district">
+                  <option value="" disabled selected>Select District</option>
+                  <option value="Ariyalur">Ariyalur</option>
+                  <option value="Chengalpattu">Chengalpattu</option>
+                  <option value="Chennai">Chennai</option>
+                  <option value="Coimbatore">Coimbatore</option>
+                  <option value="Cuddalore">Cuddalore</option>
+                  <option value="Dharmapuri">Dharmapuri</option>
+                  <option value="Dindigul">Dindigul</option>
+                  <option value="Erode">Erode</option>
+                  <option value="Kallakurichi">Kallakurichi</option>
+                  <option value="Kanchipuram">Kanchipuram</option>
+                  <option value="Kanyakumari">Kanyakumari</option>
+                  <option value="Karur">Karur</option>
+                  <option value="Krishnagiri">Krishnagiri</option>
+                  <option value="Madurai">Madurai</option>
+                  <option value="Mayiladuthurai">Mayiladuthurai</option>
+                  <option value="Nagapattinam">Nagapattinam</option>
+                  <option value="Namakkal">Namakkal</option>
+                  <option value="Nilgiris">Nilgiris</option>
+                  <option value="Perambalur">Perambalur</option>
+                  <option value="Pudukkottai">Pudukkottai</option>
+                  <option value="Ramanathapuram">Ramanathapuram</option>
+                  <option value="Ranipet">Ranipet</option>
+                  <option value="Salem">Salem</option>
+                  <option value="Sivagangai">Sivagangai</option>
+                  <option value="Tenkasi">Tenkasi</option>
+                  <option value="Thanjavur">Thanjavur</option>
+                  <option value="Theni">Theni</option>
+                  <option value="Thoothukudi">Thoothukudi</option>
+                  <option value="Tiruchirappalli">Tiruchirappalli</option>
+                  <option value="Tirunelveli">Tirunelveli</option>
+                  <option value="Tirupathur">Tirupathur</option>
+                  <option value="Tiruppur">Tiruppur</option>
+                  <option value="Tiruvallur">Tiruvallur</option>
+                  <option value="Tiruvannamalai">Tiruvannamalai</option>
+                  <option value="Tiruvarur">Tiruvarur</option>
+                  <option value="Vellore">Vellore</option>
+                  <option value="Viluppuram">Viluppuram</option>
+                  <option value="Virudhunagar">Virudhunagar</option>
+                </select>
+                <p id="UserLocationErrorSignUp" class="registerError"></p>
+              </div>
+              <div class="input-container">
+                <label for="userInterest">Choose Your Interest</label>
+                <div id="checkBox-container">
+                  <div>
+                    <input type="checkbox" id="music" value="music" class="interest" />
+                    <label for="music">Music & Entertainment</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" id="sports" value="sports" class="interest" />
+                    <label for="sports">Sports & Fitness</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" id="tech" value="tech" class="interest" />
+                    <label for="tech">Tech & Innovation</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" id="education" value="education" class="interest" />
+                    <label for="education">Education & Personal Growth</label>
+                  </div>
+                  <div>
+                    <input type="checkbox" id="others" value="others" class="interest" />
+                    <label for="others">Others</label>
+                  </div>
+                </div>
+                <p id="UserInterestErrorSignUp" class="registerError"></p>
+                
+              </div>
+              <div id="btn-container">
+                
+                <button type="button" id="signupBtn" class="registerBtn">Create your account</button>
+                
+              </div>
+            </form>
+          </div>
+        </section>
+      </section>
+      <section id="signInPage">
+        <section class="registerContainerLogin">
+          <div class="loginPoster">
+            <img src="./assets/Images/loginposter.jpg" alt="">
+          </div>
+          <div class="loginForm">
+            <div class="formHd">
+              <div>
+                <h3 class="getStartedHd">Welcome Back <img src="./assets/Images/rocket_img.jpg" style="vertical-align: bottom;" alt="" width="20px" height="100%"></h3>
+                <p id="signUpPh">Login to your Account</p>
+              </div>
+              <div class="loginTopBox">
+                Create new account <span class="loginBtn" id="signUpRedirect">Signup</span>
+              </div>
+            </div>
+            <form action="">
+              
+              <div class="input-container">
+                <label for="userMail">Email Address</label>
+                <input type="email" id="userMaillogin" placeholder="Enter your email address" class="input-field">
+                <p id="UserMailErrorSignin" class="registerError"></p>
+              </div>
+
+              <div class="input-container">
+                <label for="userPassword">Password</label>
+                <input type="password" id="userPasswordLogin" placeholder="Enter your Password" class="input-field">
+                <p id="UserMailErrorSignin" class="registerError"></p>
+              </div>
+              
+              
+              
+                
+              
+              <div id="btn-container">
+                <button type="button" class="registerBtn" id="loginBtn">Login to your account</button>
+              </div>
+            </form>
+          </div>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

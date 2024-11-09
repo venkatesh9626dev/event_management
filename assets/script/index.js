@@ -3,13 +3,14 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword , u
 import { getDatabase, ref,child, set } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
           
 const firebaseConfig = {
-apiKey: "AIzaSyDGn4Y0X3vjIcryoC1mL_m0CHkmWE1WR40",
-authDomain: "https://event-management-system-8f9cc-default-rtdb.asia-southeast1.firebasedatabase.app",
-projectId: "event-management-system-8f9cc",
-storageBucket: "event-management-system-8f9cc.appspot.com",
-messagingSenderId: "568755922602",
-appId: "1:568755922602:web:b40416ff2f13c2f7cfd2d3",
-measurementId: "G-CJV25ZFZV2",
+    apiKey: "AIzaSyDGn4Y0X3vjIcryoC1mL_m0CHkmWE1WR40",
+    authDomain: "event-management-system-8f9cc.firebaseapp.com",
+    databaseURL: "https://event-management-system-8f9cc-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "event-management-system-8f9cc",
+    storageBucket: "event-management-system-8f9cc.firebasestorage.app",
+    messagingSenderId: "568755922602",
+    appId: "1:568755922602:web:b40416ff2f13c2f7cfd2d3",
+    measurementId: "G-CJV25ZFZV2"
 };
 
 const app = initializeApp(firebaseConfig);

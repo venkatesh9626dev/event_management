@@ -4,56 +4,57 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script defer src="./assets/script/config.js"  type="module"></script>
     <link rel="stylesheet" href="./assets/style/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-   
     <script defer type="module" src="./assets/script/index.js"></script>
+    
   
   </head>
   <body>
     <header id="registerHd">
-      <img src="./assets/Images/freshworks.png" alt="" width="20px" height="20px">
-      <h6>Event Management</h6>
+      <img src="./assets/Images/freshworks.png" alt="" width="30px" height="30px">
+      <h2>Event Management</h2>
     </header>
     <main>
       <section id="signUpPage">
-        <section class="registerContainerSignup">
+        <section class="registerContainerLogin registerContainerUp ">
           <div class="loginPoster">
-            <img src="./assets/Images/login_Poster.jpg" alt="">
+            <img src="./assets/Images/login_Poster.jpg" alt="" width="100%">
           </div>
           <div class="loginForm">
             <div class="formHd">
               <div>
-                <h3 class="getStartedHd">Let's Get Started <img src="./assets/Images/rocket_img.jpg" style="vertical-align: bottom;" alt="" width="20px" height="100%"></h3>
+                <h1 class="getStartedHd">Let's Get Started <img src="./assets/Images/rocket_img.jpg" style="vertical-align: bottom;" alt="" width="30px" height="100%"></h1>
                 <p id="signUpPh">Sign Up your Account</p>
               </div>
               <div class="loginTopBox">
                 Already a user <span class="loginBtn" id="loginRedirect">Login</span>
               </div>
             </div>
-            <form action="">
+            <form action="" id="signupForm">
               <div class="input-container">
-                <label for="userName">UserName</label>
-                <input type="text" id="userNameSignUp" placeholder="Enter your Username" class="input-field" title="Please fill out this field">
+                <label for="userName">UserName*</label>
+                <input type="text" id="userNameSignUp" placeholder="Enter your Username" class="input-field" title="Please fill your username">
                 <p id="UserNameError" class="registerError"></p>
               </div>
               <div class="input-container">
-                <label for="userMail">Email Address</label>
-                <input type="email" id="userMailSignUp" placeholder="Enter your email address" class="input-field" title="Please fill out this field">
+                <label for="userMail">Email Address*</label>
+                <input type="email" id="userMailSignUp" placeholder="Enter your email address" class="input-field" title="Please fill your email">
                 <p id="UserMailErrorSignUp" class="registerError"></p>
               </div>
               <div class="input-container">
-                <label for="userPassword">Password</label>
-                <input type="password" id="userPasswordSignUp" placeholder="Enter your Password" class="input-field" title="Please fill out this field">
+                <label for="userPassword">Password*</label>
+                <input type="password" id="userPasswordSignUp" placeholder="Enter your Password" class="input-field" title="Please fill your password">
                 <p id="UserPassErrorSignUp" class="registerError"></p>
               </div>
               <div class="input-container">
-                <label for="confirmPass">Confirm Password</label>
-                <input type="password" id="confirmPassSignUp" placeholder="Re-enter your Password" class="input-field" title="Please fill out this field">
+                <label for="confirmPass">Confirm Password*</label>
+                <input type="password" id="confirmPassSignUp" placeholder="Re-enter your Password" class="input-field" title="Please fill your password">
                 <p id="UserConfirmPassErrorSignUp" class="registerError"></p>
               </div>
               <div class="input-container">
-                <label for="district">Your Location</label>
+                <label for="district">Your Location*</label>
                 <select name="district" id="district" class="input-field" title="Please select your district">
                   <option value="" disabled selected>Select District</option>
                   <option value="Ariyalur">Ariyalur</option>
@@ -98,7 +99,7 @@
                 <p id="UserLocationErrorSignUp" class="registerError"></p>
               </div>
               <div class="input-container">
-                <label for="userInterest">Choose Your Interest</label>
+                <label for="userInterest">Choose Your Interest*</label>
                 <div id="checkBox-container">
                   <div>
                     <input type="checkbox" id="music" value="music" class="interest" />
@@ -141,28 +142,30 @@
           <div class="loginForm">
             <div class="formHd">
               <div>
-                <h3 class="getStartedHd">Welcome Back <img src="./assets/Images/rocket_img.jpg" style="vertical-align: bottom;" alt="" width="20px" height="100%"></h3>
+                <h2 class="getStartedHd">Welcome Back <img src="./assets/Images/rocket_img.jpg" style="vertical-align: bottom;" alt="" width="30px" height="100%"></h2>
                 <p id="signUpPh">Login to your Account</p>
               </div>
               <div class="loginTopBox">
                 Create new account <span class="loginBtn" id="signUpRedirect">Signup</span>
               </div>
             </div>
-            <form action="">
+            <form action="" id="signinForm">
               
               <div class="input-container">
-                <label for="userMail">Email Address</label>
+                <label for="userMail">Email Address*</label>
                 <input type="email" id="userMaillogin" placeholder="Enter your email address" class="input-field">
                 <p id="UserMailErrorSignin" class="registerError"></p>
               </div>
 
               <div class="input-container">
-                <label for="userPassword">Password</label>
+                <label for="userPassword">Password*</label>
                 <input type="password" id="userPasswordLogin" placeholder="Enter your Password" class="input-field">
                 <p id="UserPassErrorSignin" class="registerError"></p>
               </div>
               
-              
+              <div>
+                <p id="commonErrorSignin" class="registerError"></p>
+              </div>
               
                 
               
@@ -174,5 +177,6 @@
         </section>
       </section>
     </main>
+    
   </body>
 </html>

@@ -163,7 +163,7 @@ function passErrorCheck(){
     let number = 0;
 
     if(value === ""){
-        UserPassErrorSignUp.textContent = "";
+        UserPassErrorSignUp.textContent = "Enter your password";
     }
     else{
         for(let i = 0; i < value.length; i++){
@@ -186,6 +186,7 @@ function passErrorCheck(){
         if(count && value.length >=8){
             UserPassErrorSignUp.textContent = "Password is Good";
             UserPassErrorSignUp.style.color = "green";
+            return 0;
         }
         else if(count && value.length <8){
             UserPassErrorSignUp.textContent = "Password should contain 8 characters"
@@ -197,7 +198,7 @@ function passErrorCheck(){
         }
     }
     
-    return 0;
+    
 }
 
 // Confirm password error check
@@ -209,28 +210,24 @@ function confirmPassErrorCheck(){
     let passValue = userPassSignup.value;
     let inputValue = confirmPassSignup.value;
 
-    if(passValue === "" && inputValue === ""){
-        UserConfirmPassErrorSignUp.textContent = "Enter your Confirm Password";
+    if(passValue === ""){
+        UserConfirmPassErrorSignUp.textContent = "First enter your Password";
         return 1;
     }
     else if(passValue === inputValue){
         UserConfirmPassErrorSignUp.textContent ="Password matched"
         UserConfirmPassErrorSignUp.style.color = "green";
+        return 0;
     }
     else if(inputValue.length > passValue.length){
         UserConfirmPassErrorSignUp.textContent = "Password is too length";
         return 1;
     }
     else{
-        for(let i = 0; i < inputValue.length; i++){
-            if(inputValue[i] !== passValue[i]){
-                UserConfirmPassErrorSignUp.textContent = "Password Mismatch"
-                return 1;
-                
-            }
-        }
+       UserConfirmPassErrorSignUp.textContent = "Password Mismatch";
+       return 1;
     }
-    return 0;
+    
 }
 
 userNameSignup.addEventListener("input", userNameErrorCheck);
@@ -247,6 +244,7 @@ userMailSignup.addEventListener("input",()=>{
 
 // Password Test cases
 userPassSignup.addEventListener("focus",()=>{
+    UserConfirmPassErrorSignUp.textContent = "";
     if(userMailSignup.value === ""){
         UserMailErrorSignUp.textContent = "Enter your email address"
     }
@@ -254,11 +252,20 @@ userPassSignup.addEventListener("focus",()=>{
 userPassSignup.addEventListener("input",passErrorCheck);
 
 
+
 // Confirm Password
 
 confirmPassSignup.addEventListener("focus",()=>{
+
     if(userPassSignup.value === ""){
-        UserPassErrorSignUp.textContent = "First enter your password"
+        UserConfirmPassErrorSignUp.style.color = "red";
+        UserPassErrorSignUp.style.color = "red";
+        UserPassErrorSignUp.textContent = "First enter your password";
+        UserConfirmPassErrorSignUp.textContent = "First enter your password"
+    }
+    else if(userPassSignup.value === confirmPassSignup.value){
+        UserConfirmPassErrorSignUp.style.color = "green";
+        UserConfirmPassErrorSignUp.textContent = "Password match"
     }
 })
 

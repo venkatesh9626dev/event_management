@@ -93,8 +93,12 @@ async function userNameErrorCheck() {
         userNameSignUpError.textContent = "Enter Your Username";
         return 1;
     } 
+    else if (/^[0-9]/.test(enteredValue)){
+        userNameSignUpError.textContent = "The username should not start with numbers";
+        return 1;
+    }
     
-    else if (!/^[a-zA-Z0-9_]*$/.test(enteredValue)) {
+    else if (!/^[A-Za-z][A-Za-z0-9_]*$/.test(enteredValue)) {
         userNameSignUpError.textContent = "The username only contains alphabets, numbers, and (_) underscore";
         return 1;
     } 
@@ -130,11 +134,17 @@ async function userNameErrorCheck() {
 function emailErrorCheck(email) {
     // Regular expression for basic email validation
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3,}$/;
-    if (emailRegex.test(email)) {
+    if(/^[._%+\-!@#$^&*(){}"'?<>,|/]/.test(email)){
+        UserMailErrorSignUp.textContent = "no special characters in start of email";
+        UserMailErrorSignUp.style.color = "red";
+        return 1;
+    }
+    else if (emailRegex.test(email)) {
         UserMailErrorSignUp.textContent = "valid email format";
         UserMailErrorSignUp.style.color = "green";
         return 0; // No error
-    } else {
+    } 
+    else {
         UserMailErrorSignUp.textContent = "Invalid email format";
         UserMailErrorSignUp.style.color = "red";
         return 1; // Error found

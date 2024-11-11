@@ -272,12 +272,11 @@ userDistSignup.addEventListener('change',location);
 
 userInterestArrSignup.forEach((element)=>{
     element.addEventListener('change',(event)=>{
-        if(event.target.value !== ""){
+        if(event.target.checked){
             UserInterestErrorSignUp.style.color = "green"
             UserInterestErrorSignUp.textContent = "Interest Selected"
         }
         else{
-            
             UserInterestErrorSignUp.style.color = "red"
             UserInterestErrorSignUp.textContent = "Select atleast one"
         }

@@ -209,7 +209,11 @@ function confirmPassErrorCheck(){
     let passValue = userPassSignup.value;
     let inputValue = confirmPassSignup.value;
 
-    if(passValue === inputValue){
+    if(passValue === "" && inputValue === ""){
+        UserConfirmPassErrorSignUp.textContent = "Enter your Confirm Password";
+        return 1;
+    }
+    else if(passValue === inputValue){
         UserConfirmPassErrorSignUp.textContent ="Password matched"
         UserConfirmPassErrorSignUp.style.color = "green";
     }
@@ -260,6 +264,26 @@ confirmPassSignup.addEventListener("focus",()=>{
 
 confirmPassSignup.addEventListener("input",confirmPassErrorCheck);
 
+// location 
+
+userDistSignup.addEventListener('change',location);
+
+// interest 
+
+userInterestArrSignup.forEach((element)=>{
+    element.addEventListener('change',(event)=>{
+        if(event.target.value !== ""){
+            UserInterestErrorSignUp.style.color = "green"
+            UserInterestErrorSignUp.textContent = "Interest Selected"
+        }
+        else{
+            
+            UserInterestErrorSignUp.style.color = "red"
+            UserInterestErrorSignUp.textContent = "Select atleast one"
+        }
+    })
+})
+
 // signup functions
 
 userSignupBtn.addEventListener("click",async ()=>{
@@ -282,7 +306,7 @@ userSignupBtn.addEventListener("click",async ()=>{
 
     let errorName = ["Username","email address","Password","Confirm Password","or select location"];
     let checkValue = [userNameValue,userMailValue,passwordValue,confirmValue,locationValue,interestArr];
-    let respectiveFtn = [userNameErrorCheck,emailErrorCheck,passErrorCheck,confirmPassErrorCheck,zero,interestFtn]
+    let respectiveFtn = [userNameErrorCheck,emailErrorCheck,passErrorCheck,confirmPassErrorCheck,location,interestFtn]
     for(let i = 0; i <checkValue.length; i++){
         if(checkValue[i] === ""){
             errorPart[i].textContent = `Please fill ${errorName[i]} field`;
@@ -299,22 +323,35 @@ userSignupBtn.addEventListener("click",async ()=>{
     }
 
 })
-function zero(){
-    return 0;
+function location(){
+    if(userDistSignup.value != ""){
+        UserLocationErrorSignUp.style.color = "green"
+        UserLocationErrorSignUp.textContent = "District Selected"
+        return 0;
+    }
+    else{
+        UserLocationErrorSignUp.style.color = "red"
+        UserLocationErrorSignUp.textContent = "Select Your District"
+    }
+    
 }
 function interestFtn(interestArr){
     let count = 0;
     userInterestArrSignup.forEach((element,index)=>{
         if(element.checked){
+
             count++;
             interestArr.push(element.value);
         }
     })
     if(count === 0){
+         UserInterestErrorSignUp.style.color = "red";
         UserInterestErrorSignUp.textContent = "Choose atleast one"
         return 1;
     }
     else{
+         UserInterestErrorSignUp.textContent = "Interest selected"
+          UserInterestErrorSignUp.style.color = "green";
         return 0;
     }
 }

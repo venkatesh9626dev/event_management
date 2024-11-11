@@ -12,9 +12,7 @@ let logOutBtn = document.getElementById("logoutBtn");
             displayUsername.innerHTML= ` Hello ${user.displayName}`
         }
         else{
-            
             window.location.href = "../index.html"
-
         }
     })
 

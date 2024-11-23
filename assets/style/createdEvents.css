@@ -1,0 +1,11 @@
+:root{
+    --mainBgColor : #F8F9FA;
+    --cardBgColor : #FFFFFF;
+    --primaryTxt : #343A40;
+    --secTxt : #6C757D;
+    --successMsg : #28A745;
+    --warnMsg : #FFC107;
+    --errorMsg : #DC3545;
+    --primaryBtn : #007BFF;
+    --secondaryBtn : #00C4CC;
+}

@@ -2,8 +2,21 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    color: white;
 }
 
+
+:root{
+    --mainBgColor : #121212;
+    --cardBgColor : #FFFFFF;
+    --primaryTxt : #ffffff;
+    --secTxt : #6C757D;
+    --successMsg : #00ff3c;
+    --warnMsg : #FFC107;
+    --errorMsg : #ff0019;
+    --primaryBtn : #B71C1C;
+    --secondaryBtn : #FF5252;
+}
 
 #registerHd{
     display: flex;
@@ -16,14 +29,15 @@
     left: 0%;
     right: 0%;
     z-index: 2;
-    background-color: #FFFFFF;
+    background-color: #D32F2F;
     
     
     
 }
 main{
     padding: 80px 0;
-    background-color: #F8F9FA;
+    background-color: var(--mainBgColor);
+    min-height: 100vh;
     
 }
 #registerHd > h2{
@@ -42,8 +56,9 @@ main{
 
 .registerError{
     
-    color: red;
+    color: var(--errorMsg);
     margin-top: 6px;
+    height: 10px;
 }
 .loginForm{
     
@@ -60,9 +75,8 @@ main{
     display: none;
 }
 .loginBtn{
-    color: blue;
+    color: var(--primaryBtn);
     text-decoration: underline;
-    
     cursor: pointer;
 }
 
@@ -86,7 +100,7 @@ main{
 #signUpPh{
     
     margin-top: 5px;
-    color: #343A40;
+    color: var(--primaryTxt);
     font-size: 20px;
 }
 .input-container{
@@ -98,6 +112,9 @@ main{
     font-size: 20px;
     
 }
+.input-field::placeholder{
+    color: black;
+}
 
 .input-field , select{
     height: 40px;
@@ -105,11 +122,16 @@ main{
     margin-top: 10px;
     padding: 0 10px;
     font-size: 16px;
+    color: black;
 }
 .input-field{
-    background-color: #e4eaf6;
+    background-color:#dee0e2dc;
     border: 0;
     border-radius: 2px;
+}
+select:focus > option{
+    background-color: black;
+    color: #FFFFFF;
 }
 
 #checkBox-container{
@@ -130,7 +152,7 @@ main{
     margin: 5px;
 }
 .registerBtn{
-    background-color: #007BFF;
+    background-color: var(--primaryBtn);
     border: 0;
     border-radius: 2px;
     padding: 10px 0;
@@ -146,7 +168,7 @@ main{
     align-items: center;
     height : 80vh;
     gap: 10%;
-    background-color: #F8F9FA;
+    background-color: var(--mainBgColor);
     
 }
 .registerContainerUp{
@@ -161,3 +183,4 @@ main{
         width: 90%;
     }
 }
+

@@ -1,0 +1,76 @@
+:root{
+    --mainBgColor : #F8F9FA;
+    --cardBgColor : #FFFFFF;
+    --primaryTxt : #343A40;
+    --secTxt : #6C757D;
+    --successMsg : #28A745;
+    --warnMsg : #FFC107;
+    --errorMsg : #DC3545;
+    --primaryBtn : #007BFF;
+    --secondaryBtn : #00C4CC;
+    --inputField : #007BFF;
+}
+
+#createHd{
+    text-transform: capitalize;
+}
+.subForm{
+    margin-top: 30px;
+}
+.createLabel{
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+    display: block;
+}
+.inputContainer{
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.twoDi{
+    width: 45%;
+
+}
+.textBox{
+    width: 90%;
+}
+.textArea{
+    width: 100%;
+   
+    resize: none;
+    height: 60px;
+    font-size: 1.3rem;
+    padding: 10px;
+    border:1px solid var(--inputField);
+}
+
+.inputField {
+    height: 40px;
+    width: 100%;
+    font-size: 1.2rem;
+    padding: 10px 10px 7px;
+    border: 1px solid var(--inputField);
+}
+
+#fileUpload{
+    cursor: pointer;
+    
+    background-color: #f8f9fa;
+    color: #333;
+    padding: 5pxd;
+    font-size: 19px;
+}
+.durationContainer{
+    width: 30%;
+}
+.registerBtn{
+    background-color: var(--primaryBtn);
+    border: 0;
+    border-radius: 2px;
+    padding: 10px 0;
+    color: white;
+    font-size: 20px;
+    width: 50%;
+    margin-top: 10px;
+}

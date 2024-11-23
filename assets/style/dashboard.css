@@ -1,25 +1,199 @@
-#registerHd{
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    
+}
+body{
+    background-color: #121212; /* Dark background for sleek look */
+    color: #FFFFFF; /* White text for readability */
+    font-family: 'Roboto', sans-serif; /* Modern font */
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+a {
+    text-decoration: none;
+    color: #FF5252; /* Default link color */
+  }
+  
+a:hover {
+color: #D32F2F; /* Darker red on hover */
+}
+
+h1{
+    font-size: 2.0rem;
+}
+h2{
+    font-size: 1.5rem;
+}
+h3{
+    font-size: 1.17rem;
+}
+h4{
+    font-size: 1rem;
+}
+h5{
+    font-size:  0.83rem;
+}
+h6{
+    font-size:  0.67rem;
+}
+label{
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+:root{
+
+    --mainBgColor : #121212;
+    --cardBgColor : #ece4e4;
+    --primaryTxt : #343A40;
+    --secTxt : #6C757D;
+    --successMsg : #28A745;
+    --warnMsg : #FFC107;
+    --errorMsg : #DC3545;
+    --primaryBtn : #007BFF;
+    --secondaryBtn : #00C4CC;
+}
+
+#mainHd{
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 10px;
-    padding: 10px 0 10px 5%;
+    padding: 20px 3%;
     box-shadow: 0.1px 0 2px black;
     position: fixed;
     top: 0%;
     left: 0%;
     right: 0%;
     z-index: 2;
+    background-color: #D32F2F; /* Red header */
+    color: #FFFFFF;
+}
+#logoContainer{
+    width: 10%;
+    display: flex;
+    gap: 5%;
+}
+#logoName{
+    
+}
+#searchContainer{
+    width: 50%;
+    position: relative;
+    
+}
+#searchBar{
+    width: 97%;
     background-color: #FFFFFF;
-    
-    
-    
+    border: 1px solid #B71C1C;
+    color: #000000;
+    border-radius: 5px;
+    padding: 5px 10px;
+    height: 40px;
+}
+#searchBar::placeholder{
+    color: #757575;
+}
+#searchBar:active{
+    border: 2px solid #FF5252;
+}
+#searchIcon{
+    position: absolute;
+    top: 28%;
+    right: 5%;
+    cursor: pointer;
+    color: black;
+}
+#logoutBox{
+    width: 10%;
+}
+#logoutBtn{
+
+    width: 100%;
+    font-size: 1rem;
+    background-color: #B71C1C;
+    color: #FFFFFF;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+
+}
+#logoutBtn:hover{
+    background-color: #FF5252;
 }
 main{
-    padding: 80px 0;
-    background-color: #F8F9FA;
+    padding: 7% 0;
+   
+}
+#sideNavBar{
+    width: 20%;
+    background-color: #000000; /* Black sidebar */
+    color: #FFFFFF; /* White text */
+    position: fixed;
+    top: 9%;
+    bottom: 0%;
+    padding-top: 2%;
+}
+.navItems{
+    padding: 20px 0;
+    padding-left: 10%;
+    cursor: pointer;
+}
+.navItems:hover{
+    background-color: #B71C1C;
+}
+.navActive{
+    background-color: #D32F2F; /* Active menu item */
+    color: #FFFFFF;
+}
+
+.sideNavIcon{
+    font-size: 25px;
+}
+.sideNavName{
+    font-size: 1.6rem;
+    margin-left: 15px;
+}
+#contentArea{
+    margin-left: 20%;
+    padding-left: 25px;
+}
+#welcomeBox{
+    text-transform: capitalize;
+}
+#currentEvent{
+    margin-top: 30px;
+}
+#filterContainer{
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    width: 80%;
     
 }
-#registerHd > h2{
-    align-self: center;
-    margin: 0;
+
+.filter{
+    background-color: #FFFFFF;
+    border: 1px solid #B71C1C;
+    color: #000000;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+.filter:focus{
+    border: 2px solid #D32F2F;
+}
+#dynamicContent{
+    margin-top: 20px;
+    margin-right: 20px;
+    display: flex;
+    justify-content: space-between; 
+    flex-wrap: wrap;  
+}
+.eventsBox{
+    width: 45%;
 }

@@ -4,18 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CelestaHub</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/style/home.css">
+    <link rel="stylesheet" href="../assets/style/createdEvents.css">
+    <link rel="stylesheet" href="../assets/style/createEvent.css">
+    <link rel="stylesheet" href="../assets/style/participatedEvents.css">
+    <link rel="stylesheet" href="../assets/style/userProfile.css">
+    
     <link rel="stylesheet" href="../assets/style/dashboard.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script defer type="module" src="../assets/script/dashboard.js"></script>
 </head>
 <body>
-    <header id="registerHd">
-        <img src="../assets/Images/freshworks.png" alt="" width="30px" height="30px">
-        <h2>CelestaHub</h2>
+    <header id="mainHd">
+        <div id="logoContainer">
+            <img src="../assets/Images/freshworks.png" alt="" width="30px" height="30px">
+            <h2 id="logoName">CelestaHub</h2>
+        </div>
+        <div id="searchContainer">
+            <input type="search" placeholder="Search..." id="searchBar">
+            <i class="fa fa-search" id="searchIcon"></i>
+        </div>
+        <div id="logoutBox">
+            <button id="logoutBtn">Logout</button>
+        </div>
     </header>
    <main>
-    <h1 id="userName"><i class="fa fa-spinner fa-spin" "></i></h1>
-    <button id="logoutBtn">Logout</button>
+        <aside id="sideNavBar">
+            <div class="navItems" id="home">
+                <i class="fa-solid fa-house sideNavIcon"></i>
+                <span class="sideNavName">Home</span>
+            </div>
+            <div class="navItems" id="createEvent">
+                <i class="fa-solid fa-plus sideNavIcon"></i>
+                <span class="sideNavName">Create Event</span>
+            </div>
+            <div class="navItems" id="createdEvents">
+                <i class="fa-solid fa-list sideNavIcon"></i>
+                <span class="sideNavName">Created Events</span>
+            </div>
+            <div class="navItems" id="participatedEvents">
+                <i class="fa-solid fa-calendar-days sideNavIcon"></i>
+                <span class="sideNavName">Participated Events</span>
+            </div>
+            <div class="navItems" id="userProfile">
+                <i class="fa-solid fa-user sideNavIcon"></i>
+                <span class="sideNavName">Profile</span>
+            </div>
+        </aside>
+            
+        
+        <section id="contentArea">
+            
+        </section>
    </main>
 </body>
 </html>

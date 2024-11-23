@@ -17,23 +17,23 @@ const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
 
+
 // window current status
 
 
-    onAuthStateChanged(auth,(user)=>{
+onAuthStateChanged(auth,(user)=>{
+    
         if(user){
-           if(!JSON.parse(localStorage.getItem("signedup"))){
-            localStorage.setItem("signedup",JSON.stringify(true))
-           }
-           else if(window.location.pathname !== "/pages/dashboard.html"){
-
-                window.location.pathname = "./pages/dashboard.html"
-            }
-           
-        }
-        else{
-            if(window.location.pathname !== "/index.html"){
-                Window.location.pathname = "/index.html";
-            }
-        }
-    })
+            setTimeout(()=>{
+                if( localStorage.getItem("loginStatus") && window.location.pathname !== "/pages/dashboard.html" ){
+                window.location.replace("/pages/dashboard.html");
+                }
+            },500)
+         }
+         else{
+             if(window.location.pathname !== "/index.html"){
+                 window.location.pathname = "/index.html";
+             }
+         }
+    
+})

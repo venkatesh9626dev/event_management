@@ -2,6 +2,8 @@ import { getDatabase, ref,child, set , get} from "https://www.gstatic.com/fireba
 import{createUserWithEmailAndPassword,onAuthStateChanged, signInWithEmailAndPassword , updateProfile} from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 import { auth } from "./config.js";
 
+
+
 const db = getDatabase();
  
       //   Dom Reference Variables //
@@ -10,6 +12,11 @@ const db = getDatabase();
 
  export let signupPage = document.getElementById("signUpPage");
  export let loginPage = document.getElementById("signInPage");
+
+
+
+
+
 
 // form reference
 
@@ -55,6 +62,21 @@ let errorPart = [userNameSignUpError,UserMailErrorSignUp,UserPassErrorSignUp,Use
 let toLogin = document.getElementById("loginRedirect");
 let toSignup = document.getElementById("signUpRedirect");
 
+// inserting district options by fetch
+
+window.addEventListener("DOMContentLoaded",()=>{
+    fetch("./assets/json/district.json")
+    .then((response)=> response.json())
+    .then((data)=>{
+        data.forEach((element)=>{
+            let optionTag = document.createElement("option");
+            optionTag.textContent = `${element}`;
+            optionTag.value = `${element}`
+            userDistSignup.appendChild(optionTag)
+        })
+    })
+})
+ 
 toLogin.addEventListener("click",()=>{
     errorPart.forEach((element)=>{
         element.textContent = "";
@@ -279,7 +301,13 @@ userDistSignup.addEventListener('change',location);
 
 userInterestArrSignup.forEach((element)=>{
     element.addEventListener('change',(event)=>{
-        if(event.target.checked){
+        let count = 0;
+        userInterestArrSignup.forEach((element)=>{
+            if(element.checked){
+                count++;
+            }
+        })
+        if(count > 0){
             UserInterestErrorSignUp.style.color = "green"
             UserInterestErrorSignUp.textContent = "Interest Selected"
         }
@@ -449,7 +477,7 @@ function inPassCheck(value){
    
 
     
-    UserPassErrorSignUp.style.color = "red";
+    inPassError.style.color = "red";
     let caps = 0;
     let special = 0;
     let number = 0;
@@ -498,15 +526,18 @@ function inPassCheck(value){
 function signInFtn(mail,password){
     signinBtn.innerHTML = `Logging in <i class="fa fa-spinner fa-spin" "></i>`
     signInWithEmailAndPassword(auth,mail,password)
-    .then(()=>{
+    .then((userCredential)=>{
+        let jsonBool = JSON.stringify(true);
+        localStorage.setItem("loginStatus" ,jsonBool);
+        let currentPage = JSON.stringify("home");
+        localStorage.setItem("currentPage",currentPage);
         
-        signinBtn.innerHTML = "Login to your account"
         inForm.reset();
         inMailError.textContent= "";
         inMailError.style.color = "red"
         inPassError.textContent = "";
         inMailError.style.color = "red";
-        window.location.href = "../pages/dashboard.html";
+        signinBtn.innerHTML = "Login to your account";
     })
     .catch(()=>{
         commonError.textContent = "Invalid email or password"
@@ -523,7 +554,7 @@ signinPass.addEventListener("input",()=>{
 
 signinBtn.addEventListener("click",signInCheck);
 
-async function signInCheck(){
+ function signInCheck(){
 
     let errorCount = 0
 

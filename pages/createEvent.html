@@ -1,0 +1,81 @@
+<section>
+    <div id="createHd">
+        <h1>Create your own event</h1>
+    </div>
+    <form action="" id="createEventForm">
+        <div class="subForm">
+            <h2>Basic Information</h2>
+            <div class="inputContainer">
+                <div class="twoDi">
+                    <label for="eventName" class="createLabel">Event Name</label>
+                    <input type="text" id="eventName" class="inputField" required>
+                </div>
+                <div class="twoDi">
+                    <label for="eventOrganizer" class="createLabel">Event Organizer</label>
+                    <input type="text" id="eventOrganizer" class="inputField" required>
+                </div>
+                <div class="textBox">
+                    <label for="eventDesc" class="createLabel">Event Description</label>
+                    <textarea name="eventDesc" class="textArea" id="eventDesc" required ></textarea>
+                </div>
+                <div class="twoDi">
+                    <label for="eventcategory" class="createLabel">Event Category</label>
+                    <select name="createCategory" id="createCategory" class="inputField" required>
+                        <option value="" disabled selected>Select Category</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Sports">Fitness</option>
+                        <option value="Tech">Tech</option>
+                        <option value="Education">Education</option>
+                    </select>
+                </div>
+                <div class="twoDi" >
+                    <label for="eventPoster" class="createLabel">Event Poster URL*</label>
+                    <input type="text" class="inputField" id="fileUpload">
+                </div>
+            </div>
+        </div>
+        <div class="subForm">
+            <h2>Date & Time</h2>
+            <div class="inputContainer">
+                <div class="durationContainer">
+                    <label for="eventDate" class="createLabel">Event Date</label>
+                    <input type="date" name="" id="eventDate" class="inputField" >
+                </div>
+                <div class="durationContainer">
+                    <label for="startTime" class="createLabel" >Start Time</label>
+                    <input type="time" name="" class="inputField" id="startTime">
+                </div>
+                <div class="durationContainer">
+                    <label for="endTime" class="createLabel" >End Time</label>
+                    <input type="time" name="" class="inputField" id="endTime">
+                </div>
+            </div>
+        </div>
+        <div class="subForm">
+            <h2>Venue & Address</h2>
+            <div class="inputContainer">
+                <div class="twoDi">
+                    <label for="eventName" class="createLabel">Venue Name</label>
+                    <input type="text" id="eventVenue" class="inputField" required>
+                </div>
+                <div class="twoDi">
+                    <label for="eventDistrict" class="createLabel">Venue District</label>
+                    <select name="eventDistrict" id="eventDistrict" class="inputField" required>
+                        <option value="" disabled selected>Select District</option>
+                       
+                    </select>
+                </div>
+                <div class="textBox">
+                    <label for="eventAddress" class="createLabel">Address & Location</label>
+                    <textarea name="eventAddress" id="eventAddress" class="textArea" required ></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="subForm">
+            <button type="button" class="registerBtn" id="createEventBtn">Create Your Event</button>
+        </div>
+    </form>
+    
+</section>
+
+

@@ -76,13 +76,14 @@
   white-space: nowrap;
   overflow: hidden;
 }
-.date{
-
-}
 .dateDetails{
-    margin-left: 10px;
     display: inline-block;
+   
 }
+.date span{
+    margin-left: 10px;
+}
+
 .eventTime{
     border-left: 1px solid rgb(158, 143, 143);
     margin-left: 10px;
@@ -92,7 +93,7 @@
     margin-left: 10px;
     display: inline-block;
 }
-.joinBtn{
+.joinBtn,.knowBtn{
   background-color: #FF5252;
   color: #FFFFFF;
   padding: 10px 15px;
@@ -103,10 +104,11 @@
   width: 45%;
   margin-right: 10px;
 }
-.joinBtn:hover{
+.joinBtn:hover,.knowBtn:hover{
     background-color: #D32F2F;
 }
-.knowBtn{
-    background-color: #00BCD4;
-     color: #FFFFFF;
-}
+
+
+
+
+

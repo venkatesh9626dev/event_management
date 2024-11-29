@@ -59,7 +59,7 @@ function expiryCheck(eventDate) {
   let currentDate = new Date();
 
   let dateArr = eventDate.split("-");
-  console.log(dateArr);
+  
 
   if (Number(dateArr[0]) < currentDate.getFullYear()) {
     return false;
@@ -86,6 +86,73 @@ function categoryCheck(selectedCategory, category) {
 function districtCheck(selectedDistrict,district){
   if (selectedDistrict === "All District"||selectedDistrict === "") return true;
   return selectedDistrict === district ? true : false;
+}
+
+// view more feature
+
+window.knowMoreClick = async function (eventId){
+  try{
+    let dataFromEvent = await get(ref(db,`events/${eventId}/eventDetails_`));
+    let eventDetails = await dataFromEvent.val();
+    document.querySelector(".popDivFull").innerHTML=`
+    
+    <div id="viewMoreContent">
+            <div id="viewMoreImgBox">
+                <img src="${eventDetails.poster}" alt="">
+                
+            </div>
+            <div class="viewMoreInfo">
+              <div id="viewMoreBasicBox">
+                  <h3 class="viewMoreName">${eventDetails.eventName}</h3>
+                  <p class="viewMoreDesc">${eventDetails.description}</p>
+                  <div class="viewMoreCategoryBox">
+                      <p>Category</p>
+                      <p id="viewMoreCategoryName">${eventDetails.category}</p>
+                  </div>
+              </div>
+              <div class = "viewMoreDate">
+                  <i class="fas fa-calendar-alt"></i>
+
+                  <span>${eventDetails.date}</span>
+                      
+                
+              </div>
+              <div class="viewMoreTimeBox">
+                  <i class="fa-solid fa-clock"></i>
+                  <span class="eventTime">${eventDetails.startTime} to </span>
+                  <span class="eventTime">${eventDetails.endTime}</span>
+              </div>
+              <div class = "viewMoreLocation">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <div class="locationDetails">
+                      <span >${eventDetails.venueDistrict}</span>
+                  </div>
+              </div>
+              <div class="viewMoreAddress">
+                  <i class="fa fa-address-card" aria-hidden="true"></i>
+                  <p>${eventDetails.address}</p>
+              </div>
+            </div>
+        </div>
+    `
+    document.querySelector("main").style.display = "none";
+    document.querySelector("header").style.display = "none";
+    document.querySelector(".popDivFull").style.display="block";
+    document.querySelector(".popDivFull").insertAdjacentHTML("afterbegin",
+      `<div class="popCloseBox">
+        <button type="button" class="popUpBack">Back</button>
+       </div>`
+    )
+    document.querySelector(".popUpBack").addEventListener("click",closePopUp);
+
+    
+    // making the height to popup container
+    
+  }
+  catch(error){
+    alert(error)
+  }
+
 }
 
 // fetching the events from the firebase
@@ -130,8 +197,8 @@ async function fetchEvents(callBack) {
             <span >${eventDetails.venueDistrict}</span>
         </div>
         </div>
-        <button  onclick="knowMoreClick(${eventDetails.randomId})" class = "joinBtn">To Know More</button>
-        <button  onclick="participateClick(${eventDetails.randomId})" class = "joinBtn">Join The Event</button>
+        <button  onclick="knowMoreClick('${eventDetails.randomId}')" class = "knowBtn">To Know More</button>
+        <button  onclick="participateClick('${eventDetails.randomId}')" class = "joinBtn">Join The Event</button>
         </div>
         <div class = "eventCategory">${eventDetails.category}</div>
         
@@ -147,3 +214,12 @@ async function fetchEvents(callBack) {
 }
 
 fetchEvents((eventDetails) => expiryCheck(eventDetails.date));
+
+// closing pop up
+
+function closePopUp(){
+  document.querySelector("main").style.display = "block";
+    document.querySelector("header").style.display = "flex";
+    document.querySelector(".popDivFull").style.display="none";
+}
+

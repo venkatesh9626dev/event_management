@@ -24,11 +24,12 @@ export const auth = getAuth(app);
 onAuthStateChanged(auth,(user)=>{
     
         if(user){
+            
             setTimeout(()=>{
                 if( localStorage.getItem("loginStatus") && window.location.pathname !== "/pages/dashboard.html" ){
                 window.location.replace("/pages/dashboard.html");
                 }
-            },500)
+            },0)
          }
          else{
              if(window.location.pathname !== "/index.html"){

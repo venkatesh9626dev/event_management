@@ -527,11 +527,10 @@ function signInFtn(mail,password){
     signinBtn.innerHTML = `Logging in <i class="fa fa-spinner fa-spin" "></i>`
     signInWithEmailAndPassword(auth,mail,password)
     .then((userCredential)=>{
-        let jsonBool = JSON.stringify(true);
-        localStorage.setItem("loginStatus" ,jsonBool);
-        let currentPage = JSON.stringify("home");
-        localStorage.setItem("currentPage",currentPage);
-        
+        localStorage.setItem("loginStatus" ,JSON.stringify(true));
+        localStorage.setItem("currentPage",JSON.stringify("home"));
+    })
+    .then(()=>{
         inForm.reset();
         inMailError.textContent= "";
         inMailError.style.color = "red"

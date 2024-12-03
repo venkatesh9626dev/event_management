@@ -67,6 +67,10 @@
     margin-bottom: 10px;
     color: #BDBDBD;
 }
+.contentArea i{
+    margin-right: 10px;
+    width: 5%;
+}
 .eventName{
     color: #FFFFFF;
   font-weight: bold;
@@ -78,20 +82,22 @@
 }
 .dateDetails{
     display: inline-block;
-   
-}
-.date span{
-    margin-left: 10px;
 }
 
 .eventTime{
-    border-left: 1px solid rgb(158, 143, 143);
-    margin-left: 10px;
+    border-left: 1px solid grey;
     padding-left: 10px;
 }
-.locationDetails{
-    margin-left: 10px;
-    display: inline-block;
+.eventDate{
+    padding-right: 10px;
+}
+
+.location{
+   display: flex;
+  
+}
+.location > span {
+    align-self: flex-start;
 }
 .joinBtn,.knowBtn{
   background-color: #FF5252;

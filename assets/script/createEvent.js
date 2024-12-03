@@ -50,29 +50,38 @@ let createEventBtn = document.getElementById("createEventBtn");
 
 
 createEventBtn.addEventListener("click", async () => {
-  let randomId = crypto.randomUUID();
+  try{
+    let randomId = crypto.randomUUID();
   
-  let userRef = ref(db, `events/${randomId}`);
-  let data = {
-    eventDetails_: {
-      date: eventDateInput.value,
-      randomId: randomId,
-      eventName: eventNameInput.value,
-      organizer: eventOrganizerInput.value,
-      category: eventCategoryInput.value,
-      poster: eventPosterInput.value,
-      description: eventDescriptionInput.value,
-      startTime: eventStartInput.value,
-      endTime: eventEndInput.value,
-      venueName: eventVenueInput.value,
-      venueDistrict: eventDistrictInput.value,
-      address: eventAddressInput.value,
-    },
-    participantDetails : {}
+    let userRef = ref(db, `events/${randomId}`);
+    let data = {
+      eventDetails_: {
+        date: eventDateInput.value,
+        randomId: randomId,
+        eventName: eventNameInput.value,
+        organizer: eventOrganizerInput.value,
+        category: eventCategoryInput.value,
+        poster: eventPosterInput.value,
+        description: eventDescriptionInput.value,
+        startTime: eventStartInput.value,
+        endTime: eventEndInput.value,
+        venueName: eventVenueInput.value,
+        venueDistrict: eventDistrictInput.value,
+        address: eventAddressInput.value,
+      },
+      participantDetails : {}
   };
-  update(userRef,data)
-  .then(()=>{
-    alert("event created successfully");
-    createForm.reset();
-  })
+  await update(userRef,data)
+  alert("event created successfully");
+  createForm.reset();
+  let userDbRef = ref(db,`users/userDetails/${userInfo.uid}/createdEvents`);
+  let IdData = {
+    [randomId] : randomId
+  }  
+  await update(userDbRef,IdData)
+}
+catch(error){
+  alert(error)
+}
+  
 });

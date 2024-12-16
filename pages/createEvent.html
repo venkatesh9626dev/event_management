@@ -1,81 +1,92 @@
-<section>
-    <div id="createHd">
-        <h1>Create your own event</h1>
-    </div>
-    <form action="" id="createEventForm">
-        <div class="subForm">
-            <h2>Basic Information</h2>
-            <div class="inputContainer">
-                <div class="twoDi">
-                    <label for="eventName" class="createLabel">Event Name</label>
-                    <input type="text" id="eventName" class="inputField" required>
-                </div>
-                <div class="twoDi">
-                    <label for="eventOrganizer" class="createLabel">Event Organizer</label>
-                    <input type="text" id="eventOrganizer" class="inputField" required>
-                </div>
-                <div class="textBox">
-                    <label for="eventDesc" class="createLabel">Event Description</label>
-                    <textarea name="eventDesc" class="textArea" id="eventDesc" required ></textarea>
-                </div>
-                <div class="twoDi">
-                    <label for="eventcategory" class="createLabel">Event Category</label>
-                    <select name="createCategory" id="createCategory" class="inputField" required>
-                        <option value="" disabled selected>Select Category</option>
-                        <option value="Entertainment">Entertainment</option>
-                        <option value="Sports">Fitness</option>
-                        <option value="Tech">Tech</option>
-                        <option value="Education">Education</option>
-                    </select>
-                </div>
-                <div class="twoDi" >
-                    <label for="eventPoster" class="createLabel">Event Poster URL*</label>
-                    <input type="text" class="inputField" id="fileUpload">
-                </div>
-            </div>
-        </div>
-        <div class="subForm">
-            <h2>Date & Time</h2>
-            <div class="inputContainer">
-                <div class="durationContainer">
-                    <label for="eventDate" class="createLabel">Event Date</label>
-                    <input type="date" name="" id="eventDate" class="inputField" >
-                </div>
-                <div class="durationContainer">
-                    <label for="startTime" class="createLabel" >Start Time</label>
-                    <input type="time" name="" class="inputField" id="startTime">
-                </div>
-                <div class="durationContainer">
-                    <label for="endTime" class="createLabel" >End Time</label>
-                    <input type="time" name="" class="inputField" id="endTime">
-                </div>
-            </div>
-        </div>
-        <div class="subForm">
-            <h2>Venue & Address</h2>
-            <div class="inputContainer">
-                <div class="twoDi">
-                    <label for="eventName" class="createLabel">Venue Name</label>
-                    <input type="text" id="eventVenue" class="inputField" required>
-                </div>
-                <div class="twoDi">
-                    <label for="eventDistrict" class="createLabel">Venue District</label>
-                    <select name="eventDistrict" id="eventDistrict" class="inputField" required>
-                        <option value="" disabled selected>Select District</option>
-                       
-                    </select>
-                </div>
-                <div class="textBox">
-                    <label for="eventAddress" class="createLabel">Address & Location</label>
-                    <textarea name="eventAddress" id="eventAddress" class="textArea" required ></textarea>
-                </div>
-            </div>
-        </div>
-        <div class="subForm">
-            <button type="button" class="registerBtn" id="createEventBtn">Create Your Event</button>
-        </div>
-    </form>
-    
-</section>
 
+    <section id="wrapper">
+        <div class="head">
+            <h1>Create Your Own Unforgettable Event!</h1>
+            <p>Plan your college event and create lasting memories—fill out the form now!</p>
+        </div>
+        <div class="container">
+           
+            <form id="eventForm">
+                <!-- Event Poster Upload -->
+                <div class="form-group">
+                    <label for="eventPoster">Event Poster</label>
+                    <div class="upload-container" id="uploadContainer">
+                        <i class="fas fa-upload"></i>
+                        <p>Drag & Drop your event image here or click to upload</p>
+                        <input type="file" id="eventPoster" accept="image/*">
+                    </div>
+                    <div class="image-preview" id="imagePreview"></div>
+                </div>
+    
+                <!-- Event Name -->
+                <div class="form-group">
+                    <label for="eventName">Event Name <span class="caption">(Give your event a captivating name!)</span></label>
+                    <input type="text" id="eventName" placeholder="Enter event name" required>
+                </div>
+    
+                <!-- Event Description -->
+                <div class="form-group">
+                    <label for="eventDescription">Event Description <span class="caption">(Describe what your event is all about)</span></label>
+                    <textarea id="eventDescription" placeholder="Enter event description" required></textarea>
+                </div>
+    
+                <!-- Event Date and Time -->
+                <div class="form-group">
+                    
+                    <div class="field-group">
+                        <div class="field-group-child">
+                            <label for="eventDate">Event Date</label>
+                            <input type="date" id="eventDate" required>
+                        </div>
+                       <div class="field-group-child">
+                        <label for="eventTime">Event Time</label>
+                        <input type="time" id="eventTime" required>
+                       </div>
+                        <div class="field-group-child">
+                            <label for="duration">Event Duration(Optional)</label>
+                            <input type="text"  placeholder="e.g., 02:30" id="eventDuration"></input>
+                            <label for=""></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="eventCollege">College Name <span class="caption">You can't change</span></label>
+                    <textarea id="eventCollege" disabled ></textarea>
+                </div>
+    
+                <!-- Event Address -->
+                <div class="form-group">
+                    <label for="eventAddress">Event Address <span class="caption">(This address will be used as a reference for Google Maps)</span></label>
+                    <input type="text" id="eventAddress" placeholder="Enter event address" required>
+                </div>
+    
+                <!-- Agenda -->
+                <div class="form-group">
+                    <label for="agenda">Agenda <span class="caption">(Outline the schedule of your event)</span></label>
+                    <textarea id="agenda" placeholder="Enter event agenda" required></textarea>
+                </div>
+    
+                <!-- Category -->
+                <div class="form-group">
+                    <label for="category">Category <span class="caption">(Select the main category of your event)</span></label>
+                    <input type="text" id="category" placeholder="Enter event category" required>
+                </div>
+    
+                <!-- Subcategories -->
+                <div class="form-group">
+                    <button type="button" class="add-subcategory-btn" id="addSubcategoryBtn"><i class="fas fa-plus"></i> Add Subcategory</button>
+                </div>
+                <div class="subcategories-container" id="subcategoriesContainer">
+                    <!-- Dynamic Subcategories will be appended here -->
+                </div>
+    
+                <!-- Submit Button -->
+                <button type="submit" class="submit-btn">Create Event</button>
+            </form>
+        </div>
+    </section>
+
+
+        
 

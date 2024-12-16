@@ -1,7 +1,13 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 import{createUserWithEmailAndPassword,onAuthStateChanged, signInWithEmailAndPassword , updateProfile} from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
-          
+import {
+    getDatabase,
+    ref,
+    child,
+    set,
+    get,
+  } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";      
 const firebaseConfig = {
     apiKey: "AIzaSyDGn4Y0X3vjIcryoC1mL_m0CHkmWE1WR40",
     authDomain: "event-management-system-8f9cc.firebaseapp.com",
@@ -17,24 +23,9 @@ const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
 
-
+export let db = getDatabase()
 // window current status
 
+   
 
-onAuthStateChanged(auth,(user)=>{
-    
-        if(user){
-            
-            setTimeout(()=>{
-                if( localStorage.getItem("loginStatus") && window.location.pathname !== "/pages/dashboard.html" ){
-                window.location.replace("/pages/dashboard.html");
-                }
-            },0)
-         }
-         else{
-             if(window.location.pathname !== "/index.html"){
-                 window.location.pathname = "/index.html";
-             }
-         }
-    
-})
+

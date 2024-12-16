@@ -1,76 +1,217 @@
-:root{
-    --mainBgColor : #F8F9FA;
-    --cardBgColor : #FFFFFF;
-    --primaryTxt : #343A40;
-    --secTxt : #6C757D;
-    --successMsg : #28A745;
-    --warnMsg : #FFC107;
-    --errorMsg : #DC3545;
-    --primaryBtn : #007BFF;
-    --secondaryBtn : #00C4CC;
-    --inputField : #007BFF;
+:root {
+    /* Buttons and Interactive Elements */
+    --color-primary: #d4441f; /* Electric Blue */
+    --color-secondary: #00C4CC; /* Cyan */
+  
+    /* Background Colors */
+    --color-background-main: #e4e9f7; /* Soft Gray */
+    --color-background-card: #FFFFFF; /* White */
+  
+    /* Text Colors */
+    --color-text-primary: #343A40; /* Dark Gray */
+    --color-text-secondary: #6C757D; /* Medium Gray */
+  
+    /* Alerts and Status Indicators */
+    --color-success: #28A745; /* Green */
+    --color-warning: #FFC107; /* Amber */
+    --color-error: #DC3545; /* Crimson */
+  }
+
+
+
+* {
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', Helvetica, Tahoma, Arial, sans-serif;
 }
 
-#createHd{
-    text-transform: capitalize;
+body {
+    background-color: var(--color-background-main);
+    margin: 0;
+    padding: 20px;
 }
-.subForm{
-    margin-top: 30px;
+.head h1{
+    font-size: 3rem;
 }
-.createLabel{
-    margin-bottom: 10px;
-    font-size: 1.4rem;
+.head p{
+    font-size: 1.5rem;
+    color: var(--color-text-primary);
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+       padding: 30px;    
+}
+
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
     display: block;
+    font-weight: 1000;
+    margin-bottom: 8px;
+
 }
-.inputContainer{
-    margin-top: 30px;
+
+input[type="text"],
+input[type="email"],
+
+select,
+textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus,
+select:focus,
+textarea:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+.field-group{
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    justify-content: space-between;
 }
-.twoDi{
-    width: 45%;
-
-}
-.textBox{
-    width: 90%;
-}
-.textArea{
-    width: 100%;
-   
-    resize: none;
-    height: 60px;
-    font-size: 1.3rem;
-    padding: 10px;
-    border:1px solid var(--inputField);
-}
-
-.inputField {
-    height: 40px;
-    width: 100%;
-    font-size: 1.2rem;
-    padding: 10px 10px 7px;
-    border: 1px solid var(--inputField);
-}
-
-#fileUpload{
-    cursor: pointer;
-    
-    background-color: #f8f9fa;
-    color: #333;
-    padding: 5pxd;
-    font-size: 19px;
-}
-.durationContainer{
+.field-group-child{
     width: 30%;
+    
+    
 }
-.registerBtn{
-    background-color: var(--primaryBtn);
-    border: 0;
-    border-radius: 2px;
-    padding: 10px 0;
-    color: white;
-    font-size: 20px;
-    width: 50%;
+input[type="date"],input[type="time"],input[type = "number"]{
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+}
+
+textarea {
+    resize: vertical;
+    height: 100px;
+}
+
+.upload-container {
+    border: 2px dashed #ccc;
+    border-radius: 6px;
+    padding: 30px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.3s;
+    position: relative;
+}
+
+.upload-container.dragover {
+    border-color: #007BFF;
+    background-color: #f1f9ff;
+}
+
+.upload-container input {
+    display: none;
+}
+
+.upload-container i {
+    font-size: 48px;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.upload-container p {
+    color: #777;
+    font-size: 16px;
+}
+
+.image-preview {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 10px;
+}
+
+.subcategories-container {
+    margin-top: 20px;
+}
+
+.subcategory {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    position: relative;
+    background-color: #fafafa;
+}
+
+.subcategory .remove-subcategory {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.add-subcategory-btn {
+    display: inline-block;
+    background-color: #28a745;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.add-subcategory-btn:hover {
+    background-color: #218838;
+}
+
+.submit-btn {
+    display: block;
+    width: 100%;
+    background-color: #007BFF;
+    color: #fff;
+    padding: 15px;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+}
+
+.caption {
+    font-size: 14px;
+    color: #777;
+    margin-top: 5px;
+}
+
+.participant-type-group {
     margin-top: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .field-group {
+        flex-direction: column;
+    }
 }

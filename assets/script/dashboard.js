@@ -87,7 +87,6 @@ fetchBtnArr.forEach((element)=>{
 
 logOutBtn.addEventListener("click",()=>{
     alert("Logged Out");
-    localStorage.removeItem("signedUp");
     localStorage.removeItem("loginStatus");
     localStorage.removeItem("currentPage");
     signOut(auth);

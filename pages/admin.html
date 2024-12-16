@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+ 
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f4f4f9;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      background: #ffffff;
+      padding: 20px 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 90%;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .logout-btn {
+      display: inline-block;
+      background: #e74c3c;
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      transition: background 0.3s ease;
+    }
+
+    .logout-btn:hover {
+      background: #c0392b;
+    }
+
+    p {
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome, Admin</h1>
+    <p>Manage your dashboard and settings from here.</p>
+    <button class="logout-btn" id="logout">Logout</button>
+  </div>
+
+
+  <script type="module">
+    import { auth } from "../assets/script/config.js"
+
+import {onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+    // Function to handle logout
+    document.getElementById("logout").addEventListener("click",()=>{
+        alert("Logged Out");
+        localStorage.removeItem("role");
+        signOut(auth);
+    })
+  </script>
+  
+</body>
+</html>

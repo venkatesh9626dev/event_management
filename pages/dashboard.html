@@ -1,66 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CelestaHub</title>
-    <link rel="stylesheet" href="../assets/style/home.css">
-    <link rel="stylesheet" href="../assets/style/createdEvents.css">
-    <link rel="stylesheet" href="../assets/style/createEvent.css">
-    <link rel="stylesheet" href="../assets/style/participatedEvents.css">
-    <link rel="stylesheet" href="../assets/style/userProfile.css">
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sidebar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/style/dashboard.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script defer type="module" src="../assets/script/dashboard.js"></script>
-</head>
-<body style="min-height: 100vh;">
-    <header id="mainHd">
-        <div id="logoContainer">
-            <img src="../assets/Images/freshworks.png" alt="" width="30px" height="30px">
-            <h2 id="logoName">CelestaHub</h2>
-        </div>
-        <div id="searchContainer">
-            <input type="search" placeholder="Search..." id="searchBar">
-            <i class="fa fa-search" id="searchIcon"></i>
-        </div>
-        <div id="logoutBox">
-            <button id="logoutBtn">Logout</button>
-        </div>
-    </header>
-   <main>
-        <aside id="sideNavBar">
-            <div class="navItems" id="home">
-                <i class="fa-solid fa-house sideNavIcon"></i>
-                <span class="sideNavName">Home</span>
-            </div>
-            <div class="navItems" id="createEvent">
-                <i class="fa-solid fa-plus sideNavIcon"></i>
-                <span class="sideNavName">Create Event</span>
-            </div>
-            <div class="navItems" id="createdEvents">
-                <i class="fa-solid fa-list sideNavIcon"></i>
-                <span class="sideNavName">Created Events</span>
-            </div>
-            <div class="navItems" id="participatedEvents">
-                <i class="fa-solid fa-calendar-days sideNavIcon"></i>
-                <span class="sideNavName">Participated Events</span>
-            </div>
-            <div class="navItems" id="userProfile">
-                <i class="fa-solid fa-user sideNavIcon"></i>
-                <span class="sideNavName">Profile</span>
-            </div>
-        </aside>
-            
-        
-        <section id="contentArea">
-            
-        </section>
-        
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
 
-   </main>
-   <section class="popDivFull">
+  <body>
+    <header class="header">
+      <h3>CampusConnect</h3>
+      <div>
+        <a class="createBtn">Create New Event</a>
+        <a href="home.html" class="redirectBtn">Browse the events</a>
+      </div>
+    </header>
+    <main>
+      <section>
+        <div class="sidebar">
+          <div class="logo-details">
+            <div class="logo_name">constGenius</div>
+            <i class="bx bx-menu" id="btn"></i>
+          </div>
+          <ul class="nav-list">
+            <li>
+              <a href="">
+                <i class="bx bx-grid-alt"></i>
+                <span class="links_name">Dashboard</span>
+              </a>
+              <span class="tooltip">Dashboard</span>
+            </li>
+            <li>
+              <a href="">
+                <i class="bx bx-user"></i>
+                <span class="links_name">User</span>
+              </a>
+              <span class="tooltip">User</span>
+            </li>
+            <li>
+              <a href="">
+                <i class="bx bx-chat"></i>
+                <span class="links_name">Messages</span>
+              </a>
+              <span class="tooltip">Messages</span>
+            </li>
+            <li>
+              <a href="">
+                <i class="bx bx-pie-chart-alt-2"></i>
+                <span class="links_name">Analytics</span>
+              </a>
+              <span class="tooltip">Analytics</span>
+            </li>
+            <li>
+              <a href="">
+                <i class="bx bx-folder"></i>
+                <span class="links_name">Files</span>
+              </a>
+              <span class="tooltip">Files</span>
+            </li>
+            <li>
+              <a href="">
+                <i class="bx bx-cart-alt"></i>
+                <span class="links_name">Order</span>
+              </a>
+              <span class="tooltip">Order</span>
+            </li>
+            <li>
+              <a href="">
+                <i class="bx bx-heart"></i>
+                <span class="links_name">Saved</span>
+              </a>
+              <span class="tooltip">Saved</span>
+            </li>
+            <li>
+              <a href="">
+                <i class="bx bx-cog"></i>
+                <span class="links_name">Settings</span>
+              </a>
+              <span class="tooltip">Settings</span>
+            </li>
+            <li class="profile">
+              <div class="profile-details">
+                <img src="./images/profile.png" alt="profileImg" />
+                <div class="name_job">
+                  <div class="name">const Genius</div>
+                  <div class="job">Web Developer</div>
+                </div>
+              </div>
+              <i class="bx bx-log-out" id="log_out"></i>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section id="dynamicContainer">
         
-   </section>
-</body>
+      </section>
+    </main>
+  </body>
+  <script>
+    let sidebar = document.querySelector(".sidebar");
+    let closeBtn = document.querySelector("#btn");
+    let createBtn = document.querySelectorAll(".createBtn");
+    let dynamicContainer = document.getElementById("dynamicContainer")
+    // fetch create page
+    createBtn[0].addEventListener("click", async () => {
+    try {
+      // Fetch the HTML content
+      let page = await fetch("./createEvent.html");
+      let pageContent = await page.text();
+      
+      dynamicContainer.innerHTML = pageContent;
+
+      // Add CSS dynamically
+      let styleElement = document.createElement("link");
+      styleElement.setAttribute("rel", "stylesheet");
+      styleElement.setAttribute("href", "../assets/style/createEvent.css");
+      document.head.appendChild(styleElement);
+
+      // Add JS dynamically
+      let scriptElement = document.createElement("script");
+      scriptElement.setAttribute("src", "../new/createEvent.js");
+      scriptElement.setAttribute("type", "module");
+      document.head.appendChild(scriptElement);
+    } catch (error) {
+      console.error("Error loading the page or assets:", error);
+    }
+  });
+
+    closeBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("open");
+      menuBtnChange();
+    });
+
+    function menuBtnChange() {
+      if (sidebar.classList.contains("open")) {
+        closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+      } else {
+        closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+      }
+    }
+
+    menuBtnChange();
+  </script>
 </html>

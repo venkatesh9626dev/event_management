@@ -1,29 +1,108 @@
-#trendingHd{
-    color: #FF5252; /* Bright red */
-  font-size: 1.8rem;
-  font-weight: bold;
-  margin-bottom: 10px;
+:root {
+    /* Buttons and Interactive Elements */
+    --color-primary: #007BFF; /* Electric Blue */
+    --color-secondary: #00C4CC; /* Cyan */
+  
+    /* Background Colors */
+    --color-background-main: #eeedf2; /* Soft Gray */
+    --color-background-card: #f8f7fa; /* White */
+  
+    /* Text Colors */
+    --color-text-primary: #343A40; /* Dark Gray */
+    --color-text-secondary: #6C757D; /* Medium Gray */
+  
+    /* Alerts and Status Indicators */
+    --color-success: #28A745; /* Green */
+    --color-warning: #FFC107; /* Amber */
+    --color-error: #DC3545; /* Crimson */
+  }
+  
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Neue Plak, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, Helvetica, Tahoma, Arial, sans-serif";
 }
-#filterContainer{
-    color: #00BCD4;
-}
-#filterContainer label{
-    color: #BDBDBD; /* Bright red for label text *
-  font-size: 1rem; /* Standard readable font size */
-  font-weight: bold; /* Bold text for emphasis */
-  margin-right: 10px; /* Add spacing between the label and filter element */
-  display: inline-block;
-}
-#welcomeBox{
-    color: #52ff8f; /* Bright red for an energetic feel */
-    font-size: 2rem; /* Larger font size for emphasis */
-    font-weight: bold; /* Bold text for impact */
-    
-    margin: 20px 0; /* Add spacing around the message */
-    
+body{
+    background-color: var(--color-background-main);
 }
 
-#currentEventContainer{
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color:var(--color-background-card);
+    color: black;
+    margin-bottom: 20px;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    width: 100%;
+  }
+  main{
+    margin-top: 100px;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .search-bar {
+    width: 50%;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    background-color: lightgray;
+  }
+  
+  .dashboard-btn {
+    padding: 0.5rem 1rem;
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  /* Carousel Wrapper */
+#eventsCarousel {
+    width: 100%;
+
+  }
+
+#carouselBox{
+ 
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.marginAuto{
+  width: 85%;
+  margin: auto;
+}
+
+  
+  /* Carousel Images */
+  .carousel-item img {
+    height: 400px; /* Adjust height based on content */
+    object-fit: cover; /* Ensures the image covers the area without stretching */
+    border-radius: 10px;
+    
+  }
+
+  
+
+  
+  #nearbyEventsContainer{
+
+    width: 100%;
+    margin: 20px 0;
+   
+  }
+
+  #currentEventContainer,  #nearbyEventsBox{
     margin-top: 30px;
     width: 100%;
     display: flex;
@@ -32,13 +111,18 @@
     row-gap: 20px;
 }
 .currentEventItems{
-    width: 30%;
-    height: 390px;
-    background-color: #1C1C1C; /* Very dark gray */
-    border: 2px solid #D32F2F; /* Red border */
-    border-radius: 8px;
-    color: #FFFFFF;
+    width: 25%;
+    height: max-content;
+    /* Very dark gray */
+    border-radius: 4px;
+    color: var(--color-text-primary);
     position: relative;
+    box-shadow:  0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.currentEventItems:hover{
+  background-color: var(--color-background-card);
+  cursor: pointer; 
+  
 }
 .imgContainer{
     width: 100%;
@@ -54,25 +138,24 @@
     position: absolute;
     top: 3%;
     right: 5%;
-    background-color: #FF4081;
+    background-color: var(--color-success);
      color: #FFFFFF;
     border: 1px solid rgb(0, 0, 0);
     padding: 5px;
-    
 }
 .contentArea {
     padding: 10px 20px;
 }
 .contentArea > *{
     margin-bottom: 10px;
-    color: #BDBDBD;
+    color: var(--color-text-secondary);
 }
 .contentArea i{
     margin-right: 10px;
     width: 5%;
 }
 .eventName{
-    color: #FFFFFF;
+    color: var(--color-text-primary);
   font-weight: bold;
   font-size: 1.2rem;
   height: 30px;
@@ -100,7 +183,7 @@
     align-self: flex-start;
 }
 .joinBtn,.knowBtn{
-  background-color: #FF5252;
+  background-color: var(--color-primary);
   color: #FFFFFF;
   padding: 10px 15px;
   border: none;
@@ -111,10 +194,76 @@
   margin-right: 10px;
 }
 .joinBtn:hover,.knowBtn:hover{
-    background-color: #D32F2F;
+    background-color: #4c91dbd3;
+}
+
+  
+/** skeleton loader **/
+
+.card {
+  width: 320px;
+  background-color: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, .12);
+}
+
+.image {
+  height: 200px;
+}
+
+.image img {
+  display: block;
+  width: 100%;
+  height: inherit;
+  object-fit: cover;
+}
+
+.content {
+  padding: 2rem 1.8rem;
+}
+
+h4 {
+  margin: 0 0 1rem;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+}
+
+.description {
+  font-size: 1rem;
+  line-height: 1.4rem;
+}
+
+.loading .image,
+.loading h4,
+.loading .description {
+  background-color: #ededed;
+  background: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, .5) 50%,
+    rgba(255, 255, 255, 0) 60%
+  ) #ededed;
+  background-size: 200% 100%;
+  background-position-x: 180%;
+  animation: 1s loading ease-in-out infinite;
+}
+
+@keyframes loading {
+  to {
+    background-position-x: -20%;
+  }
+}
+
+.loading h4 {
+  min-height: 1.6rem;
+  border-radius: 4px;
+  animation-delay: .05s;
 }
 
 
-
-
-
+.skeletonBox{
+  display: flex; 
+  justify-content: space-between;
+   margin-top: 30px;
+}

@@ -68,8 +68,7 @@ createEventBtn.addEventListener("click", async () => {
         venueName: eventVenueInput.value,
         venueDistrict: eventDistrictInput.value,
         address: eventAddressInput.value,
-      },
-      participantDetails : {}
+      }
   };
   await update(userRef,data)
   alert("event created successfully");

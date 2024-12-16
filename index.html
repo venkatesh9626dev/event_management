@@ -4,23 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Event Management System</title>
-    <script defer src="./assets/script/config.js"  type="module"></script>
+    <script type="module" src="./assets/script/config.js"></script>
+    <script defer src="./assets/script/onauth.js"  type="module"></script>
     <link rel="stylesheet" href="./assets/style/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script defer type="module" src="./assets/script/index.js"></script>
-    
-  
   </head>
   <body>
     <header id="registerHd">
       <img src="./assets/Images/freshworks.png" alt="" width="30px" height="30px">
       <h2>CelestaHub</h2>
     </header>
+    
     <main>
       <section id="signUpPage">
         <section class="registerContainerLogin registerContainerUp ">
           <div class="loginPoster">
-            <img src="./assets/Images/login_Poster.png" alt="" width="100%">
+            <img src="./assets/Images/login_Poster.jpg" alt="" width="100%">
           </div>
           <div class="loginForm">
             <div class="formHd">
@@ -33,13 +33,14 @@
               </div>
             </div>
             <form action="" id="signupForm">
+              
               <div class="input-container">
                 <label for="userName">UserName*</label>
                 <input type="text" id="userNameSignUp" placeholder="Enter your Username" class="input-field" title="Please fill your username">
                 <p id="UserNameError" class="registerError"></p>
               </div>
               <div class="input-container">
-                <label for="userMail">Email Address*</label>
+                <label for="userMail">Official College Mail*</label>
                 <input type="email" id="userMailSignUp" placeholder="Enter your email address" class="input-field" title="Please fill your email">
                 <p id="UserMailErrorSignUp" class="registerError"></p>
               </div>
@@ -53,40 +54,16 @@
                 <input type="password" id="confirmPassSignUp" placeholder="Re-enter your Password" class="input-field" title="Please fill your password">
                 <p id="UserConfirmPassErrorSignUp" class="registerError"></p>
               </div>
+              
+              
               <div class="input-container">
-                <label for="district">Your Location*</label>
-                <select name="district" id="district" class="input-field" title="Please select your district">
-                  <option value="" disabled selected>Select District</option>
-                </select>
-                <p id="UserLocationErrorSignUp" class="registerError"></p>
+                  <input type="checkbox" id="termsCheckboxUp" />
+                  <label for="termsCheckboxUp" class ="termsCheck">
+                    I agree to the <a href="./pages/terms.html" target="_blank">Terms and Conditions</a> and <a href="./pages/privacy.html" target="_blank">Privacy Policy</a>.
+                  </label>
+                 <p id="termsCheckboxUpError" class="registerError"></p>
               </div>
-              <div class="input-container">
-                <label for="userInterest">Choose Your Interest*</label>
-                <div id="checkBox-container">
-                  <div>
-                    <input type="checkbox" id="music" value="music" class="interest" />
-                    <label for="music">Entertainment</label>
-                  </div>
-                  <div>
-                    <input type="checkbox" id="sports" value="sports" class="interest" />
-                    <label for="sports">Sports</label>
-                  </div>
-                  <div>
-                    <input type="checkbox" id="tech" value="tech" class="interest" />
-                    <label for="tech">Tech</label>
-                  </div>
-                  <div>
-                    <input type="checkbox" id="education" value="education" class="interest" />
-                    <label for="education">Education</label>
-                  </div>
-                  <div>
-                    <input type="checkbox" id="others" value="others" class="interest" />
-                    <label for="others">Others</label>
-                  </div>
-                </div>
-                <p id="UserInterestErrorSignUp" class="registerError"></p>
-                
-              </div>
+              
               <div id="btn-container">
                 
                 <button type="button" id="signupBtn" class="registerBtn">Create your account</button>
@@ -102,7 +79,7 @@
       <section id="signInPage">
         <section class="registerContainerLogin">
           <div class="loginPoster">
-            <img src="./assets/Images/login_Poster.png" alt="">
+            <img src="/assets/Images/login_Poster.jpg" alt="">
           </div>
           <div class="loginForm">
             <div class="formHd">
@@ -115,17 +92,33 @@
               </div>
             </div>
             <form action="" id="signinForm">
+
+              <div class="input-container">
+                <input type="radio" name="user" id="user" class="role" >
+                <label for="user" style="display: inline;">User</label>
+                <input type="radio" name="user" id="Admin" class="role" >
+                <label for="Admin" style="display: inline;">Admin</label>
+                <p id="roleErrorIn" class="registerError">Choose a role to fill further Details</p>
+              </div>
               
               <div class="input-container">
                 <label for="userMail">Email Address*</label>
-                <input type="email" id="userMaillogin" placeholder="Enter your email address" class="input-field">
+                <input type="email" disabled id="userMaillogin" placeholder="Enter your email address" class="input-field">
                 <p id="UserMailErrorSignin" class="registerError"></p>
               </div>
 
               <div class="input-container">
                 <label for="userPassword">Password*</label>
-                <input type="password" id="userPasswordLogin" placeholder="Enter your Password" class="input-field">
+                <input type="password" disabled id="userPasswordLogin" placeholder="Enter your Password" class="input-field">
                 <p id="UserPassErrorSignin" class="registerError"></p>
+              </div>
+
+              <div class="input-container">
+                  <input type="checkbox" id="termsCheckboxIn" />
+                  <label for="termsCheckboxIn" class = "termsCheck">
+                    I agree to the <a href="./pages/terms.html" target="_blank">Terms and Conditions</a> and <a href="./pages/privacy.html" target="_blank">Privacy Policy</a>.
+                  </label>
+                 <p id="termsCheckboxInError" class="registerError"></p>
               </div>
               
               <div>

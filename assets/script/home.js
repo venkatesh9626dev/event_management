@@ -9,9 +9,21 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
 
 let userCurrentLocation = await userLocation();
+
  export let eventsObj;
 
-function userLocation(){
+async function userLocation(){
+  try{
+    let location = await getLocation()
+    return location;
+  }
+  catch(error){
+    return null;
+  }
+   
+}
+
+function getLocation(){
   return new Promise((resolve, reject) => {
     if (!navigator.geolocation) {
       reject(new Error("Geolocation is not supported by your browser."));
@@ -20,13 +32,11 @@ function userLocation(){
       (position) => {
         // Extract latitude and longitude
         const { latitude, longitude } =  position.coords;
-        
-       
-        
+   
         resolve({latitude,longitude}) ;
       },
       (error) => {
-        reject(new Error(`Geolocation error: ${error.message}`));
+        reject(false);
       },
       {
         enableHighAccuracy: true,  // Precise but consumes more power
@@ -35,7 +45,6 @@ function userLocation(){
       }
     )
   })
-   
 }
 
 
@@ -232,8 +241,11 @@ async function fetchEvents(callBack) {
         
         `;
         
+        let toAppend;
+        if(userCurrentLocation){
+          toAppend = await  nearbyCheck(eventDetails.coords);
+        }
         
-        let toAppend = await  nearbyCheck(eventDetails.coords);
         
         if(toAppend){
           nearbyEventsBox.appendChild(contentBox)

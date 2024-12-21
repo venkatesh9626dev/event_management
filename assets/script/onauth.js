@@ -24,7 +24,7 @@ onAuthStateChanged(auth, (user) => {
       ) {
         window.location.replace("/pages/home.html");
       } else if (!roleStatus) {
-        localStorage.setItem("userId", JSON.stringify(`${user.uid}`));
+        
         window.location.replace("/pages/choose.html");
       }
     }, 0);

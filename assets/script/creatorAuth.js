@@ -188,7 +188,7 @@ form.addEventListener("submit", async (e) => {
       await update(creatorRef, { checkStatus: "pending" });
 
       // Redirect to dashboard
-      window.location.replace("/pages/dashboard.html");
+      window.location.replace("/pages/home.html");
     } catch (error) {
       alert(`Error: ${error.message || error}`);
     }
@@ -203,7 +203,7 @@ skipBtn.addEventListener("click", () => {
     let userRef = ref(db, `users/userDetails/${userId}/check/creatorCheck`);
     update(userRef,{"checkStatus" : "empty"})
   })
-  window.location.replace("/pages/dashboard.html");
+  window.location.replace("/pages/home.html");
 });
 
 function base64(file) {

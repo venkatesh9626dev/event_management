@@ -67,11 +67,11 @@ function showCreatorAuthenticationPage() {
 
 // Event Listeners for Creator and Participator Cards
 document.getElementById("experience-card").addEventListener("click", () => {
-  handleSelection("creator");
+  handleSelection("participator");
 });
 
 document.getElementById("organize-card").addEventListener("click", () => {
-  handleSelection("participator");
+  handleSelection("creator");
 });
 
 function handleSelection(userType) {
@@ -84,9 +84,9 @@ function handleSelection(userType) {
     let dRef = ref(db,`users/${userId}/check/roleCheck`)
     update(dRef,{"roleStatus" : true})
     .then(()=>{
-        let userRef = ref(db, `users/${userId}/check/creatorCheck`);
+        let userRef = ref(db, `users/userDetails/${userId}/check/creatorCheck`);
         update(userRef,{"checkStatus" : "pending"})
       })
-    window.location.href = "./dashboard.html";
+    window.location.href = "/pages/home.html";
   }
 }

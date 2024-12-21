@@ -339,24 +339,17 @@ async function signUpAuth(userNameValue, userMailValue, passwordValue) {
           // Create user with email and password
           const userCredential = await createUserWithEmailAndPassword(auth, userMailValue, passwordValue);
           const user = userCredential.user;
-          console.log(user)
-          console.log("Updating profile...");
-          // Update the user profile with displayName
           
-          console.log("Updating name...");
-          // Update database with username and role status
+          
           const usernameRef = ref(db, `users/usernames/`);
           await update(usernameRef, { [userNameValue]: userNameValue });
-          console.log("Updated name...");
-          console.log("Updating role...");
+         
           const roleCheckRef = ref(db, `users/userDetails/${user.uid}/check/roleCheck`);
           await update(roleCheckRef, { roleStatus: false });
-          console.log("Updated role...");
+          localStorage.setItem("userId", JSON.stringify(`${user.uid}`));
           // UI feedback for success
           userSignupBtn.innerHTML = "Signup Successful";
-          setTimeout(() => {
-            redirectToLogin(); // Function to redirect user to login page
-          }, 1000);
+          
         } catch (error) {
           // Handle specific Firebase errors
           if (error.code === "auth/email-already-in-use") {

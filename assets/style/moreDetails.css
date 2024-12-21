@@ -1,0 +1,136 @@
+:root {
+    /* Buttons and Interactive Elements */
+    --color-primary: #d4441f; /* Electric Blue */
+    --color-secondary: #00C4CC; /* Cyan */
+  
+    /* Background Colors */
+    --color-background-main: white ; /* Soft Gray */
+    --color-background-card: white; /* White */
+  
+    /* Text Colors */
+    --color-text-primary: #1e0a3c; /* Dark Gray */
+    --color-text-secondary: #39364f; /* Medium Gray */
+  
+    /* Alerts and Status Indicators */
+    --color-success: #28A745; /* Green */
+    --color-warning: #FFC107; /* Amber */
+    --color-error: #DC3545; /* Crimson */
+}
+    
+  
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Helvetica Neue",
+    Helvetica, Tahoma, Arial, sans-serif;
+}
+body{
+    background-color: var(--color-background-main);
+}
+
+h3{
+    font-size: 1.7rem;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color:var(--color-background-card);
+    color: black;
+    margin-bottom: 20px;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    width: 100%;
+    border-bottom: 0.5px solid gray;
+}
+a{
+    text-decoration: none;
+}
+p{
+    color: var(--color-text-secondary);
+    font-weight: 300;
+}
+li{
+    color: var(--color-text-secondary);
+    font-weight: 300;
+}
+main{
+   width: 80%;
+   margin: 120px auto;
+   padding: 1px;
+}
+
+#content-container{
+  
+    width: 80%;
+    margin: 100px auto;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .search-bar {
+    width: 50%;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    background-color: lightgray;
+  }
+  
+  .dashboard-btn {
+    padding: 0.5rem 1rem;
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  #img-container{
+  
+    
+  }
+
+  .eventImage{
+    
+    width: 100%;
+    aspect-ratio: 16/6;
+    border-radius: 10px;
+  }
+
+  #content-Container{
+    margin-top: 40px;
+  }
+
+  #eventName{
+    font-size: 3.25rem;
+    line-height: 4rem;
+    margin-bottom: calc(var(--base-unit)*4);
+  }
+
+  .contentItems{
+    margin: 40px 0;
+    line-height: 30px;
+    
+  }
+  #eventDesc{
+    color: var(--color-text-secondary);
+  }
+  
+  .detailsLabel{
+    margin: 20px 0;
+  }
+  #eventTimeDate{
+    margin-left: 10px;
+  }
+  #categoryList{
+    margin-left: 15px;
+  }
+  #map{
+    height: 500px;
+  }

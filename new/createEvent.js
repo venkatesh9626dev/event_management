@@ -16,11 +16,32 @@ const descriptionElement = document.getElementById("eventDescription");
 const dateElement = document.getElementById("eventDate");
 const timeElement = document.getElementById("eventTime");
 const durationElement = document.getElementById("eventDuration");
+const cityElement = document.getElementById("eventCity");
 const addressElement = document.getElementById("eventAddress");
 const agendaElement = document.getElementById("agenda");
+const ticketTypeElement = document.getElementById("ticketType");
+const priceElement = document.getElementById("eventPrice")
 const categoryElement = document.getElementById("category");
-let userId = localStorage.getItem("userId");
+const defaultSelectElement = document.getElementById("defaultSelect");
+let userId = JSON.parse(localStorage.getItem("userId"));
 let coordsObj = receiveCoords();
+
+
+// Error Varibales //
+
+const eventNameError = document.getElementById("eventNameError");
+const eventDescriptionError = document.getElementById("eventDescriptionError");
+const eventDateError = document.getElementById("eventDateError");
+const eventTimeError = document.getElementById("eventTimeError");
+const eventCityError = document.getElementById("eventCityError");
+const ticketError = document.getElementById("ticketTypeError");
+const priceError = document.getElementById("priceError");
+const eventAddressError = document.getElementById("eventAddressError");
+const agendaError = document.getElementById("agendaError");
+const categoryError = document.querySelector(".category-name-error");
+
+
+
 
 // async function getCollegeName(userId) {
 //   try {
@@ -38,103 +59,90 @@ let coordsObj = receiveCoords();
 
 // set event data in firebase
 
+
+// ticket Type check
+
+ticketTypeElement.addEventListener("change",()=>{
+  ticketError.textContent = "";
+  let priceBox = document.getElementById("priceBox")
+  if(ticketTypeElement.value === "Paid"){
+    priceBox.classList.toggle("hidden",false)
+  }
+  else{
+    priceBox.classList.toggle("hidden",true)
+  }
+})
+
+
 // get coords
 
-async function receiveCoords(){
-   try{
-    let dbRef =  await ref(db,"coords");
+async function receiveCoords() {
+  try {
+    let dbRef = await ref(db, "coords");
     let data = await get(dbRef);
 
-    if(!data.exists()){
-        throw new Error("no coords found")
+    if (!data.exists()) {
+      throw new Error("no coords found");
     }
-    return data.val()
-   }
-   catch(error){
+    return data.val();
+  } catch (error) {
     return {};
-   }
+  }
 }
 
 // generatecoords
 
 async function generateCoords(address) {
-    const url = `https://google-map-places.p.rapidapi.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&language=en&region=en`;
-    const options = {
-        method: 'GET',
-        headers: {
-            'x-rapidapi-key': '9de07cb8bbmshea97d4c3fe99842p17d18fjsn3202acd43b1f',
-            'x-rapidapi-host': 'google-map-places.p.rapidapi.com'
-        }
-    };
+  const url = `https://google-map-places.p.rapidapi.com/maps/api/geocode/json?address=${encodeURIComponent(
+    address
+  )}&language=en&region=en`;
+  const options = {
+    method: "GET",
+    headers: {
+      "x-rapidapi-key": "9de07cb8bbmshea97d4c3fe99842p17d18fjsn3202acd43b1f",
+      "x-rapidapi-host": "google-map-places.p.rapidapi.com",
+    },
+  };
 
-    try {
-        const response = await fetch(url, options);
-        const data = await response.json();
+  try {
+    const response = await fetch(url, options);
+    const data = await response.json();
 
-        if (data.results && data.results.length > 0) {
-            return data.results[0].geometry.location; // Return latitude and longitude
-        } else {
-            alert('Address not found!');
-            return null;
-        }
-    } catch (error) {
-        console.error('Error fetching location:', error);
-        return null;
+    if (data.results && data.results.length > 0) {
+      return data.results[0].geometry.location; // Return latitude and longitude
+    } else {
+      alert("Address not found!");
+      return null;
     }
-    
+  } catch (error) {
+    console.error("Error fetching location:", error);
+    return null;
+  }
 }
 
-// getCoords 
+// getCoords
 
 async function getCoords(address) {
-    let searchAddress = address.replace(/[^a-zA-Z0-9]/g, '_');;
-    
-    
-    
-    try{
-        if(coordsObj[searchAddress]){
-            return coordsObj[searchAddress]
-        }
+  let searchAddress = address.replace(/[^a-zA-Z0-9]/g, "_");
 
-        let receivedCoords = await generateCoords(address);
-        if(receivedCoords === null) throw new Error("Cant get coords")
-        let coordsRef = await ref(db,"coords")
-        await update(coordsRef,{
-          [searchAddress] : receivedCoords
-        })
-        return receivedCoords
-    }
-    catch(error){
-      alert(error)
-    }
-}
-
-
-async function setEventData(data, eventId, userId) {
   try {
-    let dbRef = ref(db,`events/${eventId}`);
-    await update(dbRef,data);
-    let userRef = ref(db,`users/userDetails/${userId}`);
-    let response = await get(userRef)
-    let existingId = response?.createdEvents || {};
-
-    let updatedId = {
-        ...existingId,
-        [eventId] : eventId
-    }
-    await update(userRef,{"createdEvents" : updatedId})
-    // Reset the form after submission
-    eventForm.reset();
-    imagePreview.innerHTML = "";
-    
-    alert("Event created successfully!");
+    if (coordsObj[searchAddress]) {
+      return coordsObj[searchAddress];
     }
 
-   catch (error) {
-    console.log(error);
+    let receivedCoords = await generateCoords(address);
+    if (receivedCoords === null) throw new Error("Cant get coords");
+    let coordsRef = await ref(db, "coords");
+    await update(coordsRef, {
+      [searchAddress]: receivedCoords,
+    });
+    return receivedCoords;
+  } catch (error) {
     alert(error);
   }
 }
+
+
 
 // const collegeName = getCollegeName(userId);
 // Handle Image Upload Preview
@@ -187,31 +195,35 @@ const subcategoriesContainer = document.getElementById(
 addSubcategoryBtn.addEventListener("click", () => {
   const subcategory = document.createElement("div");
   subcategory.classList.add("subcategory");
-
   subcategory.innerHTML = `
-        <button type="button" class="remove-subcategory"><i class="fas fa-times"></i></button>
-        <div class="form-group">
-            <label>Subcategory Name <span class="caption">(Give a name to this subcategory)</span></label>
-            <input type="text" class="subcategory-name" placeholder="Enter subcategory name" required>
-        </div>
-        <div class="form-group">
-            <label>Number of Seats <span class="caption">(Specify how many seats are available)</span></label>
-            <input type="number" class="number-of-seats" placeholder="Enter number of seats" min="1" required>
-        </div>
-        <div class="form-group">
-            <label>Participator Type <span class="caption">(Choose individual or group participation)</span></label>
-            <select class="participator-type" required>
-                <option value="">Select type</option>
-                <option value="individual">Individual</option>
-                <option value="group">Group</option>
-            </select>
-        </div>
-        <div class="form-group hidden members-group">
-            <label>Number of Members in a Team <span class="caption">(If group, specify team size)</span></label>
-            <input type="number" class="number-of-members" placeholder="Enter number of members" min="2">
-        </div>
-    `;
 
+    <div class="form-group">
+    
+      <label>Subcategory Name <span class="caption">(Give a name to this subcategory)</span></label>
+      <input type="text" class="subcategory-name" placeholder="Enter subcategory name" required>
+      <span class="error-message subcategory-name-error"></span>
+    </div>
+    <div class="form-group">
+      <label>Number of Seats <span class="caption">(Specify how many seats are available)</span></label>
+      <input type="number" class="number-of-seats" placeholder="Enter number of seats" min="1" required>
+      <span class="error-message number-of-seats-error"></span>
+    </div>
+    <div class="form-group">
+      <label>Participator Type <span class="caption">(Choose individual or group participation)</span></label>
+      <select class="participator-type" required>
+        <option value="" disabled selected>Select type</option>
+        <option value="individual">Individual</option>
+        <option value="group">Group</option>
+      </select>
+      <span class="error-message participator-type-error"></span>
+    </div>
+    <div class="form-group hidden members-group">
+      <label>Number of Members in a Team <span class="caption">(If group, specify team size)</span></label>
+      <input type="number" class="number-of-members" placeholder="Enter number of members" min="2">
+      <span class="error-message number-of-members-error"></span>
+    </div>
+    <button type="button" class="remove-subcategory">Remove</button>
+  `;
   subcategoriesContainer.appendChild(subcategory);
 
   // Add event listener for remove button
@@ -239,19 +251,49 @@ addSubcategoryBtn.addEventListener("click", () => {
   });
 });
 
+// default subcategory select
+
+defaultSelectElement.addEventListener("change", (e) => {
+  const membersGroup = document
+    .getElementById("defaultSub")
+    .querySelector(".members-group");
+  if (e.target.value === "group") {
+    membersGroup.classList.remove("hidden");
+    document.getElementById("defaultSub")
+      .querySelector(".number-of-members")
+      .setAttribute("required", "required");
+  } else {
+    membersGroup.classList.add("hidden");
+    document.getElementById("defaultSub").querySelector(".number-of-members").removeAttribute("required");
+  }
+});
+
 // format Time
 
-function formatTime(){
-  let time = timeElement.value.split(":");
-  let timeUnit  = time[0] >=12 ? "PM" : "AM";
-  let hours = time[0] % 12 ;
-  let correctTime = hours ? `${hours}` : "12";
 
-  return `${correctTime} : ${time[1]} ${timeUnit}`;
-}
 
 // Handle Form Submission
 const eventForm = document.getElementById("eventForm");
+
+async function setEventData(data, eventId, userId) {
+  try {
+    let dbRef = ref(db, `events/${eventId}`);
+    await update(dbRef, data);
+    let userRef = ref(db, `users/userDetails/${userId}/createdEvents`);
+  
+   
+    
+    await update(userRef, {[eventId]: eventId });
+    // Reset the form after submission
+    eventForm.reset();
+    imagePreview.innerHTML = "";
+
+    alert("Event created successfully!");
+  } catch (error) {
+    console.log(error);
+    alert(error);
+  }
+}
 
 eventForm.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -262,59 +304,187 @@ eventForm.addEventListener("submit", async (e) => {
   const eventName = nameElement.value;
   const eventDescription = descriptionElement.value;
   const eventDate = dateElement.value;
-  const eventTime = formatTime();
+  const eventTime = timeElement.value;
   const eventDuration = durationElement.value;
+  const eventCity = cityElement.value;
   const eventAddress = addressElement.value;
+  const ticketType = ticketTypeElement.value;
   const agenda = agendaElement.value;
   const category = categoryElement.value;
-  const coords = await  getCoords(eventAddress) ;
-  if(coords === null){
-    return;
-  }
 
   // Gather subcategories
   const subcategories = {};
   const subcategoryElements = document.querySelectorAll(".subcategory");
-  subcategoryElements.forEach((subcat) => {
-    const name = subcat.querySelector(".subcategory-name").value;
-    const seats = subcat.querySelector(".number-of-seats").value;
-    const type = subcat.querySelector(".participator-type").value;
-    let members = null;
-    if (type === "group") {
-      members = subcat.querySelector(".number-of-members").value;
+
+  let isValid = true;
+  document
+    .querySelectorAll(".error-message")
+    .forEach((error) => (error.textContent = ""));
+
+  // event Name
+
+  
+  if (!eventName.trim()) {
+    eventNameError.textContent = "Event Name is required.";
+    isValid = false;
+  }
+
+  // event Description
+
+  
+  if (!eventDescription.trim()) {
+    eventDescriptionError.textContent = "Event Description is required.";
+    isValid = false;
+  }
+  //  date check
+
+  
+  if (!eventDate) {
+    eventDateError.textContent = "Event Date is required.";
+    isValid = false;
+  }
+
+  // time check
+
+  if (!eventTime) {
+    eventTimeError.textContent = "Event Time is required.";
+    isValid = false;
+  }
+
+  // City Check
+
+  
+  if (!eventCity.trim()) {
+    eventCityError.textContent = "Event Time is required.";
+    isValid = false;
+  }
+
+  // ticket Type check
+  if(ticketType=== ""){
+    ticketError.textContent = "Select Ticket Type"
+    isValid = false;
+  }
+  else if(ticketType === "Paid" && priceElement.value === "" ){
+    priceError.textContent = "Input the price"
+    isValid = false;
+  }
+  
+
+  // address check
+
+  if (!eventAddress.trim()) {
+    eventAddressError.textContent = "Event Address is required.";
+    isValid = false;
+  }
+
+  // agenda check
+
+  if (!agenda.trim()) {
+    agendaError.textContent = "Agenda is required.";
+    isValid = false;
+  }
+
+  // category check
+
+  if (!category.trim()) {
+    categoryError.textContent = "Category is required.";
+    isValid = false;
+  }
+
+  // subCategory check
+
+  subcategoryElements.forEach((subcategory, index) => {
+    const subcategoryName = subcategory.querySelector(".subcategory-name");
+    const subcategoryNameError = subcategory.querySelector(
+      ".subcategory-name-error"
+    );
+    if (!subcategoryName.value.trim()) {
+      subcategoryNameError.textContent = `Subcategory Name is required (Subcategory ${index + 1
+        }).`;
+      isValid = false;
     }
-    subcategories[`${name}`] = {
-      subCatDetails: {
-        catName: name,
-        catSeats: seats,
-        type: type,
-        members: members,
-      },
-      participantDetails: {
-        userName: "creator",
-         collegeName: "VRS" , //getCollegeName()
-        randomId: crypto.randomUUID(),
-      },
-    };
+
+    // Validate Number of Seats
+    const numberOfSeats = subcategory.querySelector(".number-of-seats");
+    const numberOfSeatsError = subcategory.querySelector(
+      ".number-of-seats-error"
+    );
+    if (!numberOfSeats.value || parseInt(numberOfSeats.value) <= 0) {
+      numberOfSeatsError.textContent = `Number of Seats must be greater than 0 (Subcategory ${index + 1
+        }).`;
+      isValid = false;
+    }
+
+    // Validate Participator Type
+    const participatorType = subcategory.querySelector(".participator-type");
+    const participatorTypeError = subcategory.querySelector(
+      ".participator-type-error"
+    );
+    if (!participatorType.value) {
+      participatorTypeError.textContent = `Participator Type is required (Subcategory ${index + 1
+        }).`;
+      isValid = false;
+    }
+
+    // Validate Number of Members (if "group" is selected)
+    const numberOfMembers = subcategory.querySelector(".number-of-members");
+    const numberOfMembersError = subcategory.querySelector(
+      ".number-of-members-error"
+    );
+    if (
+      participatorType.value === "group" &&
+      (!numberOfMembers.value || parseInt(numberOfMembers.value) < 2)
+    ) {
+      numberOfMembersError.textContent = `Number of Members must be at least 2 for a group (Subcategory ${index + 1
+        }).`;
+      isValid = false;
+    }
   });
 
-  let data = {
-    generalInfo: {
-      eventId: eventId,
-      coords : coords,
-      eventPoster: eventPoster,
-      eventName: eventName,
-      eventDescription: eventDescription,
-      eventDate: eventDate,
-      eventTime: eventTime,
-      eventDuration: eventDuration,
-      eventAddress: eventAddress,
-      agenda: agenda,
-      category: category,
-    },
-    subCategory: subcategories,
-  };
+  if (isValid) {
+    const coords = await getCoords(eventAddress);
+    subcategoryElements.forEach((subcat) => {
+      const name = subcat.querySelector(".subcategory-name").value;
+      const seats = subcat.querySelector(".number-of-seats").value;
+      const type = subcat.querySelector(".participator-type").value;
+      let members = null;
+      if (type === "group") {
+        members = subcat.querySelector(".number-of-members").value;
+      }
+      subcategories[`${name}`] = {
+        subCatDetails: {
+          catName: name,
+          catSeats: seats,
+          type: type,
+          members: members,
+        },
+        participantDetails: {
+          userName: "creator",
+          collegeName: "VRS", //getCollegeName()
+          randomId: crypto.randomUUID(),
+        },
+      };
+    });
 
-  setEventData(data, eventId, userId);
+    let data = {
+      generalInfo: {
+        eventId: eventId,
+        coords: coords,
+        eventPoster: eventPoster,
+        eventName: eventName,
+        eventDescription: eventDescription,
+        eventDate: eventDate,
+        eventTime: eventTime,
+        eventDuration: eventDuration,
+        eventCity : eventCity,
+        eventAddress: eventAddress,
+        agenda: agenda,
+        category: category,
+        ticketType : ticketType
+      },
+      subCategory: subcategories,
+    };
+
+    setEventData(data, eventId, userId);
+  }
 });
-

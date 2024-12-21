@@ -1,4 +1,5 @@
 import { db } from "./config.js";
+import { categoryColors } from "./constant.js";
 import {
   getDatabase,
   ref,
@@ -8,8 +9,38 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
 
 let userCurrentLocation = await userLocation();
+ export let eventsObj;
 
-fetchEvents((eventDetails) => expiryCheck(eventDetails.eventDate));
+function userLocation(){
+  return new Promise((resolve, reject) => {
+    if (!navigator.geolocation) {
+      reject(new Error("Geolocation is not supported by your browser."));
+    }
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        // Extract latitude and longitude
+        const { latitude, longitude } =  position.coords;
+        
+       
+        
+        resolve({latitude,longitude}) ;
+      },
+      (error) => {
+        reject(new Error(`Geolocation error: ${error.message}`));
+      },
+      {
+        enableHighAccuracy: true,  // Precise but consumes more power
+        timeout: Infinity,           // Wait for max 10 seconds
+        maximumAge: 0             // Always fetch a fresh location
+      }
+    )
+  })
+   
+}
+
+
+
+fetchEvents((eventDetails) => expiryCheck(eventDetails.eventDate,eventDetails.eventTime));
 
 const topPicks = document.getElementById("topPicksBox")
 const nearbyEvents = document.getElementById("nearbyEvents");
@@ -26,28 +57,32 @@ const nearbyEvents = document.getElementById("nearbyEvents");
 //   });
 // });
 
-// while clicking district filter
+// format time
+
+
+function formatTime(time) {
+  
+  let timeUnit = time[0] >= 12 ? "PM" : "AM";
+  let hours = time[0] % 12;
+  let correctTime = hours ? `${hours}` : "12";
+
+  return `${correctTime}:${time[1]} ${timeUnit}`;
+}
 
 
 // expiry date check
 
-function expiryCheck(eventDate) {
+function expiryCheck(eventDate,eventTime) {
   let currentDate = new Date();
-
-  let dateArr = eventDate.split("-");
-
-  if (Number(dateArr[0]) < currentDate.getFullYear()) {
-    return false;
-  } else if (Number(dateArr[1]) < currentDate.getMonth() + 1) {
-    return false;
-  } else if (
-    Number(dateArr[1]) === currentDate.getMonth() + 1 &&
-    Number(dateArr[2]) < currentDate.getDate()
-  ) {
-    return false;
+  
+  let [year,month,day] = eventDate.split("-").map(Number);
+  let [hours,minutes] = eventTime.split(":").map(Number);
+  let eventDateTime = new Date(year, month - 1, day, hours, minutes)
+  if (eventDateTime > currentDate){
+    return formatTime([hours,minutes]);
   }
-
-  return true;
+  
+  return false;
 }
 
 // category filter
@@ -121,26 +156,16 @@ function expiryCheck(eventDate) {
 
 // user Location
 
-function userLocation(){
-  return new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        // Extract latitude and longitude
-        const { latitude, longitude } =  position.coords;
-        resolve({latitude,longitude}) ;
-      }
-    )
-  })
-   
-}
+
 // nearby events check
 
 async function nearbyCheck(coords){
-  const radius = 10000;
-  let userCoords = userCurrentLocation;
-  const distance = await geolib.getDistance(userCoords, coords);
-
-  console.log(distance <= radius)
+  const radius = 40000;
+ 
+  let eventCoords = {"latitude" : coords["lat"],"longitude" : coords["lng"]}
+  const distance = await geolib.getDistance(userCurrentLocation, eventCoords);
+  console.log([eventCoords,userCurrentLocation,distance]);
+  
  return distance <= radius;
 }
 
@@ -162,6 +187,7 @@ async function fetchEvents(callBack) {
     let eventsSnapshot = await get(dbRef);
 
     let eventsList = eventsSnapshot.val();
+    eventsObj = eventsList;
 
     for (let event in eventsList) {
       let eventDetails = eventsList[event].generalInfo;
@@ -169,37 +195,46 @@ async function fetchEvents(callBack) {
       let isValidEvent = callBack(eventDetails);
 
       if (isValidEvent) {
-        let posterImage =
-          eventDetails.eventPoster === ""
-            ? "https://thumbs.dreamstime.com/b/web-324671699.jpg"
-            : eventDetails.eventPoster;
+        let catColor = eventDetails.category === "Tech" ? categoryColors.tech 
+                                                        : eventDetails.category === "Sports" ? categoryColors.Sports
+                                                        : eventDetails.category === "Culturals" ? categoryColors.Culturals
+                                                        :categoryColors.Education;
+        
         let contentBox = document.createElement("div");
         contentBox.classList.add("currentEventItems");
         contentBox.setAttribute("onclick",`knowMoreClick('${eventDetails.eventId}')`)
         contentBox.innerHTML = `
         
         <div class = "imgContainer">
-            <img src="${posterImage}" alt="Image description" class="eventPoster">
+            <img src="${eventDetails.eventPoster}" alt="Image description" class="eventPoster">
         </div>
-        <div class = "contentArea">
-        <h3 class = "eventName">${eventDetails.eventName}</h3>
-        <div class = "date">
+        <div class = "contentArea itemsGap" >
+        <h3 class = "eventName itemsGap">${eventDetails.eventName}</h3>
+        <div class = "date itemsGap">
             <i class="fas fa-calendar-alt"></i>
             <div class="dateDetails">
                 <span class = "eventDate">${eventDetails.eventDate}</span>
-                <span class="eventTime">${eventDetails.eventTime}</span>
+                <span class="eventTime">${isValidEvent}</span>
             </div>
         </div>
-        <div class = "location">
+        <div class = "location itemsGap">
            <i class="fa-solid fa-location-dot"></i>
-           <span >${eventDetails.eventAddress}</span>
+           <span class = "eventAddress">${eventDetails.eventCity}</span>
         </div>
-        
+        <div class = "ticket itemsGap">
+           <i class="fa-solid fa-ticket"></i>
+           <span class = "eventTicket">${eventDetails.ticketType}</span>
         </div>
-        <div class = "eventCategory">${eventDetails.category}</div>
+        <button id="joinBtn" class="primaryBtn">Register Now</button>
+        <button id="viewMoreBtn" class="secondaryBtn">View More</button>
+        </div>
+        <div class = "eventCategory" style = "background-color : ${catColor};">${eventDetails.category}</div>
         
         `;
+        
+        
         let toAppend = await  nearbyCheck(eventDetails.coords);
+        
         if(toAppend){
           nearbyEventsBox.appendChild(contentBox)
         }
@@ -213,6 +248,7 @@ async function fetchEvents(callBack) {
     })
     nearbyEvents.appendChild(nearbyEventsBox)
     topPicks.appendChild(commonEvents);
+    
   
   } catch (error) {
     console.error(error);
@@ -228,3 +264,5 @@ function closePopUp() {
   document.querySelector("header").style.display = "flex";
   document.querySelector(".popDivFull").style.display = "none";
 }
+
+

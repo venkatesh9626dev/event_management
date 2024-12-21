@@ -115,13 +115,15 @@
       let page = await fetch("./createEvent.html");
       let pageContent = await page.text();
       
-      dynamicContainer.innerHTML = pageContent;
-
-      // Add CSS dynamically
       let styleElement = document.createElement("link");
       styleElement.setAttribute("rel", "stylesheet");
       styleElement.setAttribute("href", "../assets/style/createEvent.css");
       document.head.appendChild(styleElement);
+      
+      dynamicContainer.innerHTML = pageContent;
+
+      // Add CSS dynamically
+      
 
       // Add JS dynamically
       let scriptElement = document.createElement("script");

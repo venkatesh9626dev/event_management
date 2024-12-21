@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script defer src="../assets/script/moreDetails.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="../assets/style/moreDetails.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">Eventify</div>
+        <input type="text" class="search-bar" placeholder="Search events..." />
+        <a class="dashboard-btn" href="dashboard.html">Dashboard</a>
+    </header>
+    <main>
+        <section id="img-container">
+            <img class="eventImage" src="../assets/Images/Premium Vector _ Vector abstract technological light tunnel background.jpg" alt="">
+        </section>
+        <section id="content-Container">
+            <div  class="contentItems">
+                <h2 id="eventName">Freshworks Hub</h2>
+            </div>
+            <div  class="contentItems">
+                <p id="eventDesc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem nam perspiciatis culpa vitae consequatur ut fugit atque magni deserunt? Ipsa obcaecati facilis tempore alias consectetur unde, optio voluptate illo saepe. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Omnis alias iure eius? Fugit ea earum aliquid laudantium odio eligendi rem expedita nihil quia, provident optio reiciendis. Similique pariatur inventore eum!</p>
+            </div>
+            <div class="contentItems">
+                <h3 class="detailsLabel">Date and Time</h3>
+                <p ><i class="fa-solid fa-calendar-days"></i> <span id="eventTimeDate">11 - 12 - 2024 | 2:00 PM</span></p>
+            </div>
+            <div class="contentItems">
+                <h3 class="detailsLabel">College Name</h3>
+                <p id="collegeName">VRS Engineering College</p>
+            </div>
+            <div class="contentItems">
+                <h3 class="detailsLabel">Category</h3>
+                <p id="eventCategory">Entertainment</p>
+                <ul id = "categoryList" >
+                    <li>Music</li>
+                </ul>
+            </div>
+            <div class="contentItems">
+                <h3 class="detailsLabel">Event Location</h3>
+                <address id="eventAddress">
+                    123 University Lane, College Town, State, 12345
+                </address>
+            </div>
+            <div class="contentItems">
+                <h3 class="detailsLabel">Agenda of the Event</h3>
+                <p id="eventAgenda">10:00 AM - 10:30 AM: Registration & Welcome Kit Distribution
+                    10:30 AM - 11:00 AM: Opening Ceremony
+                    Welcome Speech by Event Organizer
+                    Keynote Address by Chief Guest
+                    11:00 AM - 1:00 PM: Technical Workshops
+                    Workshop 1: "Introduction to AI & Machine Learning"
+                    Workshop 2: "Web Development: Building Modern Websites"</p>
+            </div>
+            <div class="contentItems">
+                <h3 class="detailsLabel">Map Location</h3>
+                <div id="map"></div>
+            </div>
+            
+        </section>
+    </main>
+</body>
+</html>

@@ -1,92 +1,161 @@
+<section id="wrapper">
+    <div class="head">
+        <h2>Create Your Own Unforgettable Event!</h2>
+        <p>Plan your college event and create lasting memories—fill out the form now!</p>
+    </div>
+    <div class="container">
 
-    <section id="wrapper">
-        <div class="head">
-            <h1>Create Your Own Unforgettable Event!</h1>
-            <p>Plan your college event and create lasting memories—fill out the form now!</p>
-        </div>
-        <div class="container">
-           
-            <form id="eventForm">
-                <!-- Event Poster Upload -->
-                <div class="form-group">
-                    <label for="eventPoster">Event Poster</label>
-                    <div class="upload-container" id="uploadContainer">
-                        <i class="fas fa-upload"></i>
-                        <p>Drag & Drop your event image here or click to upload</p>
-                        <input type="file" id="eventPoster" accept="image/*">
-                    </div>
-                    <div class="image-preview" id="imagePreview"></div>
-                </div>
-    
-                <!-- Event Name -->
-                <div class="form-group">
-                    <label for="eventName">Event Name <span class="caption">(Give your event a captivating name!)</span></label>
-                    <input type="text" id="eventName" placeholder="Enter event name" required>
-                </div>
-    
-                <!-- Event Description -->
-                <div class="form-group">
-                    <label for="eventDescription">Event Description <span class="caption">(Describe what your event is all about)</span></label>
-                    <textarea id="eventDescription" placeholder="Enter event description" required></textarea>
-                </div>
-    
-                <!-- Event Date and Time -->
-                <div class="form-group">
+        <form id="eventForm" novalidate>
+            <!-- Event Poster Upload -->
+            <div class="form-group">
+                <label for="eventPoster">Event Poster</label>
+                <div class="upload-container" id="uploadContainer">
+                    <i class="fas fa-upload"></i>
+                    <p>Drag & Drop your event image here or click to upload</p>
+                    <input type="file" id="eventPoster" accept="image/*">
                     
-                    <div class="field-group">
-                        <div class="field-group-child">
-                            <label for="eventDate">Event Date</label>
-                            <input type="date" id="eventDate" required>
-                        </div>
-                       <div class="field-group-child">
+                </div>
+                <span class="error-message" id="eventPosterError"></span>
+                <div class="image-preview" id="imagePreview"></div>
+            </div>
+
+            <!-- Event Name -->
+            <div class="form-group">
+                <label for="eventName">Event Name <span class="caption">(Give your event a captivating
+                        name!)</span></label>
+                <input type="text" id="eventName" placeholder="Enter event name" required>
+                <span class="error-message" id="eventNameError"></span>
+            </div>
+
+            <!-- Event Description -->
+            <div class="form-group">
+                <label for="eventDescription">Event Description <span class="caption">(Describe what your event is all
+                        about)</span></label>
+                <textarea id="eventDescription" placeholder="Enter event description" required></textarea>
+                <span class="error-message" id="eventDescriptionError"></span>
+            </div>
+
+            <!-- Event Date and Time -->
+            <div class="form-group">
+
+                <div class="field-group">
+                    <div class="field-group-child">
+                        <label for="eventDate">Event Date</label>
+                        <input type="date" id="eventDate" required>
+                        <span class="error-message" id="eventDateError"></span>
+                    </div>
+                    <div class="field-group-child">
                         <label for="eventTime">Event Time</label>
                         <input type="time" id="eventTime" required>
-                       </div>
-                        <div class="field-group-child">
-                            <label for="duration">Event Duration(Optional)</label>
-                            <input type="text"  placeholder="e.g., 02:30" id="eventDuration"></input>
-                            <label for=""></label>
-                        </div>
+                        <span class="error-message" id="eventTimeError"></span>
+                    </div>
+                    <div class="field-group-child">
+                        <label for="duration">Event Duration(Optional)</label>
+                        <input type="text" placeholder="e.g., 02:30" id="eventDuration"></input>
+                        <span class="error-message" id="eventDurationError"></span>
                     </div>
                 </div>
+            </div>
+             <!-- College Name -->
+            <div class="form-group">
+                <label for="eventCollege">College Name <span class="caption">You can't change</span></label>
+                <input type="text" id="eventCollege" disabled>
+                
+            </div>
 
-                <div class="form-group">
-                    <label for="eventCollege">College Name <span class="caption">You can't change</span></label>
-                    <textarea id="eventCollege" disabled ></textarea>
-                </div>
-    
-                <!-- Event Address -->
-                <div class="form-group">
-                    <label for="eventAddress">Event Address <span class="caption">(This address will be used as a reference for Google Maps)</span></label>
-                    <input type="text" id="eventAddress" placeholder="Enter event address" required>
-                </div>
-    
-                <!-- Agenda -->
-                <div class="form-group">
-                    <label for="agenda">Agenda <span class="caption">(Outline the schedule of your event)</span></label>
-                    <textarea id="agenda" placeholder="Enter event agenda" required></textarea>
-                </div>
-    
-                <!-- Category -->
-                <div class="form-group">
-                    <label for="category">Category <span class="caption">(Select the main category of your event)</span></label>
-                    <input type="text" id="category" placeholder="Enter event category" required>
-                </div>
-    
-                <!-- Subcategories -->
-                <div class="form-group">
-                    <button type="button" class="add-subcategory-btn" id="addSubcategoryBtn"><i class="fas fa-plus"></i> Add Subcategory</button>
-                </div>
-                <div class="subcategories-container" id="subcategoriesContainer">
-                    <!-- Dynamic Subcategories will be appended here -->
-                </div>
-    
-                <!-- Submit Button -->
-                <button type="submit" class="submit-btn">Create Event</button>
-            </form>
-        </div>
-    </section>
+            <!-- City Name -->
+
+            <div class="form-group">
+                <label for="eventCity">Event City<span class="caption">( Give the city name of the event )</span></label>
+                <input type="text" id="eventCity">
+                <span class="error-message" id="eventCityError"></span>
+            </div>
 
 
-        
+            <!-- Event Address -->
+            <div class="form-group">
+                <label for="eventAddress">Event Address <span class="caption">(This address will be used as a reference
+                        for Google Maps)</span></label>
+                <input type="text" id="eventAddress" placeholder="Enter event address" required>
+                <span class="error-message" id="eventAddressError"></span>
+            </div>
+
+            <!-- Agenda -->
+            <div class="form-group">
+                <label for="agenda">Agenda <span class="caption">(Outline the schedule of your event)</span></label>
+                <textarea id="agenda" placeholder="Enter event agenda" required></textarea>
+                <span class="error-message" id="agendaError"></span>
+            </div>
+            
+            <!-- Ticket Type -->
+
+            <div class="form-group">
+                <label for="ticketType">Ticket Type <span  class="caption"> (Free or Paid)</span></label>
+                <select name="ticketType" id="ticketType">
+                    <option value="" selected disabled>Select Ticket Type</option>
+                    <option value="Paid">Paid</option>
+                    <option value="Free">Free</option>
+                </select>
+                <span class="error-message" id="ticketTypeError"></span>
+                <div  class="hidden" id="priceBox">
+                    <input type="number" id="eventPrice" placeholder="Enter ticket fair">
+                    <span class="error-message" id="priceError"></span>
+                </div>
+            </div>
+
+            <!-- Category -->
+            <div class="form-group">
+                <label for="category">Category <span class="caption">(Select the main category of your
+                        event)</span></label>
+                <select name="category" id="category">
+                    <option value="" disabled selected> Select Category</option>
+                    <option value="Tech">Tech</option>
+                    <option value="Education">Education</option>
+                    <option value="Culturals">Culturals</option>
+                    <option value="Sports">Sports</option>
+                </select>
+                <span class="error-message category-name-error"></span>
+            </div>
+
+            <!-- Subcategories -->
+            <div class="form-group">
+                <button type="button" class="add-subcategory-btn" id="addSubcategoryBtn"><i class="fas fa-plus"></i> Add
+                    Subcategory</button>
+            </div>
+            <div class="subcategories-container" id="subcategoriesContainer">
+                <div class="subcategory" id="defaultSub">
+                    <div class="form-group">
+                        <label>Subcategory Name <span class="caption">(Give a name to this subcategory)</span></label>
+                        <input type="text" class="subcategory-name" placeholder="Enter subcategory name" required>
+                        <span class="error-message subcategory-name-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Number of Seats <span class="caption">(Specify how many seats are available)</span></label>
+                        <input type="number" class="number-of-seats" placeholder="Enter number of seats" min="1" required>
+                        <span class="error-message number-of-seats-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Participator Type <span class="caption">(Choose individual or group
+                                participation)</span></label>
+                        <select class="participator-type" id="defaultSelect" required>
+                            <option value="" disabled selected>Select type</option>
+                            <option value="individual">Individual</option>
+                            <option value="group">Group</option>
+                        </select>
+                        <span class="error-message participator-type-error"></span>
+                    </div>
+                    <div class="form-group hidden members-group">
+                        <label>Number of Members in a Team <span class="caption">(If group, specify team
+                                size)</span></label>
+                        <input type="number" class="number-of-members" placeholder="Enter number of members" min="2">
+                        <span class="error-message number-of-members-error"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn">Create Event</button>
+        </form>
+    </div>
+</section>
 

@@ -1,36 +1,13 @@
-:root {
-    /* Buttons and Interactive Elements */
-    --color-primary: #d4441f; /* Electric Blue */
-    --color-secondary: #00C4CC; /* Cyan */
-  
-    /* Background Colors */
-    --color-background-main: #e4e9f7; /* Soft Gray */
-    --color-background-card: #FFFFFF; /* White */
-  
-    /* Text Colors */
-    --color-text-primary: #343A40; /* Dark Gray */
-    --color-text-secondary: #6C757D; /* Medium Gray */
-  
-    /* Alerts and Status Indicators */
-    --color-success: #28A745; /* Green */
-    --color-warning: #FFC107; /* Amber */
-    --color-error: #DC3545; /* Crimson */
-  }
 
 
 
-* {
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', Helvetica, Tahoma, Arial, sans-serif;
-}
 
-body {
-    background-color: var(--color-background-main);
-    margin: 0;
-    padding: 20px;
-}
-.head h1{
-    font-size: 3rem;
+
+
+
+.head h2{
+    font-size: 2rem;
+    margin: 30px 0;
 }
 .head p{
     font-size: 1.5rem;
@@ -57,7 +34,7 @@ label {
 
 input[type="text"],
 input[type="email"],
-
+input[type = "number"],
 select,
 textarea {
     width: 100%;
@@ -72,6 +49,7 @@ input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="date"]:focus,
 input[type="time"]:focus,
+input[type = "number"]:focus,
 select:focus,
 textarea:focus {
     border-color: #007BFF;
@@ -209,6 +187,12 @@ textarea {
 .hidden {
     display: none;
 }
+.error-message {
+    color: red;
+    font-size: 0.85em;
+    margin-top: 5px;
+    display: block;
+  }
 
 @media (max-width: 600px) {
     .field-group {

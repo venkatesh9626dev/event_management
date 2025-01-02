@@ -4,83 +4,74 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard</title>
- 
-  <style>
-    /* General Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-
-    body {
-      background-color: #f4f4f9;
-      color: #333;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-
-    .container {
-      text-align: center;
-      background: #ffffff;
-      padding: 20px 40px;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      max-width: 500px;
-      width: 90%;
-    }
-
-    h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-
-    .logout-btn {
-      display: inline-block;
-      background: #e74c3c;
-      color: white;
-      text-decoration: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-      border: none;
-      transition: background 0.3s ease;
-    }
-
-    .logout-btn:hover {
-      background: #c0392b;
-    }
-
-    p {
-      margin-bottom: 20px;
-      font-size: 14px;
-    }
-  </style>
+  <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+      integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  <link rel="stylesheet" href="/assets/style/admin.css">
+  <script defer type="module" src="/assets/script/admin.js"></script>
 </head>
 <body>
-  <div class="container">
-    <h1>Welcome, Admin</h1>
-    <p>Manage your dashboard and settings from here.</p>
-    <button class="logout-btn" id="logout">Logout</button>
-  </div>
+  <header class="header">
+    <div class="logo">CampusConnect</div>
+    <div>
+      <ul class="navLinkBox">
+        <li class="navItems" id="homeBtn" >Home</li>
+        <li  class="navItems" id="pendingApprovalBtn" >Pending Approval</li>
+        <li class="navItems" id="approvedUsersBtn" >Approved users</li>
+        <li class="navItems" id="rejectedUsersBtn" >Rejected users</li>
+  
+      </ul>
+      <button id="logOut">LogOut</button>
+    </div>
+   
+  </header>
+  <main id="dynamicContainer">
+    <section id="mainContainer">
+      <h2 class="mainHd">Creator Authentication Record</h2>
+      <div id="recordBox">
+        <div>
+          <h1 id="totalUsers" class="recordItems"></h1>
+        <h1 id="totalCreators" class="recordItems"></h1>
+        <h1 id="totalRequest" class="recordItems"></h1>
+        <h1 id="approvedRequest" class="recordItems"></h1>
+        <h1 id="pendingRequest" class="recordItems"></h1>
+        <h1 id="rejectedRequest" class="recordItems"></h1>
+        </div>
+      </div>
+    </section>
+    <section id="pendingApproval">
+      <h2 class="mainHd">Pending Authentication's Record</h2>
+      <div id="pendingBox" class="container">
 
+      </div>
+    </section>
+    <section id="approvedUsers" >
+      <h2 class="mainHd">Approved Authentication's Record</h2>
+      <div id="approvedBox" class="container">
 
-  <script type="module">
-    import { auth } from "../assets/script/config.js"
+      </div>
+    </section>
+    <section id="rejectedUsers" >
+      <h2 class="mainHd">Rejected Authentication's Record</h2>
+      <div id="rejectedBox" class="container">
 
-import {onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
-    // Function to handle logout
-    document.getElementById("logout").addEventListener("click",()=>{
-        alert("Logged Out");
-        localStorage.removeItem("role");
-        signOut(auth);
-    })
-  </script>
+      </div>
+    </section>
+    <section id="detailsPopUp">
+      <div id="contentBox">
+        <button class="primaryBtn" id="backBtn">Back</button>
+        <img src="" alt="" id="idPhoto">
+        <h2 id="collegeName"></h2>
+        <h2 id="collegeId"></h2>
+
+      </div>
+    </section>
+    <section id="successPopUp"> Successfully Updated</section>
+  </main>
   
 </body>
 </html>

@@ -1,4 +1,4 @@
-import { db } from "./config.js";
+import { db ,auth} from "./config.js";
 import {
   ref,
   child,
@@ -7,7 +7,19 @@ import {
   update,
 } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
 
+import { onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 
+onAuthStateChanged(auth,(user)=>{
+  if(!user && window.location.pathname == "/pages/choose.html"){
+    window.location.replace("/index.html")
+  }
+  else{
+    let check = JSON.parse(localStorage.getItem("roleCheck"))
+    if(check){
+      window.location.replace("/pages/home.html")
+    }
+  }
+})
 
 function showCreatorAuthenticationPage() {
   // Select the container to apply the blur effect
@@ -81,12 +93,15 @@ function handleSelection(userType) {
     showCreatorAuthenticationPage();
   } else if (userType === "participator") {
     let userId = JSON.parse(localStorage.getItem("userId"))
-    let dRef = ref(db,`users/${userId}/check/roleCheck`)
+    let dRef = ref(db,`users/userDetails/${userId}/check/roleCheck`)
     update(dRef,{"roleStatus" : true})
     .then(()=>{
+        
         let userRef = ref(db, `users/userDetails/${userId}/check/creatorCheck`);
-        update(userRef,{"checkStatus" : "pending"})
+        update(userRef,{"checkStatus" : "empty"})
+        .then(()=> window.location.href = "/pages/home.html")
+        
       })
-    window.location.href = "/pages/home.html";
+    
   }
 }

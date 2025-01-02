@@ -4,150 +4,88 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sidebar</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="../assets/style/dashboard.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+      integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <link
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
+    <script defer type="module" src="/assets/script/dashboard.js"></script>
   </head>
 
   <body>
     <header class="header">
-      <h3>CampusConnect</h3>
+      <div class="logo">CampusConnect</div>
+      <div class="searchBox">
+        <input
+          type="search"
+          id="searchBar"
+          class="search-bar"
+          placeholder="Search events by event name or location"
+        />
+      </div>
       <div>
-        <a class="createBtn">Create New Event</a>
-        <a href="home.html" class="redirectBtn">Browse the events</a>
+        <div class="navLinkBox">
+          <a class="navItems" href="home.html">Home</a>
+          <a  class="navItems" href="dashboard.html">Dashboard</a>
+          <a class="navItems" href="AboutUs.html">About Us</a>
+        </div>
+        <div class="navLinkBox" id="profileBox">
+          <i class="fa-solid fa-user" style="font-size: 20px"></i>
+        </div>
+        <button id="logOut">log_out</button>
       </div>
     </header>
-    <main>
+    <main id="mainContainer">
       <section>
-        <div class="sidebar">
+        <div id="sidebar">
           <div class="logo-details">
-            <div class="logo_name">constGenius</div>
+            <div class="logo_name">CampusConnect</div>
             <i class="bx bx-menu" id="btn"></i>
           </div>
           <ul class="nav-list">
-            <li>
-              <a href="">
+            <li id="createEventBtn">
+              <a >
                 <i class="bx bx-grid-alt"></i>
-                <span class="links_name">Dashboard</span>
+                <span class="links_name">Create event</span>
               </a>
-              <span class="tooltip">Dashboard</span>
+              <span class="tooltip">create new event</span>
             </li>
-            <li>
-              <a href="">
+            <li id="createdBtn">
+              <a >
                 <i class="bx bx-user"></i>
-                <span class="links_name">User</span>
+                <span class="links_name">Created events</span>
               </a>
-              <span class="tooltip">User</span>
+              <span class="tooltip">Created events</span>
             </li>
-            <li>
-              <a href="">
+            <li id="myEventsBtn">
+              <a >
                 <i class="bx bx-chat"></i>
+                <span class="links_name">My events</span>
+              </a>
+              <span class="tooltip">My events</span>
+            </li>
+            <li id="messageBtn">
+              <a >
+                <i class="bx bx-pie-chart-alt-2"></i>
                 <span class="links_name">Messages</span>
               </a>
               <span class="tooltip">Messages</span>
             </li>
-            <li>
-              <a href="">
-                <i class="bx bx-pie-chart-alt-2"></i>
-                <span class="links_name">Analytics</span>
-              </a>
-              <span class="tooltip">Analytics</span>
-            </li>
-            <li>
-              <a href="">
-                <i class="bx bx-folder"></i>
-                <span class="links_name">Files</span>
-              </a>
-              <span class="tooltip">Files</span>
-            </li>
-            <li>
-              <a href="">
-                <i class="bx bx-cart-alt"></i>
-                <span class="links_name">Order</span>
-              </a>
-              <span class="tooltip">Order</span>
-            </li>
-            <li>
-              <a href="">
-                <i class="bx bx-heart"></i>
-                <span class="links_name">Saved</span>
-              </a>
-              <span class="tooltip">Saved</span>
-            </li>
-            <li>
-              <a href="">
-                <i class="bx bx-cog"></i>
-                <span class="links_name">Settings</span>
-              </a>
-              <span class="tooltip">Settings</span>
-            </li>
-            <li class="profile">
-              <div class="profile-details">
-                <img src="./images/profile.png" alt="profileImg" />
-                <div class="name_job">
-                  <div class="name">const Genius</div>
-                  <div class="job">Web Developer</div>
-                </div>
-              </div>
-              <i class="bx bx-log-out" id="log_out"></i>
-            </li>
           </ul>
         </div>
       </section>
-      <section id="dynamicContainer">
-        
-      </section>
+      <section id="dynamicContainer"></section>
     </main>
   </body>
-  <script>
-    let sidebar = document.querySelector(".sidebar");
-    let closeBtn = document.querySelector("#btn");
-    let createBtn = document.querySelectorAll(".createBtn");
-    let dynamicContainer = document.getElementById("dynamicContainer")
-    // fetch create page
-    createBtn[0].addEventListener("click", async () => {
-    try {
-      // Fetch the HTML content
-      let page = await fetch("./createEvent.html");
-      let pageContent = await page.text();
-      
-      let styleElement = document.createElement("link");
-      styleElement.setAttribute("rel", "stylesheet");
-      styleElement.setAttribute("href", "../assets/style/createEvent.css");
-      document.head.appendChild(styleElement);
-      
-      dynamicContainer.innerHTML = pageContent;
-
-      // Add CSS dynamically
-      
-
-      // Add JS dynamically
-      let scriptElement = document.createElement("script");
-      scriptElement.setAttribute("src", "../new/createEvent.js");
-      scriptElement.setAttribute("type", "module");
-      document.head.appendChild(scriptElement);
-    } catch (error) {
-      console.error("Error loading the page or assets:", error);
-    }
-  });
-
-    closeBtn.addEventListener("click", () => {
-      sidebar.classList.toggle("open");
-      menuBtnChange();
-    });
-
-    function menuBtnChange() {
-      if (sidebar.classList.contains("open")) {
-        closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
-      } else {
-        closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");
-      }
-    }
-
-    menuBtnChange();
-  </script>
 </html>

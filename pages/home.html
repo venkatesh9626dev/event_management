@@ -11,6 +11,9 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
    
     <script src="../assets/script/home.js" type="module" defer></script>
     <script src="
@@ -24,6 +27,7 @@ https://cdn.jsdelivr.net/npm/geolib@3.3.4/lib/index.min.js
       <div class="logo">CampusConnect</div>
       <div class="searchBox">
         <input type="search" id="searchBar" class="search-bar" placeholder="Search events by event name or location">
+        <i class="fa-solid fa-magnifying-glass" id="searchIcon"></i>
       </div>
       <div>
         <div class = "navLinkBox">
@@ -35,10 +39,11 @@ https://cdn.jsdelivr.net/npm/geolib@3.3.4/lib/index.min.js
         <div class = "navLinkBox" id="profileBox">
           <i class="fa-solid fa-user" style="font-size: 20px;"></i>
         </div>
+        <button id="logOut">log_out</button>
       </div>
       
     </header>
-    <main>
+    <main id="mainContainer" class="centerLayout">
   
      
       <section id="nearbyEventsContainer">
@@ -116,6 +121,17 @@ https://cdn.jsdelivr.net/npm/geolib@3.3.4/lib/index.min.js
           </div>
         </section>
       </section>
+      
     </main>
+    <section id="searchContainer" class="centerLayout">
+      <button id="backHomeBtn"class="primaryBtn">Back to home</button>
+      <h2>College events </h2>
+      <section id="searchResults" >
+
+      </section>
+    </section>
   </body>
 </html>
+
+
+

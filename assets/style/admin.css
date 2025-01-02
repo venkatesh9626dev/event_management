@@ -1,0 +1,215 @@
+:root {
+    /* Buttons and Interactive Elements */
+    --color-primary: #ff4500; /* Electric Blue */
+    --color-secondary: #e63e00;
+    
+
+    /* Background Colors */
+    --color-background-main: #f8f8f8; /* Soft Gray */
+    --color-background-card: #FFFFFF;
+    --color-nav : #ff4500; 
+
+    /* Text Colors */
+    --color-text-primary: #343A40; /* Dark Gray */
+    --color-text-secondary: #6C757D; /* Medium Gray */
+
+    /* Alerts and Status Indicators */
+    --color-success: #28A745; /* Green */
+    --color-warning: #FFC107; /* Amber */
+    --color-error: #DC3545; /* Crimson */
+}
+    
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Helvetica Neue",
+    Helvetica, Tahoma, Arial, sans-serif;
+    
+}
+body{
+    background-color: var(--color-background-main);
+}   
+
+*::first-letter{
+    text-transform: capitalize;
+} 
+    
+
+.navItems{
+    color: white;
+    padding: 0 30px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 2% 20px 5%;
+    background-color:var(--color-nav);
+    color: black;
+    margin-bottom: 20px;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 100%;
+    color: white;
+    }
+    .navLinkBox{
+    display: inline-block;
+    }
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.search-bar {
+width: 100%;
+padding: 0.5rem;
+border: none;
+border-radius: 4px;
+text-transform: none;
+}
+
+ul li{
+    list-style-type: none;
+    display: inline-block;
+}
+#pendingApproval,#approvedUsers,#rejectedUsers{
+    display: none;
+}
+
+.blurbackground{
+    position: fixed;
+    top: 70px;
+    left: 0;
+    z-index: 3000;
+    background-color: rgba(211, 211, 211, 0.482);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+  }
+
+  #dynamicContainer {
+    background: var(--color-background-main);
+    min-height: 100vh;
+    margin-left: 88px;
+    margin-top: 100px;
+  }
+
+  #recordBox{
+    background-color: lightgray;
+    height: 80vh;
+    margin-top: 20px;
+    width: 85vw;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 50px;
+  }
+.recordItems{
+    color: var(--color-text-primary);
+    margin: 20px;
+    font-size: 2rem;
+}
+
+#detailsPopUp{
+    position: fixed;
+    top: 65px;
+    left: 0;
+    width: 100vw;
+    min-height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    display: none;
+}
+#detailsPopUp img{
+    width: 100%;
+    height: 300px;
+}
+#contentBox{
+    background-color: var(--color-background-card);
+    border-radius: 5px;
+    line-height: 40px;
+    padding: 30px;
+}
+.primaryBtn{
+    background-color: var(--color-primary);
+    text-decoration: none;
+    color: white;
+    border: none;
+    display: inline-block;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: medium;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.5s ease, transform 0.5s ease;
+    margin-right: 20px;
+}
+.primaryBtn:hover{
+    background-color: var(--color-secondary);
+    transform: scale(1.1);
+}
+
+.show{
+    display: flex !important;
+}
+.secondaryBtn{
+    background-color: white;
+     color: rgb(0, 0, 0);
+     border: none;
+     border-radius: 5px;
+     padding: 10px;
+     font-size: medium;
+     margin-top: 10px;
+     border: 1px solid gray;
+     margin-left: 10px;
+     cursor: pointer;
+     transition: background-color 0.5s ease, transform 0.5s ease;
+}
+
+.secondaryBtn:hover{
+    background-color: rgb(245, 243, 243);
+      transform: scale(1.1);
+}
+
+#successPopUp{
+    position: fixed;
+    top: 30px;
+    right: 50px;
+    color: white;
+    background-color: var(--color-success);
+    display: none;
+    border-radius: 5px;
+    padding: 20px;
+    z-index: 10000;
+}
+.successShow{
+    display: block;
+}
+
+.smallBox{
+    margin: 30px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: var(--color-text-secondary);
+    color: white;
+    cursor: pointer;
+    min-width: 100px;
+    text-align: center;
+}
+.container{
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}

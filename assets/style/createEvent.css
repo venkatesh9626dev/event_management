@@ -184,9 +184,7 @@ textarea {
     margin-top: 10px;
 }
 
-.hidden {
-    display: none;
-}
+
 .error-message {
     color: red;
     font-size: 0.85em;
@@ -198,4 +196,11 @@ textarea {
     .field-group {
         flex-direction: column;
     }
+}
+
+.alert{
+    height: 100vh;
+    text-align: center;
+    padding-top: 400px;
+    font-size: 3rem;
 }

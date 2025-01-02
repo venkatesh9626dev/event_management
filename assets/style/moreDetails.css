@@ -1,99 +1,111 @@
 :root {
-    /* Buttons and Interactive Elements */
-    --color-primary: #d4441f; /* Electric Blue */
-    --color-secondary: #00C4CC; /* Cyan */
+  /* Buttons and Interactive Elements */
+  --color-primary: #ff4500; /* Electric Blue */
+  --color-secondary: #e63e00;
   
-    /* Background Colors */
-    --color-background-main: white ; /* Soft Gray */
-    --color-background-card: white; /* White */
-  
-    /* Text Colors */
-    --color-text-primary: #1e0a3c; /* Dark Gray */
-    --color-text-secondary: #39364f; /* Medium Gray */
-  
-    /* Alerts and Status Indicators */
-    --color-success: #28A745; /* Green */
-    --color-warning: #FFC107; /* Amber */
-    --color-error: #DC3545; /* Crimson */
+
+  /* Background Colors */
+  --color-background-main: #f8f8f8; /* Soft Gray */
+  --color-background-card: #FFFFFF;
+  --color-nav : #ff4500; 
+
+  /* Text Colors */
+  --color-text-primary: #343A40; /* Dark Gray */
+  --color-text-secondary: #6C757D; /* Medium Gray */
+
+  /* Alerts and Status Indicators */
+  --color-success: #28A745; /* Green */
+  --color-warning: #FFC107; /* Amber */
+  --color-error: #DC3545; /* Crimson */
 }
-    
-  
 *{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Helvetica Neue",
-    Helvetica, Tahoma, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Helvetica Neue",
+  Helvetica, Tahoma, Arial, sans-serif;
+  
 }
 body{
-    background-color: var(--color-background-main);
+  background-color: var(--color-background-main);
+  
+*::first-letter{
+text-transform: capitalize;
+} 
+  
 }
-
-h3{
-    font-size: 1.7rem;
+a{
+text-decoration: none;
+color: white;
+padding: 0 30px;
+font-size: 20px;
 }
 
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background-color:var(--color-background-card);
-    color: black;
-    margin-bottom: 20px;
-    position: fixed;
-    z-index: 100;
-    top: 0;
-    width: 100%;
-    border-bottom: 0.5px solid gray;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 2% 20px 5%;
+  background-color:var(--color-nav);
+  color: black;
+  margin-bottom: 20px;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+ left: 0;
+  width: 100%;
+color: white;
 }
-a{
-    text-decoration: none;
+.navLinkBox{
+  display: inline-block;
 }
-p{
-    color: var(--color-text-secondary);
+
+
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.searchBox{
+width: 40%;
+}
+.search-bar {
+  width: 100%;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  text-transform: none;
+}
+main{
+  width: 90%;
+  margin: 140px auto;
+  padding: 1px;
+}
+
+
+p,address{
+    color: var(--color-text-primary);
     font-weight: 300;
 }
 li{
     color: var(--color-text-secondary);
     font-weight: 300;
 }
-main{
-   width: 80%;
-   margin: 120px auto;
-   padding: 1px;
+
+
+#btnContainer{
+  position: fixed;
+  top: 80px;
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+
 }
 
 #content-container{
   
     width: 80%;
     margin: 100px auto;
-  }
-  
-  .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
-  .search-bar {
-    width: 50%;
-    padding: 0.5rem;
-    border: none;
-    border-radius: 4px;
-    background-color: lightgray;
-  }
-  
-  .dashboard-btn {
-    padding: 0.5rem 1rem;
-    background-color: #0056b3;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  #img-container{
-  
-    
   }
 
   .eventImage{
@@ -118,9 +130,7 @@ main{
     line-height: 30px;
     
   }
-  #eventDesc{
-    color: var(--color-text-secondary);
-  }
+
   
   .detailsLabel{
     margin: 20px 0;
@@ -128,9 +138,254 @@ main{
   #eventTimeDate{
     margin-left: 10px;
   }
-  #categoryList{
-    margin-left: 15px;
+  #sideBox{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
   }
   #map{
     height: 500px;
+    width: 100%;
+   
   }
+  #categoryList{
+    display: flex;
+    gap: 30px;
+  }
+  
+  .primaryBtn{
+    background-color: var(--color-primary);
+    text-decoration: none;
+    color: white;
+    border: none;
+    display: inline-block;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: medium;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.5s ease, transform 0.5s ease;
+  }
+  .primaryBtn:hover{
+    background-color: var(--color-secondary);
+    transform: scale(1.1);
+}
+
+/* participator form css */
+
+#participatorContainer {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+  
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensures it's on the top layer */
+   /* Blurs the background */
+}
+
+.participatorForm {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 500px;
+}
+.formHead{
+    font-size: 30px;
+    color: var(--color-primary);
+}
+.input-container {
+  margin: 20px 0;
+}
+label {
+  display: block;
+  font-weight: 300;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+textarea {
+  resize: none;
+  height: 100px;
+}
+.input-field, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 5px;
+  border: 1px solid var(--color-primary);
+  border-radius: 5px;
+}
+input[type="checkbox"],.subCatLabel{
+    width: fit-content;
+    display: inline-block;
+    font-weight: 100;
+    margin-right: 10px;
+    color: var(--color-text-secondary);
+}
+input::placeholder{
+    color: var(--color-text-secondary);
+}
+#catSelect{
+    display: flex;
+    gap: 30px;
+}
+.priceItems{
+    font-size: 1.2rem;
+    margin: 20px 0;
+}
+#joinEventBtn{
+    width: 100%;
+    padding: 5px;
+    font-size: 1.3rem;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--color-primary);
+}
+.show {
+  display: flex !important;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/*  confirm popup */
+.popup-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Popup box styles */
+.popup {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 300px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.popup h2 {
+  color: #28a745;
+  margin:20px 0 ;
+}
+
+.popup p {
+  color: #201d1d;
+  margin-bottom: 20px;
+}
+
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+/* popup */
+
+.popup-message {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: var(--color-success); /* Green color */
+  color: white;
+  padding: 15px 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  font-size: 16px;
+  z-index: 1000;
+}
+
+.popup-message.show {
+  display: block; /* Show the pop-up */
+  animation: fadeOut 3s forwards; /* Fades out after 3 seconds */
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.registerError{
+  color: var(--color-error);
+  margin: 5px 0;
+  height: 10px;
+}
+
+
+/* payment success popup */
+
+.successPopup {
+  position: fixed;
+  top: 20px; /* Appears near the top */
+  right: 20px; /* Positioned at the right-most corner */
+   /* Light green background */
+  
+  padding: 15px;
+  width: 280px;
+  font-family: Arial, sans-serif;
+  z-index: 1000; /* Ensures popup stays on top */
+  opacity: 1; /* Initial opacity for animation */
+  animation: fadeOut 3s forwards; /* Fades out after 3 seconds */
+}
+
+/* Popup items styling */
+.popUpItems {
+  font-size: 16px;
+  color: #2e7d32; /* Dark green text */
+  margin-bottom: 5px;
+  background-color: var(--color-success);
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

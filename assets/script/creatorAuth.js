@@ -1,4 +1,4 @@
-import { db } from "./config.js";
+import { db,auth } from "./config.js";
 import {
   ref,
   child,
@@ -6,6 +6,13 @@ import {
   get,
   update,
 } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
+import { onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+
+onAuthStateChanged(auth,(user)=>{
+  if(!user && window.location.pathname == "/pages/creatorAuth.html"){
+    window.location.replace("/index.html")
+  }
+})
 
 let userid = JSON.parse(localStorage.getItem("userId"));
 
@@ -162,19 +169,20 @@ form.addEventListener("submit", async (e) => {
 
   if (isValid) {
     try {
-      localStorage.setItem("loginStatus", JSON.stringify(true));
+      
       let file = uploadID.files[0];
 
       // Convert file to Base64
       const base64String = await base64(file);
 
       // Update admin's pending request
-      let dRef = ref(db, `admin/pendingRequest/${userid}`);
+      let dRef = ref(db, `admin/request/${userid}`);
       let data = {
         creatorId: userid,
         collegeName: collegeName.value,
         CollegeId: collegeID.value,
         collegeIdPhoto: base64String,
+        status : "pending"
       };
       await update(dRef, data);
 
@@ -182,7 +190,7 @@ form.addEventListener("submit", async (e) => {
       let userId = JSON.parse(localStorage.getItem("userId"));
       let roleRef = ref(db, `users/userDetails/${userId}/check/roleCheck`);
       await update(roleRef, { roleStatus: true });
-
+      
       // Update creator check
       let creatorRef = ref(db, `users/userDetails/${userId}/check/creatorCheck`);
       await update(creatorRef, { checkStatus: "pending" });
@@ -193,6 +201,7 @@ form.addEventListener("submit", async (e) => {
       alert(`Error: ${error.message || error}`);
     }
   }
+ 
 });
 
 skipBtn.addEventListener("click", () => {
@@ -200,10 +209,12 @@ skipBtn.addEventListener("click", () => {
   let dRef = ref(db, `users/userDetails/${userId}/check/roleCheck`);
   update(dRef, { roleStatus: true })
   .then(()=>{
+    
     let userRef = ref(db, `users/userDetails/${userId}/check/creatorCheck`);
     update(userRef,{"checkStatus" : "empty"})
+    .then(()=> window.location.replace("/pages/home.html"))
   })
-  window.location.replace("/pages/home.html");
+  
 });
 
 function base64(file) {

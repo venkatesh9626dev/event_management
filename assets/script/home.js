@@ -1,57 +1,83 @@
-import { db } from "./config.js";
-import { categoryColors } from "./constant.js";
+import { db, auth } from "./config.js";
+import { categoryColors,radius } from "./constant.js";
+import { signOut,onAuthStateChanged  } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 import {
-  getDatabase,
+  
   ref,
-  child,
-  set,
+  update,
   get,
 } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
 
+
+
+onAuthStateChanged(auth, (user) => {
+  if (!user && window.location.pathname == "/pages/home.html") {
+    window.location.replace("/index.html");
+  }
+});
+
+let mainElement = document.getElementById("mainContainer");
+let searchIcon = document.getElementById("searchIcon");
 let userCurrentLocation = await userLocation();
+let eventsObj = {};
+let searchObj = {};
 
- export let eventsObj;
 
-async function userLocation(){
-  try{
-    let location = await getLocation()
+async function userLocation() {
+  try {
+    let location = await getLocation();
     return location;
+  } catch (error) {
+    if(error.code === error.PERMISSION_DENIED){
+      document.getElementById("nearbyEvents").innerHTML = "Give access to make nearby events visible";
+    }
+    return undefined;
   }
-  catch(error){
-    return null;
-  }
-   
 }
 
-function getLocation(){
+document.getElementById("logOut").addEventListener("click", () => {
+  signOut(auth).then(() => {
+    alert("Logged out");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("authStatus");
+    localStorage.removeItem("roleCheck");
+    localStorage.removeItem("creatorStatus");
+    localStorage.removeItem("eventsObj");
+    window.location.pathname = "/index.html";
+  });
+});
+function getLocation() {
   return new Promise((resolve, reject) => {
     if (!navigator.geolocation) {
       reject(new Error("Geolocation is not supported by your browser."));
     }
+  
     navigator.geolocation.getCurrentPosition(
       (position) => {
         // Extract latitude and longitude
-        const { latitude, longitude } =  position.coords;
-   
-        resolve({latitude,longitude}) ;
+        const { latitude, longitude } = position.coords;
+
+        resolve({ latitude, longitude });
       },
       (error) => {
-        reject(false);
+        reject(error);
       },
       {
-        enableHighAccuracy: true,  // Precise but consumes more power
-        timeout: Infinity,           // Wait for max 10 seconds
-        maximumAge: 0             // Always fetch a fresh location
+        enableHighAccuracy: true, // Precise but consumes more power
+        timeout: Infinity, // Wait for max 10 seconds
+        maximumAge: 0, // Always fetch a fresh location
       }
-    )
-  })
+    );
+  });
 }
 
+fetchEvents((eventDetails) =>
+  expiryCheck(eventDetails.eventDate, eventDetails.eventTime)
+);
+creatorStatus(JSON.parse(localStorage.getItem("userId")));
 
 
-fetchEvents((eventDetails) => expiryCheck(eventDetails.eventDate,eventDetails.eventTime));
-
-const topPicks = document.getElementById("topPicksBox")
+const topPicks = document.getElementById("topPicksBox");
 const nearbyEvents = document.getElementById("nearbyEvents");
 
 // fetching category filter
@@ -68,29 +94,26 @@ const nearbyEvents = document.getElementById("nearbyEvents");
 
 // format time
 
-
 function formatTime(time) {
-  
   let timeUnit = time[0] >= 12 ? "PM" : "AM";
   let hours = time[0] % 12;
   let correctTime = hours ? `${hours}` : "12";
 
-  return `${correctTime}:${time[1]} ${timeUnit}`;
+  return `${correctTime}:${time[1] || "00"} ${timeUnit}`;
 }
-
 
 // expiry date check
 
-function expiryCheck(eventDate,eventTime) {
+function expiryCheck(eventDate, eventTime) {
   let currentDate = new Date();
-  
-  let [year,month,day] = eventDate.split("-").map(Number);
-  let [hours,minutes] = eventTime.split(":").map(Number);
-  let eventDateTime = new Date(year, month - 1, day, hours, minutes)
-  if (eventDateTime > currentDate){
-    return formatTime([hours,minutes]);
+
+  let [year, month, day] = eventDate.split("-").map(Number);
+  let [hours, minutes] = eventTime.split(":").map(Number);
+  let eventDateTime = new Date(year, month - 1, day, hours, minutes);
+  if (eventDateTime > currentDate) {
+    return formatTime([hours, minutes]);
   }
-  
+
   return false;
 }
 
@@ -102,89 +125,29 @@ function expiryCheck(eventDate,eventTime) {
 //   return selectedCategory === category ? true : false;
 // }
 
-
 // view more feature
-
-// window.knowMoreClick = async function (eventId) {
-//   try {
-//     let dataFromEvent = await get(ref(db, `events/${eventId}/eventDetails_`));
-//     let eventDetails = await dataFromEvent.val();
-//     document.querySelector(".popDivFull").innerHTML = `
-    
-//     <div id="viewMoreContent">
-//             <div id="viewMoreImgBox">
-//                 <img src="${eventDetails.poster}" alt="">
-//                  <div class = "eventCategory">${eventDetails.category}</div>
-//             </div>
-//             <div class="viewMoreInfo">
-//               <div id="viewMoreBasicBox">
-//                   <h3 class="viewMoreName">${eventDetails.eventName}</h3>
-//                   <p class="viewMoreDesc">${eventDetails.description}</p>
-                  
-//               </div>
-//               <div class = "viewMoreDate">
-//                   <i class="fas fa-calendar-alt"></i>
-
-//                   <span>${eventDetails.date}</span>
-                      
-                
-//               </div>
-//               <div class="viewMoreTimeBox">
-//                   <i class="fa-solid fa-clock"></i>
-//                   <span class="">${eventDetails.startTime} to </span>
-//                   <span class="">${eventDetails.endTime}</span>
-//               </div>
-//               <div class = "location">
-//                 <i class="fa-solid fa-location-dot"></i>
-//                 <span >${eventDetails.venueDistrict}</span>
-//               </div>
-//               <div class="viewMoreAddress">
-//                   <i class="fa fa-address-card" aria-hidden="true"></i>
-//                   <p>${eventDetails.address}</p>
-//               </div>
-//             </div>
-           
-//         </div>
-//     `;
-//     document.querySelector("main").style.display = "none";
-//     document.querySelector("header").style.display = "none";
-//     document.querySelector(".popDivFull").style.display = "block";
-//     document.querySelector(".popDivFull").insertAdjacentHTML(
-//       "afterbegin",
-//       `<div class="popCloseBox">
-//         <button type="button" class="popUpBack">Back</button>
-//        </div>`
-//     );
-//     document.querySelector(".popUpBack").addEventListener("click", closePopUp);
-
-//     // making the height to popup container
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
-// user Location
 
 
 // nearby events check
 
-async function nearbyCheck(coords){
-  const radius = 40000;
- 
-  let eventCoords = {"latitude" : coords["lat"],"longitude" : coords["lng"]}
-  const distance = await geolib.getDistance(userCurrentLocation, eventCoords);
-  console.log([eventCoords,userCurrentLocation,distance]);
+async function nearbyCheck(coords) {
   
- return distance <= radius;
-}
 
+  try{
+    let eventCoords = { latitude: coords["lat"], longitude: coords["lng"] };
+  const distance = await geolib.getDistance(userCurrentLocation, eventCoords);
+
+  return distance <= radius;
+  }
+  catch(err){
+    Promise.reject(err);
+  }
+}
 
 // fetching the events from the firebase
 
 async function fetchEvents(callBack) {
   try {
-    
-   
     let nearbyEventsBox = document.createElement("div");
     nearbyEventsBox.id = "nearbyEventsBox";
     nearbyEventsBox.style.width = "100%";
@@ -197,21 +160,26 @@ async function fetchEvents(callBack) {
 
     let eventsList = eventsSnapshot.val();
     eventsObj = eventsList;
-
+    localStorage.setItem("eventsObj",JSON.stringify(eventsList));
+    let nearByCount = 0;
     for (let event in eventsList) {
       let eventDetails = eventsList[event].generalInfo;
-
+      
       let isValidEvent = callBack(eventDetails);
-
+      
       if (isValidEvent) {
-        let catColor = eventDetails.category === "Tech" ? categoryColors.tech 
-                                                        : eventDetails.category === "Sports" ? categoryColors.Sports
-                                                        : eventDetails.category === "Culturals" ? categoryColors.Culturals
-                                                        :categoryColors.Education;
-        
+        let catColor =
+          eventDetails.category === "Tech"
+            ? categoryColors.tech
+            : eventDetails.category === "Sports"
+            ? categoryColors.Sports
+            : eventDetails.category === "Culturals"
+            ? categoryColors.Culturals
+            : categoryColors.Education;
+            searchObj[eventDetails.eventAddress] = {eventId : event ,eventTime : isValidEvent,catColor : catColor}
         let contentBox = document.createElement("div");
         contentBox.classList.add("currentEventItems");
-        contentBox.setAttribute("onclick",`knowMoreClick('${eventDetails.eventId}')`)
+
         contentBox.innerHTML = `
         
         <div class = "imgContainer">
@@ -234,47 +202,131 @@ async function fetchEvents(callBack) {
            <i class="fa-solid fa-ticket"></i>
            <span class = "eventTicket">${eventDetails.ticketType}</span>
         </div>
-        <button id="joinBtn" class="primaryBtn">Register Now</button>
-        <button id="viewMoreBtn" class="secondaryBtn">View More</button>
+        <div class = "buttons itemsGap">
+       
+        <a id="viewMoreBtn" class="primaryBtn" href ="/pages/moreDetails.html?eventId=${encodeURIComponent(eventDetails.eventId)}&eventTime=${isValidEvent}"  class="secondaryBtn">View More</a>
         </div>
-        <div class = "eventCategory" style = "background-color : ${catColor};">${eventDetails.category}</div>
+        <div class = "eventCategory" style =" color:white ;background-color:${catColor}">${eventDetails.category}</div>
         
         `;
         
         let toAppend;
-        if(userCurrentLocation){
-          toAppend = await  nearbyCheck(eventDetails.coords);
+        if (userCurrentLocation) {
+          toAppend = await nearbyCheck(eventDetails.coords);
         }
-        
-        
-        if(toAppend){
-          nearbyEventsBox.appendChild(contentBox)
-        }
-        else{
+
+        if (toAppend) {
+          nearbyEventsBox.appendChild(contentBox);
+          nearByCount++;
+        } else {
           commonEvents.appendChild(contentBox);
         }
+        console.log(searchObj);
+        
       }
     }
-    document.querySelectorAll(".skeletonBox").forEach((element)=>{
-      element.remove()
-    })
-    nearbyEvents.appendChild(nearbyEventsBox)
-    topPicks.appendChild(commonEvents);
+    document.querySelectorAll(".skeletonBox").forEach((element) => {
+      element.remove();
+    });
+    if(userCurrentLocation && nearByCount !== 0) {
+      nearbyEvents.innerHTML="";
+      nearbyEvents.appendChild(nearbyEventsBox)
+
+    }
+    else if(userCurrentLocation && nearByCount === 0){
+      document.getElementById("nearbyEvents").innerHTML = "There are no nearby events!";
+    }
     
-  
+    topPicks.appendChild(commonEvents);
   } catch (error) {
     console.error(error);
   }
 }
 
+async function creatorStatus(userId){
+
+  let dbRef = ref(db,`users/userDetails/${userId}/check/creatorCheck`);
+  let response = await get(dbRef);
+  let status = response.val()["checkStatus"];
+
+  localStorage.setItem("creatorStatus",status);
 
 
-// closing pop up
-
-function closePopUp() {
-  document.querySelector("main").style.display = "block";
-  document.querySelector("header").style.display = "flex";
-  document.querySelector(".popDivFull").style.display = "none";
 }
+
+
+
+
+
+function searchResults(location){
+  document.querySelector("#searchBar").value = "";
+  document.querySelector("#searchResults").innerHTML = "";
+  let count = 0
+  let fragment = document.createDocumentFragment();
+  for(let event in searchObj){
+    if(event.includes(location)){
+      let card = createEventCard(searchObj[event]);
+      fragment.appendChild(card);
+      count++
+    }
+  }
+  if(count !== 0){
+    document.querySelector("#searchResults").appendChild(fragment)
+  }
+  else{
+    document.querySelector("#searchResults").innerHTML = `There are no events in ${location}`;
+  }
+  document.querySelector("#mainContainer").style.display = "none";
+  document.querySelector("#searchContainer").style.display = "block";
+}
+
+function createEventCard(detailsObj){
+  let {eventId,eventTime,catColor} = detailsObj;
+  let eventDetails = eventsObj[eventId]["generalInfo"]
+  let contentBox = document.createElement("div");
+        contentBox.classList.add("currentEventItems");
+
+        contentBox.innerHTML = `
+        
+        <div class = "imgContainer">
+            <img src="${eventDetails.eventPoster}" alt="Image description" class="eventPoster">
+        </div>
+        <div class = "contentArea itemsGap" >
+        <h3 class = "eventName itemsGap">${eventDetails.eventName}</h3>
+        <div class = "date itemsGap">
+            <i class="fas fa-calendar-alt"></i>
+            <div class="dateDetails">
+                <span class = "eventDate">${eventDetails.eventDate}</span>
+                <span class="eventTime">${eventTime}</span>
+            </div>
+        </div>
+        <div class = "location itemsGap">
+           <i class="fa-solid fa-location-dot"></i>
+           <span class = "eventAddress">${eventDetails.eventCity}</span>
+        </div>
+        <div class = "ticket itemsGap">
+           <i class="fa-solid fa-ticket"></i>
+           <span class = "eventTicket">${eventDetails.ticketType}</span>
+        </div>
+        <div class = "buttons itemsGap">
+       
+        <a id="viewMoreBtn" class="primaryBtn" href ="/pages/moreDetails.html?eventId=${encodeURIComponent(eventDetails.eventId)}&eventTime=${eventTime}"  class="secondaryBtn">View More</a>
+        </div>
+        <div class = "eventCategory" style =" color:white ;background-color:${catColor}">${eventDetails.category}</div>
+        
+        `;
+  return contentBox;
+}
+
+// search back listener 
+
+document.querySelector("#backHomeBtn").addEventListener("click",()=>{
+  document.querySelector("#mainContainer").style.display = "block";
+  document.querySelector("#searchContainer").style.display = "none";
+  document.querySelector("searchResults").innerHTML = "";
+})
+
+
+searchIcon.addEventListener("click",()=> searchResults(document.getElementById("searchBar").value));
 
 

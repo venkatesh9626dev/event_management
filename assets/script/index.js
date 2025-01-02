@@ -9,9 +9,9 @@ import {
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
 } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
-import { auth,db } from "./config.js";
+import { auth, db } from "./config.js";
 
 
 
@@ -79,7 +79,7 @@ toLogin.addEventListener("click", () => {
     element.textContent = "";
   });
   upForm.reset();
-  localStorage.setItem("signedup", JSON.stringify(true)); // to trace current page
+  // to trace current page
   signupPage.style.display = "none";
   loginPage.style.display = "block";
 });
@@ -88,9 +88,7 @@ toSignup.addEventListener("click", () => {
     element.textContent = "";
   });
   inForm.reset();
-  userSignupBtn.innerHTML = "Create your Account";
-  userSignupBtn.style.color = "white";
-  localStorage.removeItem("signedup");
+
   signupPage.style.display = "block";
   loginPage.style.display = "none";
 });
@@ -153,7 +151,7 @@ function emailErrorCheck(email) {
     UserMailErrorSignUp.style.color = "green";
     return 0; // No error
   } else {
-    UserMailErrorSignUp.textContent = "Invalid email format";
+    UserMailErrorSignUp.textContent = "Invalid college email format";
     UserMailErrorSignUp.style.color = "red";
     return 1; // Error found
   }
@@ -333,36 +331,43 @@ userSignupBtn.addEventListener("click", async () => {
 });
 
 async function signUpAuth(userNameValue, userMailValue, passwordValue) {
+  
   userSignupBtn.innerHTML =
     'Signing up <i class="fa fa-spinner fa-spin" "></i>';
-        try {
-          // Create user with email and password
-          const userCredential = await createUserWithEmailAndPassword(auth, userMailValue, passwordValue);
-          const user = userCredential.user;
-          
-          
-          const usernameRef = ref(db, `users/usernames/`);
-          await update(usernameRef, { [userNameValue]: userNameValue });
-         
-          const roleCheckRef = ref(db, `users/userDetails/${user.uid}/check/roleCheck`);
-          await update(roleCheckRef, { roleStatus: false });
-          localStorage.setItem("userId", JSON.stringify(`${user.uid}`));
-          // UI feedback for success
-          userSignupBtn.innerHTML = "Signup Successful";
-          
-        } catch (error) {
-          // Handle specific Firebase errors
-          if (error.code === "auth/email-already-in-use") {
-            UserMailErrorSignUp.style.color = "red";
-            UserMailErrorSignUp.textContent = "Email already exists";
-          } else {
-            alert(`Error: ${error.message}`);
-          }
-          userSignupBtn.innerHTML = "Create your account";
-        
-      }
+  try {
+    // Create user with email and password
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      userMailValue,
+      passwordValue
+    );
+    const user = userCredential.user;
+
+    const data = {
+      userName: userNameValue,
+      mailAddress: userMailValue,
+    };
+    update(ref(db, `users/userDetails/${user.uid}/profileDetails`), data);
+    const usernameRef = ref(db, `users/usernames/`);
+    await update(usernameRef, { [userNameValue]: userNameValue });
+
+    localStorage.setItem("userId", JSON.stringify(`${user.uid}`));
+    
+    localStorage.setItem("authStatus" , "true")
+    userSignupBtn.innerHTML = "Signup Successful";
+    window.location.replace("/pages/choose.html");
+  } catch (error) {
+    // Handle specific Firebase errors
+    if (error.code === "auth/email-already-in-use") {
+      UserMailErrorSignUp.style.color = "red";
+      UserMailErrorSignUp.textContent = "Email already exists";
+    } else {
+      alert(`Error: ${error.message}`);
+    }
+    userSignupBtn.innerHTML = "Create your account";
+  }
 }
-      
+
 function redirectToLogin() {
   upForm.reset();
   errorPart.forEach((element) => {
@@ -408,7 +413,7 @@ function inEmailCheck(email) {
       inMailError.style.color = "green";
       return 0; // No error
     } else {
-      inMailError.textContent = "Invalid email format";
+      inMailError.textContent = "Invalid college email format";
       inMailError.style.color = "red";
       return 1; // Error found
     }
@@ -472,48 +477,55 @@ function inPassCheck(value) {
 // signin from firebase
 
 async function signInFtn(mail, password) {
-    try {
-      // Update button text to show loading state
-      signinBtn.innerHTML = `Logging in <i class="fa fa-spinner fa-spin"></i>`;
-  
-      if (document.getElementById("Admin").checked) {
-        // Encode email for use as a database key
-        const encodeEmail = (email) => email.replace(/\./g, ',').replace(/@/g, '_');
-        const dref = await ref(db, `admin/accounts/${encodeEmail(mail)}`); // Reference to admin node
-  
-        // Fetch admin data from the database
-        const result = await get(dref);
-      
-        
-        if (result.exists()) {
-          // Proceed with admin sign-in
-          await signinAuth(auth, mail, password);
-        } else {
-          // Throw error if admin credentials are not found
-          throw new Error("Admin credentials not found");
-        }
-      } else {
-        // Sign in for general users
+  try {
+    // Update button text to show loading state
+    signinBtn.innerHTML = `Logging in <i class="fa fa-spinner fa-spin"></i>`;
+
+    if (document.getElementById("Admin").checked) {
+      // Encode email for use as a database key
+      const encodeEmail = (email) =>
+        email.replace(/\./g, ",").replace(/@/g, "_");
+      const dref = await ref(db, `admin/accounts/${encodeEmail(mail)}`); // Reference to admin node
+
+      // Fetch admin data from the database
+      const result = await get(dref);
+
+      if (result.exists()) {
+        // Proceed with admin sign-in
         await signinAuth(auth, mail, password);
+      } else {
+        // Throw error if admin credentials are not found
+        throw new Error("Admin credentials not found");
       }
-    } catch (error) {
-      // Display an error message to the user
-      commonError.textContent = error.message || "Invalid Credentials";
-      signinBtn.innerHTML = "Login to your account";
-      console.error("Sign-in error:", error);
+    } else {
+      // Sign in for general users
+      await signinAuth(auth, mail, password);
     }
+  } catch (error) {
+    // Display an error message to the user
+    commonError.textContent = error.message || "Invalid Credentials";
+    signinBtn.innerHTML = "Login to your account";
+    console.error("Sign-in error:", error);
   }
-  
+}
 
 // signinAuth
 
 function signinAuth(auth, mail, password) {
   signInWithEmailAndPassword(auth, mail, password)
     .then((userCredential) => {
+      const user = userCredential.user;
+      
+      localStorage.setItem("userId", JSON.stringify(`${user.uid}`));
+      localStorage.setItem("roleCheck", true);
+      localStorage.setItem("authStatus" , "true")
+
       if (document.getElementById("Admin").checked) {
-        localStorage.setItem("isAdmin", JSON.stringify(true));
+        window.location.replace("/pages/admin.html")
       }
-      localStorage.setItem("currentPage", JSON.stringify("home"));
+      else{
+        window.location.replace("/pages/home.html")
+      }
     })
     .then(() => {
       inForm.reset();

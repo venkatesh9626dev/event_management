@@ -26,24 +26,15 @@
   <body>
     <header class="header">
       <div class="logo">CampusConnect</div>
-      <div class="searchBox">
-        <input
-          type="search"
-          id="searchBar"
-          class="search-bar"
-          placeholder="Search events by event name or location"
-        />
-      </div>
+
       <div>
         <div class="navLinkBox">
           <a class="navItems" href="home.html">Home</a>
-          <a  class="navItems" href="dashboard.html">Dashboard</a>
-          <a class="navItems" href="AboutUs.html">About Us</a>
+          <a class="navItems" href="dashboard.html">Dashboard</a>
+          <a class="navItems" href="about.html">About Us</a>
         </div>
-        <div class="navLinkBox" id="profileBox">
-          <i class="fa-solid fa-user" style="font-size: 20px"></i>
-        </div>
-        <button id="logOut">log_out</button>
+
+        <button id="logOut">Log Out</button>
       </div>
     </header>
     <main id="mainContainer">
@@ -55,37 +46,38 @@
           </div>
           <ul class="nav-list">
             <li id="createEventBtn">
-              <a >
-                <i class="bx bx-grid-alt"></i>
+              <a>
+                <i class="fa-solid fa-plus"></i>
                 <span class="links_name">Create event</span>
               </a>
               <span class="tooltip">create new event</span>
             </li>
             <li id="createdBtn">
-              <a >
-                <i class="bx bx-user"></i>
+              <a>
+                <i class="fa-solid fa-calendar-days"></i>
                 <span class="links_name">Created events</span>
               </a>
               <span class="tooltip">Created events</span>
             </li>
             <li id="myEventsBtn">
-              <a >
-                <i class="bx bx-chat"></i>
+              <a>
+                <i class="fa-solid fa-layer-group"></i>
                 <span class="links_name">My events</span>
               </a>
               <span class="tooltip">My events</span>
-            </li>
-            <li id="messageBtn">
-              <a >
-                <i class="bx bx-pie-chart-alt-2"></i>
-                <span class="links_name">Messages</span>
-              </a>
-              <span class="tooltip">Messages</span>
             </li>
           </ul>
         </div>
       </section>
       <section id="dynamicContainer"></section>
+      <section id="chatContainer">
+        <button id="messageBackBtn">Back</button>
+        <div id="messageList"></div>
+        <div id="messageInputContainer">
+          <input type="text" id="messageInput" placeholder="Type a message" />
+          <button class="sendButton">Send message</button>
+        </div>
+      </section>
     </main>
   </body>
 </html>

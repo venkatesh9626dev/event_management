@@ -7,6 +7,7 @@ import {
   ref,
   update,
   get,
+  set
 } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
 
 let variablesObj = {};
@@ -189,6 +190,7 @@ function generatePopUp(userId, collegeName, collegeId, idPhoto, state) {
     else{
         let confirmBtn = document.createElement("button");
       confirmBtn.className = "primaryBtn";
+      confirmBtn.id = "confirmBtn"
       confirmBtn.textContent = "Confirm Approval";
       confirmBtn.addEventListener("click", () =>
         updateApproval(userId, "approved",collegeName)
@@ -196,6 +198,8 @@ function generatePopUp(userId, collegeName, collegeId, idPhoto, state) {
 
       let rejectBtn = document.createElement("button");
       rejectBtn.className = "secondaryBtn";
+      rejectBtn.id = "rejectBtn"
+
       rejectBtn.textContent = "Reject Approval";
       rejectBtn.addEventListener("click", () =>
         updateApproval(userId, "rejected",collegeName)
@@ -218,10 +222,10 @@ function generatePopUp(userId, collegeName, collegeId, idPhoto, state) {
 async function updateApproval(userId, state,collegeName) {
   loader();
   let userDbRef = ref(db, `users/userDetails/${userId}/check/creatorCheck`);
-  let userdata = { checkStatus: state,collegeName : collegeName };
+  let userdata = state ==="approved" ? { checkStatus: state,collegeName : collegeName } : { checkStatus: state};
   let requestRef = ref(db, `admin/request/${userId}`);
   let requestData = { status: state };
-  await update(userDbRef, userdata);
+  await set(userDbRef, userdata);
   await update(requestRef, requestData);
   await getFireBaseData();
   variablesObj["successPopUp"].classList.add("successShow");
@@ -232,7 +236,12 @@ async function updateApproval(userId, state,collegeName) {
   }, 2000);
 }
 
-let popUpRemove = () => variablesObj["detailsPopUp"].classList.remove("show");
+let popUpRemove = () =>{
+  variablesObj["detailsPopUp"].classList.remove("show");
+  document.getElementById("confirmBtn").remove();
+  document.getElementById("rejectBtn").remove();
+
+};
 
 variablesObj["backBtn"].addEventListener("click", popUpRemove);
 

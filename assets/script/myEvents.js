@@ -1,6 +1,7 @@
 import { categoryColors } from "./constant.js";
 import { auth } from "./config.js";
-import { eventsObject, myEventsObj } from "./createEvent.js";
+import { eventsObject, myEventsObj} from "./createEvent.js";
+import { formatTime,expiryCheck } from "./constant.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 
 onAuthStateChanged(auth, (user) => {
@@ -20,6 +21,7 @@ document.querySelectorAll("[id]").forEach((element) => {
 //fetching events
 
 function fetchEvents() {
+  let eventCount = 0;
   for (let event in myEventsObj) {
     let eventDate = eventsObject[event]["generalInfo"]["eventDate"];
     let eventTime = eventsObject[event]["generalInfo"]["eventTime"];
@@ -42,10 +44,7 @@ function fetchEvents() {
     contentBox.classList.add("eventItems");
     const category = myEventsObj[event]["category"];
     const categoryDetails = eventsObject[event]["subCategory"];
-    contentBox.setAttribute(
-      "onclick",
-      `fetchSubCategoryDetails(${JSON.stringify(category)},${JSON.stringify(categoryDetails)})`
-    );
+    
     contentBox.innerHTML = `
     
     <div class = "imgContainer">
@@ -58,8 +57,8 @@ function fetchEvents() {
     <div class = "date itemsGap">
         <i class="fas fa-calendar-alt"></i>
         <div class="dateDetails">
-            <span class = "eventDate">${eventDetails.eventDate}</span>
-            <span class="eventTime">${notExpired || "N/A"}</span>
+            <span class = "eventDate">${notExpired[1][1]}</span>
+            <span class="eventTime">${notExpired[1][0] || "N/A"}</span>
         </div>
     </div>
     <div class = "location itemsGap">
@@ -70,51 +69,40 @@ function fetchEvents() {
        <i class="fa-solid fa-ticket"></i>
        <span class = "eventTicket">${eventDetails.ticketType}</span>
     </div>
+    <div class = "buttons itemsGap">
+       
+      <a id="viewMoreBtn" class="primaryBtn topBtn" href ="/pages/moreDetails.html?eventId=${encodeURIComponent(eventDetails.eventId)}&eventTime=${notExpired[1][0]}&eventDate=${notExpired[1][1]}"  class="secondaryBtn">View event details</a>
+      <button class="secondaryBtn topBtn" onclick='fetchSubCategoryDetails(${JSON.stringify(category)},${JSON.stringify(categoryDetails)})'>View my details</button>
+      <button class="messageBtn" onclick = 'fetchMessages(${JSON.stringify(event)})'>View Message</button>
+    </div>
     <div class = "eventCategory" style =" color:white ;background-color:${catColor}">${
       eventDetails.category
     }</div>
     
     `;
 
-    if (notExpired) {
+    if (notExpired[0] === "upcoming") {
       variablesObj["upcomingEvents"].appendChild(contentBox);
       let clonedBox = contentBox.cloneNode(true);
 
       variablesObj["allEvents"].appendChild(clonedBox);
+      eventCount++;
+
     } else {
       variablesObj["pastEvents"].appendChild(contentBox);
       let clonedBox = contentBox.cloneNode(true);
 
       variablesObj["allEvents"].appendChild(clonedBox);
+      eventCount++;
     }
   }
-  document.querySelector(".blurbackground").remove();
+  if(eventCount === 0) variablesObj["allEvents"].textContent = "There are no events created";
+  document.querySelector(".blurbackground").remove()
 }
 
 // past events check
 
-function expiryCheck(eventDate, eventTime) {
-  let currentDate = new Date();
 
-  let [year, month, day] = eventDate.split("-").map(Number);
-  let [hours, minutes] = eventTime.split(":").map(Number);
-  let eventDateTime = new Date(year, month - 1, day, hours, minutes);
-  if (eventDateTime > currentDate) {
-    return formatTime([hours, minutes]);
-  }
-
-  return false;
-}
-
-// format time
-
-function formatTime(time) {
-  let timeUnit = time[0] >= 12 ? "PM" : "AM";
-  let hours = time[0] % 12;
-  let correctTime = hours ? `${hours}` : "12";
-
-  return `${correctTime}:${time[1] || "00"} ${timeUnit}`;
-}
 
 // event listeners for filter
 

@@ -10,7 +10,7 @@ import {
   } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";      
 const firebaseConfig = {
     apiKey: "AIzaSyDGn4Y0X3vjIcryoC1mL_m0CHkmWE1WR40",
-    authDomain: "event-management-system-8f9cc.firebaseapp.com",
+    authDomain: "https://campusconnect0.netlify.app/",
     databaseURL: "https://event-management-system-8f9cc-default-rtdb.asia-southeast1.firebasedatabase.app",
     projectId: "event-management-system-8f9cc",
     storageBucket: "event-management-system-8f9cc.firebasestorage.app",
@@ -26,6 +26,8 @@ export const auth = getAuth(app);
 export let db = getDatabase()
 // window current status
 
-   
+export let mailApiKey = "zkYPANFFIvAj9nsGD";
+export let serviceKey = "service_70x8kng";
+export let templateKey = "template_j8uxvdf"
 
 

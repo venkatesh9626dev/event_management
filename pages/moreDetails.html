@@ -13,6 +13,8 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
@@ -22,18 +24,13 @@
     <body>
         <header class="header">
           <div class="logo">CampusConnect</div>
-          <div class="searchBox">
-            <input type="search" id="searchBar" class="search-bar" placeholder="Search events by event name or location">
-          </div>
+          
           <div>
             <div class = "navLinkBox">
               <a href="home.html">Home</a>
               <a href="dashboard.html">Dashboard</a>
-              <a href="AboutUs.html">About Us</a>
+              <a href="about.html">About Us</a>
       
-            </div>
-            <div class = "navLinkBox" id="profileBox">
-              <i class="fa-solid fa-user" style="font-size: 20px;"></i>
             </div>
             <button id="logOut">log_out</button>
           </div>

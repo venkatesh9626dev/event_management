@@ -352,7 +352,7 @@ async function signUpAuth(userNameValue, userMailValue, passwordValue) {
     await update(usernameRef, { [userNameValue]: userNameValue });
 
     localStorage.setItem("userId", JSON.stringify(`${user.uid}`));
-    
+    localStorage.setItem("userMail",userMailValue);
     localStorage.setItem("authStatus" , "true")
     userSignupBtn.innerHTML = "Signup Successful";
     window.location.replace("/pages/choose.html");
@@ -517,6 +517,8 @@ function signinAuth(auth, mail, password) {
       const user = userCredential.user;
       
       localStorage.setItem("userId", JSON.stringify(`${user.uid}`));
+      localStorage.setItem("userMail",mail);
+
       localStorage.setItem("roleCheck", true);
       localStorage.setItem("authStatus" , "true")
 

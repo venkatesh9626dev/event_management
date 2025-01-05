@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - [Your Website Name]</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/assets/style/about.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">CampusConnect</div>
+  
+        <div>
+          <div class="navLinkBox">
+            <a class="navItems" href="home.html">Home</a>
+            <a class="navItems" href="dashboard.html">Dashboard</a>
+            <a class="navItems" href="about.html">About Us</a>
+          </div>
+  
+          <button id="logOut">log_out</button>
+        </div>
+      </header>
+
+    <main>
+        <section class="section">
+            <h2>Welcome to <span class="highlight">[Your Website Name]</span></h2>
+            <p>Your trusted companion for organizing, managing, and discovering college events effortlessly. We are here to transform how students and colleges connect, collaborate, and celebrate through events.</p>
+        </section>
+
+        <section class="section">
+            <h2>Who We Are</h2>
+            <p>At <span class="highlight">[Your Website Name]</span>, we believe that events are more than just gatherings—they are opportunities to learn, network, and grow. From bustling cultural fests to insightful seminars, we strive to bridge the gap between organizers and participants, ensuring a seamless experience for all.</p>
+            <p>We are a team of passionate individuals dedicated to simplifying event management for colleges, students, and educators. Our goal is to provide a platform that brings innovation, accessibility, and efficiency to the world of college events.</p>
+        </section>
+
+        <section class="section">
+            <h2>What We Do</h2>
+            <h3>For Students</h3>
+            <ul>
+                <li><strong>Discover Events:</strong> Explore a wide range of events tailored to your interests, including cultural programs, sports meets, workshops, and seminars.</li>
+                <li><strong>Participate Easily:</strong> Register for events with a single click and keep track of all your past and upcoming participations.</li>
+                <li><strong>Nearby Events:</strong> Find exciting events happening around you with our <span class="highlight">Nearby Events</span> feature, powered by Google APIs.</li>
+            </ul>
+
+            <h3>For Organizers</h3>
+            <ul>
+                <li><strong>Simplified Event Creation:</strong> Effortlessly create and manage events with detailed information like agendas, dates, venues, and participant lists.</li>
+                <li><strong>Track Participation:</strong> Stay organized with real-time updates on registrations, and manage participant details securely using Firebase.</li>
+                <li><strong>Promote Events:</strong> Reach your audience faster with tools to share and advertise your events on our platform.</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>Why Choose Us?</h2>
+            <p><span class="highlight">User-Friendly Interface:</span> Designed with simplicity in mind, our platform ensures a smooth and enjoyable experience for both students and organizers.</p>
+            <p><span class="highlight">Secure and Reliable:</span> With Firebase integration, your data is protected and easily accessible at all times.</p>
+            <p><span class="highlight">Innovative Features:</span> From personalized event recommendations to nearby event discovery, we bring the latest technology to enhance your experience.</p>
+            <p><span class="highlight">All-in-One Platform:</span> Manage everything related to college events in one place, saving you time and effort.</p>
+        </section>
+
+        <section class="section">
+            <h2>Our Mission</h2>
+            <p>To create a dynamic ecosystem where colleges, students, and educators come together through events. We aim to empower users with the tools they need to organize, discover, and participate in meaningful activities.</p>
+        </section>
+
+        <section class="section">
+            <h2>Our Vision</h2>
+            <p>We envision a world where managing and participating in events is no longer a challenge but an enjoyable and seamless process. By leveraging technology, we hope to foster collaboration, innovation, and growth in the vibrant world of college life.</p>
+        </section>
+
+        <section class="section">
+            <h2>Join Us</h2>
+            <p>Be a part of the <span class="highlight">[Your Website Name]</span> community and experience the joy of hassle-free event management. Whether you’re a student looking for your next big opportunity or an organizer planning an unforgettable event, we’ve got you covered.</p>
+            <p>Let’s make college life more engaging, one event at a time!</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 [Your Website Name]. All Rights Reserved.</p>
+    </footer>
+</body>
+<script>
+    import { auth} from "./config.js";
+
+import { signOut} from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+
+  document.getElementById("logOut").addEventListener("click", () => {
+  signOut(auth).then(() => {
+    alert("Logged out");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("authStatus");
+    localStorage.removeItem("roleCheck");
+    localStorage.removeItem("creatorStatus");
+    localStorage.removeItem("eventsObj");
+    localStorage.removeItem("userName");
+    sessionStorage.removeItem("currentPage");
+    window.location.pathname = "/index.html";
+  });
+});
+</script>
+</html>

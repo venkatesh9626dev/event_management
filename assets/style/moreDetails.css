@@ -1,7 +1,7 @@
 :root {
   /* Buttons and Interactive Elements */
   --color-primary: #ff4500; /* Electric Blue */
-  --color-secondary: #e63e00;
+  --color-secondary: #d1410c;
   
 
   /* Background Colors */
@@ -10,8 +10,8 @@
   --color-nav : #ff4500; 
 
   /* Text Colors */
-  --color-text-primary: #343A40; /* Dark Gray */
-  --color-text-secondary: #6C757D; /* Medium Gray */
+  --color-text-primary:  #1e0a3c; /* Dark Gray */
+  --color-text-secondary: #343A40; /* Medium Gray */
 
   /* Alerts and Status Indicators */
   --color-success: #28A745; /* Green */
@@ -22,9 +22,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Helvetica Neue",
-  Helvetica, Tahoma, Arial, sans-serif;
-  
+  font-family: Neue Plak, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, Helvetica, Tahoma, Arial, sans-serif;
 }
 body{
   background-color: var(--color-background-main);
@@ -76,16 +74,25 @@ width: 40%;
   border-radius: 4px;
   text-transform: none;
 }
+#logOut {
+  background-color: #fff;
+  color: #ff6600;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#logOut:hover {
+  background-color: #ff6600;
+  color: #fff;
+}
 main{
   width: 90%;
   margin: 140px auto;
   padding: 1px;
-}
-
-
-p,address{
-    color: var(--color-text-primary);
-    font-weight: 300;
 }
 li{
     color: var(--color-text-secondary);
@@ -102,11 +109,85 @@ li{
 
 }
 
-#content-container{
+#content-Container{
   
-    width: 80%;
-    margin: 100px auto;
+    
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
   }
+
+#mainInfoBox{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+
+
+#mainDate{
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+#eventNameBox{
+  width: 70%;
+}
+#sideBox{
+  width: 25%;
+  background-image: url("../Images/metal-grunge-background-with-scratches-stains.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  text-align: center;
+  padding: 30px;
+  border-radius: 5px;
+}
+
+.joinBox{
+  width: 25%;
+  align-self: center;
+  padding: 15px;
+  border: 1px solid #807e8b;
+  border-radius: 5px;
+  background-color: rgb(251, 251, 251);
+}
+.primaryBtn{
+  background-color: var(--color-primary);
+  text-decoration: none;
+  color: white;
+  border: none;
+  display: inline-block;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: medium;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background-color 0.5s ease, transform 0.5s ease;
+}
+.primaryBtn:hover{
+  background-color: var(--color-secondary);
+  transform: scale(1.1);
+}
+.secondaryBtn{
+background-color: var(--color-secondary);
+ color: rgb(255, 255, 255);
+ border: none;
+ border-radius: 5px;
+ padding: 10px;
+ font-size: medium;
+
+ border: 1px solid gray;
+ width: 100%;
+ cursor: pointer;
+ transition: background-color 0.5s ease, transform 0.5s ease;
+}
+
+#subInfoBox{
+  width: 70%;
+}
+
 
   .eventImage{
     
@@ -115,21 +196,21 @@ li{
     border-radius: 10px;
   }
 
-  #content-Container{
-    margin-top: 40px;
-  }
+ 
 
   #eventName{
     font-size: 3.25rem;
+    font-weight: 800;
     line-height: 4rem;
-    margin-bottom: calc(var(--base-unit)*4);
+    color: var(--color-text-primary);
+   margin-bottom: 30px;
   }
+#eventDesc{
+  font-size: .900rem;
+  font-weight: 100;
+  line-height: 30px;
+}
 
-  .contentItems{
-    margin: 40px 0;
-    line-height: 30px;
-    
-  }
 
   
   .detailsLabel{
@@ -138,38 +219,22 @@ li{
   #eventTimeDate{
     margin-left: 10px;
   }
-  #sideBox{
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
+ 
   #map{
     height: 500px;
     width: 100%;
    
   }
-  #categoryList{
+  #categoryList,#eventAgenda{
     display: flex;
     gap: 30px;
+    line-height: 30px;
+    font-size: .900rem;;
   }
   
-  .primaryBtn{
-    background-color: var(--color-primary);
-    text-decoration: none;
-    color: white;
-    border: none;
-    display: inline-block;
-    border-radius: 5px;
-    padding: 10px;
-    font-size: medium;
-    margin-top: 10px;
-    cursor: pointer;
-    transition: background-color 0.5s ease, transform 0.5s ease;
-  }
-  .primaryBtn:hover{
-    background-color: var(--color-secondary);
-    transform: scale(1.1);
-}
+  
+
+
 
 /* participator form css */
 

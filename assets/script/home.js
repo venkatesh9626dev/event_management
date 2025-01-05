@@ -4,7 +4,6 @@ import { signOut,onAuthStateChanged  } from "https://www.gstatic.com/firebasejs/
 import {
   
   ref,
-  update,
   get,
 } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
 
@@ -21,6 +20,7 @@ let searchIcon = document.getElementById("searchIcon");
 let userCurrentLocation = await userLocation();
 let eventsObj = {};
 let searchObj = {};
+let userId = JSON.parse(localStorage.getItem("userId"));
 
 
 async function userLocation() {
@@ -43,6 +43,8 @@ document.getElementById("logOut").addEventListener("click", () => {
     localStorage.removeItem("roleCheck");
     localStorage.removeItem("creatorStatus");
     localStorage.removeItem("eventsObj");
+    localStorage.removeItem("userName");
+    sessionStorage.removeItem("currentPage");
     window.location.pathname = "/index.html";
   });
 });
@@ -74,8 +76,8 @@ function getLocation() {
 fetchEvents((eventDetails) =>
   expiryCheck(eventDetails.eventDate, eventDetails.eventTime)
 );
-creatorStatus(JSON.parse(localStorage.getItem("userId")));
-
+creatorStatus(userId);
+setUserName(userId);
 
 const topPicks = document.getElementById("topPicksBox");
 const nearbyEvents = document.getElementById("nearbyEvents");
@@ -94,12 +96,13 @@ const nearbyEvents = document.getElementById("nearbyEvents");
 
 // format time
 
-function formatTime(time) {
-  let timeUnit = time[0] >= 12 ? "PM" : "AM";
-  let hours = time[0] % 12;
+function formatTimeDate(timeArr,eventDate) {
+  let timeUnit = timeArr[0] >= 12 ? "PM" : "AM";
+  let hours = timeArr[0] % 12;
   let correctTime = hours ? `${hours}` : "12";
-
-  return `${correctTime}:${time[1] || "00"} ${timeUnit}`;
+  let options = { weekday: 'long', day: 'numeric', month: 'long' };
+  let formatDate = new Intl.DateTimeFormat('en-US', options).format(eventDate);
+  return [`${correctTime}:${timeArr[1] || "00"} ${timeUnit}`,formatDate];
 }
 
 // expiry date check
@@ -111,7 +114,7 @@ function expiryCheck(eventDate, eventTime) {
   let [hours, minutes] = eventTime.split(":").map(Number);
   let eventDateTime = new Date(year, month - 1, day, hours, minutes);
   if (eventDateTime > currentDate) {
-    return formatTime([hours, minutes]);
+    return formatTimeDate([hours, minutes],eventDateTime);
   }
 
   return false;
@@ -176,7 +179,7 @@ async function fetchEvents(callBack) {
             : eventDetails.category === "Culturals"
             ? categoryColors.Culturals
             : categoryColors.Education;
-            searchObj[eventDetails.eventAddress] = {eventId : event ,eventTime : isValidEvent,catColor : catColor}
+            searchObj[eventDetails.eventAddress] = {eventId : event ,eventDate : isValidEvent[1],eventTime : isValidEvent[0],catColor : catColor}
         let contentBox = document.createElement("div");
         contentBox.classList.add("currentEventItems");
 
@@ -190,8 +193,8 @@ async function fetchEvents(callBack) {
         <div class = "date itemsGap">
             <i class="fas fa-calendar-alt"></i>
             <div class="dateDetails">
-                <span class = "eventDate">${eventDetails.eventDate}</span>
-                <span class="eventTime">${isValidEvent}</span>
+                <span class = "eventDate">${isValidEvent[1]}</span>
+                <span class="eventTime">${isValidEvent[0]}</span>
             </div>
         </div>
         <div class = "location itemsGap">
@@ -202,14 +205,13 @@ async function fetchEvents(callBack) {
            <i class="fa-solid fa-ticket"></i>
            <span class = "eventTicket">${eventDetails.ticketType}</span>
         </div>
-        <div class = "buttons itemsGap">
-       
-        <a id="viewMoreBtn" class="primaryBtn" href ="/pages/moreDetails.html?eventId=${encodeURIComponent(eventDetails.eventId)}&eventTime=${isValidEvent}"  class="secondaryBtn">View More</a>
-        </div>
         <div class = "eventCategory" style =" color:white ;background-color:${catColor}">${eventDetails.category}</div>
         
         `;
-        
+        contentBox.addEventListener("click",()=> {
+         
+          window.location.href = `/pages/moreDetails.html?eventId=${encodeURIComponent(eventDetails.eventId)}&eventTime=${isValidEvent[0]}&eventDate=${isValidEvent[1]}`
+        })
         let toAppend;
         if (userCurrentLocation) {
           toAppend = await nearbyCheck(eventDetails.coords);
@@ -251,7 +253,6 @@ async function creatorStatus(userId){
 
   localStorage.setItem("creatorStatus",status);
 
-
 }
 
 
@@ -281,7 +282,7 @@ function searchResults(location){
 }
 
 function createEventCard(detailsObj){
-  let {eventId,eventTime,catColor} = detailsObj;
+  let {eventId,eventDate,eventTime,catColor} = detailsObj;
   let eventDetails = eventsObj[eventId]["generalInfo"]
   let contentBox = document.createElement("div");
         contentBox.classList.add("currentEventItems");
@@ -296,7 +297,7 @@ function createEventCard(detailsObj){
         <div class = "date itemsGap">
             <i class="fas fa-calendar-alt"></i>
             <div class="dateDetails">
-                <span class = "eventDate">${eventDetails.eventDate}</span>
+                <span class = "eventDate">${eventDate}</span>
                 <span class="eventTime">${eventTime}</span>
             </div>
         </div>
@@ -310,7 +311,7 @@ function createEventCard(detailsObj){
         </div>
         <div class = "buttons itemsGap">
        
-        <a id="viewMoreBtn" class="primaryBtn" href ="/pages/moreDetails.html?eventId=${encodeURIComponent(eventDetails.eventId)}&eventTime=${eventTime}"  class="secondaryBtn">View More</a>
+        <a id="viewMoreBtn" class="primaryBtn" href ="/pages/moreDetails.html?eventId=${encodeURIComponent(eventDetails.eventId)}&eventTime=${eventTime}&eventDate=${eventDate}"  class="secondaryBtn">View More</a>
         </div>
         <div class = "eventCategory" style =" color:white ;background-color:${catColor}">${eventDetails.category}</div>
         
@@ -323,10 +324,17 @@ function createEventCard(detailsObj){
 document.querySelector("#backHomeBtn").addEventListener("click",()=>{
   document.querySelector("#mainContainer").style.display = "block";
   document.querySelector("#searchContainer").style.display = "none";
-  document.querySelector("searchResults").innerHTML = "";
+  document.querySelector("#searchResults").innerHTML = "";
 })
 
 
 searchIcon.addEventListener("click",()=> searchResults(document.getElementById("searchBar").value));
 
 
+
+async function setUserName(userId){
+  let dbRef = ref(db,`users/userDetails/${userId}/profileDetails/userName`);
+  let response = await get(dbRef);
+  let userName = response.val();
+  localStorage.setItem("userName",userName)
+}

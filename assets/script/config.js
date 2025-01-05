@@ -26,6 +26,8 @@ export const auth = getAuth(app);
 export let db = getDatabase()
 // window current status
 
-   
+export let mailApiKey = "zkYPANFFIvAj9nsGD";
+export let serviceKey = "service_70x8kng";
+export let templateKey = "template_j8uxvdf"
 
 

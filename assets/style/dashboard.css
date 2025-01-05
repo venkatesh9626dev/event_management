@@ -79,6 +79,21 @@ body{
     border-radius: 4px;
     text-transform: none;
   }
+  #logOut {
+    background-color: #fff;
+    color: #ff6600;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#logOut:hover {
+    background-color: #ff6600;
+    color: #fff;
+}
 
 
 
@@ -262,7 +277,9 @@ body{
   background: var(--color-background-main);
   min-height: 100vh;
   margin-left: 88px;
-  margin-top: 100px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  margin-top: 120px;
 }
 
 
@@ -282,3 +299,97 @@ body{
 .hidden {
   display: none;
 }
+
+/* message container styles */
+
+#chatContainer {
+  
+  height: 88vh;
+  display: none;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  margin-left: 88px;
+  
+  padding-bottom: 20px;
+  margin-top: 100px;
+}
+
+/* Message List */
+#messageList {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px;
+  background-color: #ffffff;
+}
+
+#messageList div {
+  margin-bottom: 10px;
+  padding: 20px 40px;
+  border-radius: 5px;
+  background-color: #f1f1f1;
+  width: fit-content;
+  max-width: 70%;
+  word-wrap: break-word;
+  margin-left: 0;
+  
+}
+#messageList div>*{
+  margin-top: 10px;
+}
+.myMessage{
+  background-color: #758ca3 !important;
+  color: white;
+  margin-right: 0 !important;
+  margin-left:auto !important;
+}
+.messageContent::first-letter{
+  text-transform: capitalize;
+}
+
+/* Message Input Container */
+#messageInputContainer {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  background-color: #f1f1f1;
+}
+
+/* Message Input */
+#messageInput {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  outline: none;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+#messageInput:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Send Button */
+.sendButton ,#messageBackBtn{
+  padding: 10px 20px;
+  margin-left: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.sendButton:hover {
+  background-color: #0056b3;
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+}
+

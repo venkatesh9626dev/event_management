@@ -1,4 +1,4 @@
-import { db, auth } from "./config.js";
+import { db, auth,mailApiKey,templateKey,serviceKey } from "./config.js";
 import { signOut } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 import {
   
@@ -23,6 +23,7 @@ import {
   const urlParams = new URLSearchParams(window.location.search);
   const eventId = urlParams.get('eventId');
   const eventTime = urlParams.get('eventTime');
+  const eventDate = urlParams.get('eventDate');
 
    // Function to display the location on the map
  function displayMap(coords) {
@@ -44,17 +45,15 @@ import {
   }
  
 
-function viewMore (eventId, eventTime) {
+function viewMore (eventId,eventDate,eventTime) {
     
+
   
     let eventDetails = eventsObj[eventId]["generalInfo"];
   
     let wrapper = document.createElement("div");
     wrapper.innerHTML = `
-          <div id="btnContainer">
-            <button id="backBtn" class="primaryBtn">Back</button>
-            <button id="joinBtn" class="primaryBtn">Join the event</button>
-          </div>
+          
           <div id="dynamicContainer">
               <section id="img-container">
                   <img class="eventImage" id="eventPoster" src="${
@@ -62,19 +61,33 @@ function viewMore (eventId, eventTime) {
                   }" alt="">
               </section>
               <section id="content-Container">
-                  <div  class="contentItems"
-                      <h2 id="eventName">${eventDetails.eventName}</h2>
-                      
+                  <div   id="mainInfoBox">
+                      <div id="eventNameBox">
+                        <h3 id="mainDate">${eventDate}</h3>
+                        <h2 id="eventName">${eventDetails.eventName}</h2>
+                        <p id="eventDesc">${eventDetails.eventDescription}</p>
+                      </div>
+                      <div  class="joinBox">
+                        <button class="secondaryBtn" id="joinBtn">Join the event</button>
+                      </div>
                   </div>
-                  <div  class="contentItems">
-                      <p id="eventDesc">${eventDetails.eventDescription}</p>
+
+                  <div  id="subInfoBox">
+                      <div id = "categoryBox">
+                        <h3 class="detailsLabel">Sub Category</h3>
+                        <div id = "categoryList"></div>
+                      </div>
+                      <div id="agendaBox"> 
+                        <h3 class="detailsLabel">Agenda of the Event</h3>
+                        <p id="eventAgenda">${eventDetails.agenda}</p>
+                      </div>
                   </div>
-                  <div class = "contentItems" id="sideBox">
+                  
+                  
+                  <div id="sideBox">
                     <div class="sideItems">
                       <h3 class="detailsLabel">Date and Time</h3>
-                      <p ><i class="fa-solid fa-calendar-days"></i> <span id="eventTimeDate">${
-                        eventDetails.eventDate
-                      } | ${eventTime}</span></p>
+                      <p ><span id="eventTimeDate">${eventDate} | ${eventTime}</span></p>
                     </div>
                     <div class="sideItems">
                         <h3 class="detailsLabel">College Name</h3>
@@ -101,16 +114,7 @@ function viewMore (eventId, eventTime) {
                         </address>
                     </div>
                   </div>
-                  <div class="contentItems">
-                      <h3 class="detailsLabel">Sub Category</h3>
-                      <div class="contentItems" id = "categoryList">
-                      </div>
-                  </div>
                   
-                  <div class="contentItems">
-                      <h3 class="detailsLabel">Agenda of the Event</h3>
-                      <p id="eventAgenda">${eventDetails.agenda}</p>
-                  </div>
                   
               </section>
           </div>`;
@@ -141,21 +145,20 @@ function viewMore (eventId, eventTime) {
   
       mainElement.insertAdjacentElement("afterbegin",wrapper);
       displayMap(eventDetails.coords);
-      mainElement.querySelector("#backBtn").addEventListener("click", () => {
-        window.history.back();
-      });
+      
     
     loadParticipatorForm(listOfCat, eventDetails);
   };
 
  
 
-  viewMore(eventId,eventTime);
+  viewMore(eventId,eventDate,eventTime);
 
   
   
   async function loadParticipatorForm(categoryList, eventDetails) {
     let fragment = document.createElement("section");
+    
     fragment.setAttribute("id", "participatorContainer");
     fragment.innerHTML = `
       
@@ -464,11 +467,14 @@ function viewMore (eventId, eventTime) {
       successPopup.innerHTML = `
         <div class = "popUpItems">Payment Successful!</div>
         <div class = "popUpItems">successfully joined the event!</div>
+         <div class = "popUpItems">successfully sent the email</div>
+
       `
     }
     else{
       successPopup.innerHTML = `
         <div class = "popUpItems">successfully joined the event</div>
+        <div class = "popUpItems">successfully sent the email</div>
       `
     }
     document.getElementById("participatorContainer").classList.remove("show");
@@ -477,7 +483,11 @@ function viewMore (eventId, eventTime) {
   }
   
   async function updateParticipatedEvents(popupContainer,fragment,categoryList,eventDetails){
+    console.log("hi");
+    
     let userId = JSON.parse(localStorage.getItem("userId"));
+    let userMail = localStorage.getItem("userMail");
+    let userName = localStorage.getItem("userName")
     try{
       let dbRef = ref(
         db,
@@ -486,7 +496,7 @@ function viewMore (eventId, eventTime) {
       let response = await get(dbRef);
       let existingData = response.val() || [];
       let dataArr = [...existingData];
-    
+      let checkBoxObj = {}
       // userName
     
       let userDetails = await get(ref(db,`users/userDetails/${userId}/profileDetails`));
@@ -505,26 +515,28 @@ function viewMore (eventId, eventTime) {
             collegeName: document.getElementById("collegeNameInput").value,
             bio : document.getElementById("specialBoxInput").value,
             phoneNumber : document.getElementById("phoneNumberInput").value,
-            randomId: crypto.randomUUID(),
+            entryId: crypto.randomUUID(),
           }
         
           await update (eventRef,data);
-          dataArr.push(element.id)
+          dataArr.push(element.id);
+          checkBoxObj[element.id] = data["randomId"]
         }
       
       }
         
-      
+      // update participants detail in events record
       
       let updateRef = ref(db,`users/userDetails/${userId}/participatedEvents/${eventDetails.eventId}`)
      
       await update(updateRef,{category : dataArr});
       
-      // update participants detail in events record
-  
+      let eventDate = document.querySelector("#eventTimeDate").textContent
+      await sendMail(checkBoxObj,eventDetails.eventName,eventDate,eventDetails.eventAddress,eventDetails.ticketPrice,userMail,userName);
      
       joinedEvent(true);
-      await categoryCountCheck(fragment,categoryList,eventDetails);
+      document.querySelector("#participatorContainer").remove();
+      await loadParticipatorForm(categoryList,eventDetails);
       popupContainer.remove()
     }
     catch(error){
@@ -546,5 +558,32 @@ document.getElementById("logOut").addEventListener("click", () => {
     });
   });
 
+
+// mail function
+
+async function sendMail(categoryObj,eventName,eventDate,eventAddress,ticketPrice,userMail,userName){
+  let categoryArr = [];
+  for(let key in categoryObj){
+    let str = `${key} - Unique Entry Id (${categoryObj[key]})`;
+    categoryArr.push(str)
+  }
+  let categoryName = categoryArr.join(" | ");
+  let dataObj = {
+    to_name : userName,
+    eventName : eventName,
+    eventDate : eventDate,
+    eventAddress : eventAddress,
+    ticketPrice: ticketPrice,
+    ticketCount : categoryArr.length,
+    totalPrice : ticketPrice * categoryArr.length,
+    categoryName : categoryName,
+    toEmail : userMail
+  }
  
+  await emailjs.send(serviceKey, templateKey, dataObj)
+
+}
+ 
+
+  emailjs.init(mailApiKey);
 

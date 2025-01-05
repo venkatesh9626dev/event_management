@@ -2,7 +2,7 @@ import { auth,db} from "./config.js";
 
 import { onAuthStateChanged ,signOut} from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 import {
-  ref, get,
+  ref, push, onChildAdded, query, orderByChild,off
 } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
 
 onAuthStateChanged(auth, (user) => {
@@ -22,13 +22,33 @@ document.querySelectorAll("[id]").forEach((element)=>{
   variablesObj[element.id] = element
 })
 
+let userId = JSON.parse(localStorage.getItem("userId"));
+let userName = localStorage.getItem("userName");
 
+const messageList = document.getElementById("messageList");
+const messageInput = document.getElementById("messageInput");
+const sendMessageBtn = document.querySelector(".sendButton");
+const messageBackBtn = document.querySelector("#messageBackBtn");
 
 // create event page  fetch  listener
 
-variablesObj["createEventBtn"].addEventListener("click",()=> fetchPages("createEvent") );
-variablesObj["createdBtn"].addEventListener("click",()=> fetchPages("createdEvents"));
-variablesObj["myEventsBtn"].addEventListener("click",()=> fetchPages("myEvents"));
+variablesObj["createEventBtn"].addEventListener("click",()=>{
+  fetchPages("createEvent");
+  let newListener = new Event("click");
+  messageBackBtn.dispatchEvent(newListener)
+
+});
+variablesObj["createdBtn"].addEventListener("click",()=>{
+  fetchPages("createdEvents");
+  let newListener = new Event("click");
+  messageBackBtn.dispatchEvent(newListener)
+  
+} )
+variablesObj["myEventsBtn"].addEventListener("click",()=> {
+  fetchPages("myEvents");
+  let newListener = new Event("click");
+  messageBackBtn.dispatchEvent(newListener);
+});
 // loader function
 
 function loader(){
@@ -129,6 +149,90 @@ function menuBtnChange() {
     localStorage.removeItem("roleCheck");
     localStorage.removeItem("creatorStatus");
     localStorage.removeItem("eventsObj");
+    localStorage.removeItem("userName");
+    sessionStorage.removeItem("currentPage");
     window.location.pathname = "/index.html";
   });
 });
+
+
+// message feature functions
+
+
+// Add new message to the UI
+async function addMessage(content,eventId) {
+
+  
+if (content.trim() === "") return; // Ignore empty messages
+
+sendMessageBtn.innerHTML = `<i class="fa fa-spinner fa-spin"></i>`
+
+let dbRef = ref(db,`messages/${eventId}`)
+let dataObj = {content : content,messagerId : userId,messagerName : userName,timestamp : Date.now()}
+await push(dbRef,dataObj)
+sendMessageBtn.textContent = "Send message";
+// Clear the input field
+messageInput.value = "";
+}
+
+sendMessageBtn.addEventListener("click", (e) => {
+addMessage(messageInput.value,e.target.id);
+});
+
+// Allow pressing "Enter" to send the message
+messageInput.addEventListener("keypress", (e) => {
+if (e.key === "Enter") {
+    addMessage(messageInput.value,sendMessageBtn.id);
+}
+});
+
+
+// this function called globally for created and participated events
+ window.fetchMessages = function (eventId){
+
+  
+  sendMessageBtn.id= eventId;
+  let dbRef = ref(db,`messages/${eventId}`);
+  let queryRef = query(dbRef, orderByChild("timestamp"));
+
+
+  onChildAdded(queryRef, (snapshot) => {
+    const message = snapshot.val();
+    renderMessage(message);
+  });
+
+  variablesObj["dynamicContainer"].style.display = "none";
+  variablesObj["chatContainer"].style.display = "flex"
+
+  // adding back button listener
+
+  messageBackBtn.addEventListener("click",(e)=>{
+    variablesObj["dynamicContainer"].style.display = "block";
+    variablesObj["chatContainer"].style.display = "none"
+    variablesObj["messageList"].innerHTML = "";
+    sendMessageBtn.id = "";
+    off(queryRef); 
+  })
+}
+
+function renderMessage(messageObj){
+  let {content,messagerId,messagerName,timestamp} = messageObj;
+
+  let options = { weekday: 'long', day: 'numeric', month: 'long',hour: '2-digit',minute: '2-digit',second: '2-digit', hour12: true };
+  let dateObj = new Date(timestamp)
+  let formatDate = new Intl.DateTimeFormat('en-US', options).format(dateObj);
+
+
+  const messageDiv = document.createElement("div");
+  messageDiv.innerHTML =`
+    <p>User Name : <span class = "messageContent"> ${messagerName}</span></p>
+    <p>Message : <span class = "messageContent"> ${content}</span></p>
+    <p>Date & Time : <span class = "messageContent"> ${formatDate}</span></p>
+  `
+  if(messagerId === userId) messageDiv.classList.add("myMessage")
+  messageList.appendChild(messageDiv);
+
+  // Scroll to the bottom when a new message is added
+  messageList.scrollTop = messageList.scrollHeight;
+
+}

@@ -4,19 +4,20 @@ import {
   update,
 } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
 
-import { db ,auth} from "./config.js";
-import { onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+import { db, auth } from "./config.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 
-onAuthStateChanged(auth,(user)=>{
-  if(!user && window.location.pathname == "/pages/createEvent.html"){
-    window.location.replace("/index.html")
+onAuthStateChanged(auth, (user) => {
+  if (!user && window.location.pathname == "/pages/createEvent.html") {
+    window.location.replace("/index.html");
   }
-})
+});
 
 // event details from the firebase
 
-export let eventsObject = {}
-export let myEventsObj ={};
+export let eventsObject = {};
+export let myEventsObj = {};
+export let createdEventsObj = {};
 
 // variables //
 
@@ -32,12 +33,12 @@ const cityElement = document.getElementById("eventCity");
 const addressElement = document.getElementById("eventAddress");
 const agendaElement = document.getElementById("agenda");
 const ticketTypeElement = document.getElementById("ticketType");
-const priceElement = document.getElementById("eventPrice")
+const priceElement = document.getElementById("eventPrice");
 const categoryElement = document.getElementById("category");
 const defaultSelectElement = document.getElementById("defaultSelect");
+let collegeName;
 let userId = JSON.parse(localStorage.getItem("userId"));
 let coordsObj = receiveCoords();
-
 
 // Error Varibales //
 
@@ -52,61 +53,58 @@ const eventAddressError = document.getElementById("eventAddressError");
 const agendaError = document.getElementById("agendaError");
 const categoryError = document.querySelector(".category-name-error");
 
-
-// creator status check 
+// creator status check
 
 let authStatus = localStorage.getItem("creatorStatus");
 
-
-async function authStatusCheck(authStatus){
-  if(authStatus === "pending"){
-    
-    
+async function authStatusCheck(authStatus) {
+  if (authStatus === "pending") {
     let newDiv = document.createElement("div");
-    newDiv.textContent ="Waiting for admin approval to create event"
-    newDiv.className="alert";
+    newDiv.textContent = "Waiting for admin approval to create event";
+    newDiv.className = "alert";
     document.getElementById("wrapper").classList.add("hidden");
-    document.getElementById("dynamicContainer").appendChild(newDiv)
-    
-    
-  }
-  else if(authStatus === "empty" || authStatus === "rejected"){
+    document.getElementById("dynamicContainer").appendChild(newDiv);
+  } else if (authStatus === "empty" || authStatus === "rejected") {
     await fetchCreatorAuth();
   }
-  
+  else{
+    collegeName = await getCollegeName(userId)
+  }
 }
 
-authStatusCheck(authStatus);
+
 
 // style sheet fetch
 
-function styleFetch(pageContent){
+function styleFetch(pageContent) {
   let styleElement = document.createElement("link");
   styleElement.setAttribute("rel", "stylesheet");
   styleElement.setAttribute("href", `/assets/style/creatorAuth.css`);
   document.head.appendChild(styleElement);
   let newPage = document.createElement("div");
-  newPage.innerHTML = pageContent;  
-  styleElement.onload = ()=>{
+  newPage.innerHTML = pageContent;
+  styleElement.onload = () => {
     document.getElementById("wrapper").classList.add("hidden");
-    document.getElementById("dynamicContainer").appendChild(newPage)
-  } 
+    document.getElementById("dynamicContainer").appendChild(newPage);
+  };
 }
 
 // script fetch
 
-function scriptFetch(){
+function scriptFetch() {
   let scriptElement = document.createElement("script");
-  scriptElement.setAttribute("src", `/assets/script/creatorAuth.js?timestamp=${Date.now()}`);
+  scriptElement.setAttribute(
+    "src",
+    `/assets/script/creatorAuth.js?timestamp=${Date.now()}`
+  );
   scriptElement.setAttribute("type", "module");
   scriptElement.setAttribute("id", `creatorAuth`);
-  document.head.appendChild(scriptElement);   
+  document.head.appendChild(scriptElement);
 }
 
 // fetchCreatorAuth Page
 
-async function fetchCreatorAuth(){
-
+async function fetchCreatorAuth() {
   let response = await fetch("/pages/creatorAuth.html");
   let page = await response.text();
 
@@ -114,31 +112,28 @@ async function fetchCreatorAuth(){
     `link[rel="stylesheet"][href="/assets/style/creatorAuth.css"]`
   );
 
-  if(!isStyleExists){
+  if (!isStyleExists) {
     styleFetch(page);
-    
-  }
-  else{
+  } else {
     document.getElementById("wrapper").classList.add("hidden");
     let pageContent = document.createElement("div");
     pageContent.innerHTML = page;
-    document.getElementById("dynamicContainer").appendChild(pageContent)
+    document.getElementById("dynamicContainer").appendChild(pageContent);
   }
 
   let isScriptExists = document.querySelector(`script#creatorAuth`);
 
-  if(!isScriptExists){
+  if (!isScriptExists) {
     scriptFetch();
-  }
-  else{
+  } else {
     isScriptExists.remove();
-    scriptFetch()
+    scriptFetch();
   }
 }
 
 async function getCollegeName(userId) {
   try {
-    let dbRef = await ref(db, `users/${userId}/check/creatorCheck/collegeName`);
+    let dbRef = await ref(db, `users/userDetails/${userId}/check/creatorCheck/collegeName`);
     let data = await get(dbRef);
     if (!data.exists()) {
       throw new Error("User College Name not Exists");
@@ -151,10 +146,6 @@ async function getCollegeName(userId) {
 }
 
 // set event data in firebase
-
-
-
-
 
 // get coords
 
@@ -225,23 +216,19 @@ async function getCoords(address) {
 }
 
 
-
-const collegeName = getCollegeName(userId);
 // Handle Image Upload Preview
-
 
 // ticket Type check
 
-ticketTypeElement.addEventListener("change",()=>{
+ticketTypeElement.addEventListener("change", () => {
   ticketError.textContent = "";
-  let priceBox = document.getElementById("priceBox")
-  if(ticketTypeElement.value === "Paid"){
-    priceBox.classList.toggle("hidden",false)
+  let priceBox = document.getElementById("priceBox");
+  if (ticketTypeElement.value === "Paid") {
+    priceBox.classList.toggle("hidden", false);
+  } else {
+    priceBox.classList.toggle("hidden", true);
   }
-  else{
-    priceBox.classList.toggle("hidden",true)
-  }
-})
+});
 
 let uploadPoster = "";
 uploadContainer.addEventListener("click", () => {
@@ -346,16 +333,18 @@ defaultSelectElement.addEventListener("change", (e) => {
     .querySelector(".members-group");
   if (e.target.value === "group") {
     membersGroup.classList.remove("hidden");
-    document.getElementById("defaultSub")
+    document
+      .getElementById("defaultSub")
       .querySelector(".number-of-members")
       .setAttribute("required", "required");
   } else {
     membersGroup.classList.add("hidden");
-    document.getElementById("defaultSub").querySelector(".number-of-members").removeAttribute("required");
+    document
+      .getElementById("defaultSub")
+      .querySelector(".number-of-members")
+      .removeAttribute("required");
   }
 });
-
-
 
 function displayImagePreview(file) {
   const reader = new FileReader();
@@ -366,28 +355,24 @@ function displayImagePreview(file) {
   reader.readAsDataURL(file);
 }
 
-
 // Handle Form Submission
 const eventForm = document.getElementById("eventForm");
 
 async function setEventData(data, eventId, userId) {
   try {
-    
     let dbRef = ref(db, `events/${eventId}`);
     await update(dbRef, data);
     let userRef = ref(db, `users/userDetails/${userId}/createdEvents`);
-  
-   
-    
-    await update(userRef, {[eventId]: eventId });
+
+    await update(userRef, { [eventId]: eventId });
     // Reset the form after submission
     eventForm.reset();
     imagePreview.innerHTML = "";
-    
+
     await fetchEvents();
+    await getCreatedEvents(userId);
     loader(false);
     alert("Event created successfully!");
-    
   } catch (error) {
     console.log(error);
     alert(error);
@@ -422,7 +407,6 @@ eventForm.addEventListener("submit", async (e) => {
 
   // event Name
 
-  
   if (!eventName.trim()) {
     eventNameError.textContent = "Event Name is required.";
     isValid = false;
@@ -430,14 +414,12 @@ eventForm.addEventListener("submit", async (e) => {
 
   // event Description
 
-  
   if (!eventDescription.trim()) {
     eventDescriptionError.textContent = "Event Description is required.";
     isValid = false;
   }
   //  date check
 
-  
   if (!eventDate) {
     eventDateError.textContent = "Event Date is required.";
     isValid = false;
@@ -452,22 +434,19 @@ eventForm.addEventListener("submit", async (e) => {
 
   // City Check
 
-  
   if (!eventCity.trim()) {
     eventCityError.textContent = "Event Time is required.";
     isValid = false;
   }
 
   // ticket Type check
-  if(ticketType=== ""){
-    ticketError.textContent = "Select Ticket Type"
+  if (ticketType === "") {
+    ticketError.textContent = "Select Ticket Type";
+    isValid = false;
+  } else if (ticketType === "Paid" && priceElement.value === "") {
+    priceError.textContent = "Input the price";
     isValid = false;
   }
-  else if(ticketType === "Paid" && priceElement.value === "" ){
-    priceError.textContent = "Input the price"
-    isValid = false;
-  }
-  
 
   // address check
 
@@ -498,8 +477,9 @@ eventForm.addEventListener("submit", async (e) => {
       ".subcategory-name-error"
     );
     if (!subcategoryName.value.trim()) {
-      subcategoryNameError.textContent = `Subcategory Name is required (Subcategory ${index + 1
-        }).`;
+      subcategoryNameError.textContent = `Subcategory Name is required (Subcategory ${
+        index + 1
+      }).`;
       isValid = false;
     }
 
@@ -509,8 +489,9 @@ eventForm.addEventListener("submit", async (e) => {
       ".number-of-seats-error"
     );
     if (!numberOfSeats.value || parseInt(numberOfSeats.value) <= 0) {
-      numberOfSeatsError.textContent = `Number of Seats must be greater than 0 (Subcategory ${index + 1
-        }).`;
+      numberOfSeatsError.textContent = `Number of Seats must be greater than 0 (Subcategory ${
+        index + 1
+      }).`;
       isValid = false;
     }
 
@@ -520,8 +501,9 @@ eventForm.addEventListener("submit", async (e) => {
       ".participator-type-error"
     );
     if (!participatorType.value) {
-      participatorTypeError.textContent = `Participator Type is required (Subcategory ${index + 1
-        }).`;
+      participatorTypeError.textContent = `Participator Type is required (Subcategory ${
+        index + 1
+      }).`;
       isValid = false;
     }
 
@@ -534,8 +516,9 @@ eventForm.addEventListener("submit", async (e) => {
       participatorType.value === "group" &&
       (!numberOfMembers.value || parseInt(numberOfMembers.value) < 2)
     ) {
-      numberOfMembersError.textContent = `Number of Members must be at least 2 for a group (Subcategory ${index + 1
-        }).`;
+      numberOfMembersError.textContent = `Number of Members must be at least 2 for a group (Subcategory ${
+        index + 1
+      }).`;
       isValid = false;
     }
   });
@@ -557,16 +540,7 @@ eventForm.addEventListener("submit", async (e) => {
           catSeats: seats,
           type: type,
           members: members,
-        },
-        participantDetails: {
-          userId : {
-            userName: "creator",
-            collegeName: collegeName, 
-            bio : "I am a web developer",
-            phoneNumber : "9787681356",
-            randomId: crypto.randomUUID(),
-          }
-       },
+        }
       };
     });
 
@@ -577,16 +551,16 @@ eventForm.addEventListener("submit", async (e) => {
         eventPoster: eventPoster,
         eventName: eventName,
         eventDescription: eventDescription,
-        eventCollege : collegeName, 
+        eventCollege: collegeName,
         eventDate: eventDate,
         eventTime: eventTime,
         eventDuration: eventDuration,
-        eventCity : eventCity,
+        eventCity: eventCity,
         eventAddress: eventAddress,
         agenda: agenda,
         category: category,
-        ticketType : ticketType,
-        ticketPrice  : priceElement.value || null
+        ticketType: ticketType,
+        ticketPrice: priceElement.value || null,
       },
       subCategory: subcategories,
     };
@@ -597,70 +571,83 @@ eventForm.addEventListener("submit", async (e) => {
 
 // loader function
 
-function loader(state){
-  
-  if(state){
+function loader(state) {
+  if (state) {
     let loader = document.createElement("div");
-    loader.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style = "font-size: 40px;"></i>';
+    loader.innerHTML =
+      '<i class="fa-solid fa-spinner fa-spin" style = "font-size: 40px;"></i>';
     loader.classList.add("blurbackground");
     document.querySelector("#mainContainer").appendChild(loader);
-  }
-  else{
-    document.querySelector(".blurbackground").remove()
+  } else {
+    document.querySelector(".blurbackground").remove();
   }
 }
 
-
-
-
-
-
 // fetching events from the firebase
 
-async function fetchEvents(){
+async function fetchEvents() {
   let dbRef = ref(db, "events");
   let eventsSnapshot = await get(dbRef);
 
   let eventsList = eventsSnapshot.val();
-  
-  
-  let sortedArr = Object.entries(eventsList).sort((a,b)=> new Date(a[1]["generalInfo"]["eventDate"]) - new Date(b[1]["generalInfo"]["eventDate"]) ).reverse()
+
+  let sortedArr = Object.entries(eventsList)
+    .sort(
+      (a, b) =>
+        new Date(a[1]["generalInfo"]["eventDate"]) -
+        new Date(b[1]["generalInfo"]["eventDate"])
+    )
+    .reverse();
   let sortedObj = Object.fromEntries(sortedArr);
   eventsObject = sortedObj;
   console.log(eventsObject);
-  
 }
 
 //
 
 async function myEventsFetch(userId) {
-  
-  let dbRef = ref(db,`users/userDetails/${userId}/participatedEvents`);
+  try{
+    let dbRef = ref(db, `users/userDetails/${userId}/participatedEvents`);
   let eventsSnapshot = await get(dbRef);
-  let eventsList = await eventsSnapshot.val() || {};
-  console.log(eventsList);
-  console.log(eventsObject);
+  let eventsList = (await eventsSnapshot.val()) || {};
   
-  let sortedArr = Object.entries(eventsList).sort((a,b)=> new Date(eventsObject[a[0]]["generalInfo"]["eventDate"]) - new Date(eventsObject[b[0]]["generalInfo"]["eventDate"]) ).reverse()
+
+  let sortedArr = Object.entries(eventsList)
+    .sort(
+      (a, b) =>
+        new Date(eventsObject[a[0]]["generalInfo"]["eventDate"]) -
+        new Date(eventsObject[b[0]]["generalInfo"]["eventDate"])
+    )
+    .reverse();
   let sortedObj = Object.fromEntries(sortedArr);
   myEventsObj = sortedObj;
+  if (authStatus === "approved") {
+    getCreatedEvents(userId)
+  } 
+  else {
+    document.querySelector(".blurbackground").remove();
+  }
+  }
+  catch(err){
+    console.log(err);
+    
+  }
+}
+
+async function getCreatedEvents(userId) {
+  let dbRef = ref(db, `users/userDetails/${userId}/createdEvents`);
+  let eventsSnapshot = await get(dbRef);
+  createdEventsObj= (await eventsSnapshot.val()) || {};
   document.querySelector(".blurbackground").remove();
-  
 }
 
 let currentPage = sessionStorage.getItem("currentPage");
-console.log(currentPage);
 
-
-if(currentPage === "createEvent"){
+if (currentPage === "createEvent") {
+  authStatusCheck(authStatus);
   fetchEvents();
-  myEventsFetch(JSON.parse(localStorage.getItem("userId")))
+  myEventsFetch(userId);
   
-}
-else{
+} else {
   document.querySelector(".blurbackground").remove();
 }
-
-
-
-console.log("hi");

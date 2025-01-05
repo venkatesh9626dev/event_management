@@ -10,7 +10,7 @@ import {
   } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";      
 const firebaseConfig = {
     apiKey: "AIzaSyDGn4Y0X3vjIcryoC1mL_m0CHkmWE1WR40",
-    authDomain: "event-management-system-8f9cc.firebaseapp.com",
+    authDomain: "https://campusconnect0.netlify.app/",
     databaseURL: "https://event-management-system-8f9cc-default-rtdb.asia-southeast1.firebasedatabase.app",
     projectId: "event-management-system-8f9cc",
     storageBucket: "event-management-system-8f9cc.firebasestorage.app",

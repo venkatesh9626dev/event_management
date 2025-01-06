@@ -1,6 +1,7 @@
 sessionStorage.setItem("currentPage","createdEvents");
 
 import { categoryColors } from "./constant.js";
+
 import { auth } from "./config.js";
 import { eventsObject,createdEventsObj } from "./createEvent.js";
 import { expiryCheck,formatTime } from "./constant.js";
@@ -108,6 +109,7 @@ async function fetchCreatorAuth(){
 // fetching events
 
 function fetchEvents(){
+  let eventRecordObj = {"total" : 0,"upcoming" : 0,"past" : 0};
   let eventsCount = 0;
  for(let event in createdEventsObj){
   let eventDate = eventsObject[event]["generalInfo"]["eventDate"];
@@ -168,6 +170,8 @@ function fetchEvents(){
   if(notExpired[0] === "upcoming"){
     variablesObj["upcomingEvents"].appendChild(contentBox);
     let clonedBox = contentBox.cloneNode(true);
+
+    eventRecordObj["upcoming"] = eventRecordObj["upcoming"]+ 1;
     
     variablesObj["allEvents"].appendChild(clonedBox)
     eventsCount++;
@@ -176,13 +180,64 @@ function fetchEvents(){
     variablesObj["pastEvents"].appendChild(contentBox);
     let clonedBox = contentBox.cloneNode(true);
     
+    eventRecordObj["past"] = eventRecordObj["past"] + 1;
+
     variablesObj["allEvents"].appendChild(clonedBox)
     eventsCount++;
 
   }
  }
- if(eventsCount === 0) variablesObj["allEvents"].textContent = "There are no events created";
+ if(eventsCount === 0) {
+  variablesObj["allEvents"].textContent = "There are no events created";
+}else{
+  eventRecordObj["total"] = eventsCount;
+  makeChartData(eventRecordObj);
+}
  document.querySelector(".blurbackground").remove()
+}
+
+function makeChartData(recordObj){
+  let {total,upcoming,past} = recordObj;
+  const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'pie', // Chart type (e.g., 'bar', 'line', 'pie', etc.)
+            data: {
+                labels: ['Upcoming Events', 'Past Events'], // Labels for the X-axis
+                datasets: [{
+                   
+                    data: [upcoming,past], // Data points
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)', // Red
+                'rgba(54, 162, 235, 0.2)', // Blue
+               
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)'
+               
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+              // Makes the chart responsive
+              plugins: {
+                  legend: {
+                     display: true, // Position of the legend
+                  },
+                  title:{
+                    display : true,
+                    text : "Events Record",
+                    font:{
+                      size: 18
+                    }
+                  },
+                  tooltip: {
+                      enabled: true // Enables tooltips on hover
+                  }
+              }
+          }
+        });
 }
 
 

@@ -242,4 +242,10 @@ th {
     background-color: #f4f4f4;
 }
 
-
+#wrapper{
+    margin-top: 50px;
+}
+#chartContainer{
+    height: 250px;
+    width: 250px;
+}

@@ -303,11 +303,11 @@ function viewMore (eventId,eventDate,eventTime) {
                 confirmPayment.addEventListener("click",()=>{
                   //document.body.removeChild(popupContainer);
                   popupContainer.innerHTML = `'<i class="fa-solid fa-spinner fa-spin" style = "font-size: 40px;"></i>'`;
-                  updateParticipatedEvents(popupContainer,fragment,categoryList,eventDetails);
+                  updateParticipatedEvents(popupContainer,fragment,categoryList,eventDetails,"paid");
                 })
               }
               else{
-                joinedEvent(false);
+                updateParticipatedEvents(null,fragment,categoryList,eventDetails,"free");
               }
             }
           });
@@ -482,8 +482,9 @@ function viewMore (eventId,eventDate,eventTime) {
     setTimeout(() => successPopup.remove(), 3000);
   }
   
-  async function updateParticipatedEvents(popupContainer,fragment,categoryList,eventDetails){
-    console.log("hi");
+  async function updateParticipatedEvents(popupContainer,fragment,categoryList,eventDetails,state){
+    
+    
     
     let userId = JSON.parse(localStorage.getItem("userId"));
     let userMail = localStorage.getItem("userMail");
@@ -528,16 +529,23 @@ function viewMore (eventId,eventDate,eventTime) {
       // update participants detail in events record
       
       let updateRef = ref(db,`users/userDetails/${userId}/participatedEvents/${eventDetails.eventId}`)
+     console.log("finished");
      
       await update(updateRef,{category : dataArr});
       
       let eventDate = document.querySelector("#eventTimeDate").textContent
       await sendMail(checkBoxObj,eventDetails.eventName,eventDate,eventDetails.eventAddress,eventDetails.ticketPrice,userMail,userName);
-     
-      joinedEvent(true);
+      if(state === "free"){
+        joinedEvent(false);
+
+      }
+      else{
+        joinedEvent(true);
+        popupContainer.remove();
+      }
       document.querySelector("#participatorContainer").remove();
       await loadParticipatorForm(categoryList,eventDetails);
-      popupContainer.remove()
+     
     }
     catch(error){
       console.log(error);

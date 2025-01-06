@@ -19,7 +19,8 @@ let mainElement = document.getElementById("mainContainer");
 let searchIcon = document.getElementById("searchIcon");
 let userCurrentLocation = await userLocation();
 let eventsObj = {};
-let searchObj = {};
+let addressArr = [];
+let eventDataOfAddress = [];
 let userId = JSON.parse(localStorage.getItem("userId"));
 
 
@@ -179,7 +180,8 @@ async function fetchEvents(callBack) {
             : eventDetails.category === "Culturals"
             ? categoryColors.Culturals
             : categoryColors.Education;
-            searchObj[eventDetails.eventAddress] = {eventId : event ,eventDate : isValidEvent[1],eventTime : isValidEvent[0],catColor : catColor}
+            addressArr.push(eventDetails.eventAddress.toLowerCase())
+            eventDataOfAddress.push({eventId : event ,eventDate : isValidEvent[1],eventTime : isValidEvent[0],catColor : catColor})
         let contentBox = document.createElement("div");
         contentBox.classList.add("currentEventItems");
 
@@ -223,7 +225,7 @@ async function fetchEvents(callBack) {
         } else {
           commonEvents.appendChild(contentBox);
         }
-        console.log(searchObj);
+        
         
       }
     }
@@ -240,6 +242,7 @@ async function fetchEvents(callBack) {
     }
     
     topPicks.appendChild(commonEvents);
+    
   } catch (error) {
     console.error(error);
   }
@@ -262,15 +265,16 @@ async function creatorStatus(userId){
 function searchResults(location){
   document.querySelector("#searchBar").value = "";
   document.querySelector("#searchResults").innerHTML = "";
+  
   let count = 0
   let fragment = document.createDocumentFragment();
-  for(let event in searchObj){
-    if(event.includes(location)){
-      let card = createEventCard(searchObj[event]);
+  addressArr.forEach((address,index)=>{
+    if(address.includes(location.toLowerCase())){
+      let card = createEventCard(eventDataOfAddress[index]);
       fragment.appendChild(card);
       count++
     }
-  }
+  })
   if(count !== 0){
     document.querySelector("#searchResults").appendChild(fragment)
   }
@@ -309,13 +313,14 @@ function createEventCard(detailsObj){
            <i class="fa-solid fa-ticket"></i>
            <span class = "eventTicket">${eventDetails.ticketType}</span>
         </div>
-        <div class = "buttons itemsGap">
-       
-        <a id="viewMoreBtn" class="primaryBtn" href ="/pages/moreDetails.html?eventId=${encodeURIComponent(eventDetails.eventId)}&eventTime=${eventTime}&eventDate=${eventDate}"  class="secondaryBtn">View More</a>
-        </div>
+        
         <div class = "eventCategory" style =" color:white ;background-color:${catColor}">${eventDetails.category}</div>
         
         `;
+        contentBox.addEventListener("click",()=> {
+         
+          window.location.href = `/pages/moreDetails.html?eventId=${encodeURIComponent(eventDetails.eventId)}&eventTime=${eventTime}&eventDate=${eventDate}`
+        })
   return contentBox;
 }
 

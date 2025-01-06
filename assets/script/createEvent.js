@@ -600,7 +600,7 @@ async function fetchEvents() {
     .reverse();
   let sortedObj = Object.fromEntries(sortedArr);
   eventsObject = sortedObj;
-  console.log(eventsObject);
+
 }
 
 //

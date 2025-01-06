@@ -111,7 +111,7 @@ a{
 
 
   .centerLayout{
-    width: 90%;
+    width: 95%;
     margin: 140px auto;
     padding: 1px;
  }
@@ -131,8 +131,8 @@ a{
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-  
-    gap: 30px;
+    row-gap: 30px;
+    justify-content: space-between;
 }
 .currentEventItems{
     width: 30%;
@@ -335,4 +335,10 @@ h4 {
 
 #searchContainer{
   display: none;
+}
+
+#searchResults{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }

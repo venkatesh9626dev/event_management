@@ -95,7 +95,7 @@ function loader(){
 
     if (!isScriptExists) {
       let scriptElement = document.createElement("script");
-      scriptElement.setAttribute("src", `/assets/script/${pageName}.js`);
+      scriptElement.setAttribute("src", `/assets/script/${pageName}.js?timestamp=${Date.now()}`);
       scriptElement.setAttribute("type", "module");
       scriptElement.setAttribute("id", `${pageName}`);
       document.head.appendChild(scriptElement);      

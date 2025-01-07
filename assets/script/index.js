@@ -8,7 +8,6 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
 import {
   createUserWithEmailAndPassword,
-  onAuthStateChanged,
   signInWithEmailAndPassword,
 } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 import { auth, db } from "./config.js";
@@ -34,12 +33,15 @@ let userMailSignup = document.getElementById("userMailSignUp");
 let userPassSignup = document.getElementById("userPasswordSignUp");
 let confirmPassSignup = document.getElementById("confirmPassSignUp");
 let userSignupBtn = document.getElementById("signupBtn");
+let termsBox = document.querySelectorAll('input[type="checkbox"]');
 
 // login variables
 
 let signinMail = document.getElementById("userMaillogin");
 let signinPass = document.getElementById("userPasswordLogin");
 let signinBtn = document.getElementById("loginBtn");
+
+
 let role = document.querySelectorAll(".role");
 
 // login error
@@ -92,6 +94,20 @@ toSignup.addEventListener("click", () => {
   signupPage.style.display = "block";
   loginPage.style.display = "none";
 });
+
+// listener for terms check
+
+termsBox.forEach((e)=>{
+  e.addEventListener("change",(event)=>{
+   let errorElement = document.getElementById(`${event.target.id}Error`) ;
+  if(e.checked){
+    errorElement.classList.add("hidden")
+  }
+  else{
+    errorElement.classList.remove("hidden")
+  }
+  })
+})
 
 // userName Error Check
 

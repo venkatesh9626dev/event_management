@@ -15,9 +15,9 @@ onAuthStateChanged(auth, (user) => {
 
 // event details from the firebase
 
-export let eventsObject = {};
-export let myEventsObj = {};
-export let createdEventsObj = {};
+ let eventsObject = {};
+ let myEventsObj = {};
+ let createdEventsObj = {};
 
 // variables //
 
@@ -39,6 +39,7 @@ const defaultSelectElement = document.getElementById("defaultSelect");
 let collegeName;
 let userId = JSON.parse(localStorage.getItem("userId"));
 let coordsObj = receiveCoords();
+
 
 // Error Varibales //
 
@@ -600,10 +601,11 @@ async function fetchEvents() {
     .reverse();
   let sortedObj = Object.fromEntries(sortedArr);
   eventsObject = sortedObj;
-
+  localStorage.setItem("eventsObject",JSON.stringify(eventsObject))
 }
 
 //
+
 
 async function myEventsFetch(userId) {
   try{
@@ -621,6 +623,7 @@ async function myEventsFetch(userId) {
     .reverse();
   let sortedObj = Object.fromEntries(sortedArr);
   myEventsObj = sortedObj;
+  localStorage.setItem("myEventsObj",JSON.stringify(myEventsObj))
   if (authStatus === "approved") {
     getCreatedEvents(userId)
   } 
@@ -638,6 +641,7 @@ async function getCreatedEvents(userId) {
   let dbRef = ref(db, `users/userDetails/${userId}/createdEvents`);
   let eventsSnapshot = await get(dbRef);
   createdEventsObj= (await eventsSnapshot.val()) || {};
+  localStorage.setItem("createdEventsObj",JSON.stringify(createdEventsObj))
   document.querySelector(".blurbackground").remove();
 }
 

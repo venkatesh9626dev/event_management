@@ -1,22 +1,33 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-   
-}
-
-
-:root{
-    --mainBgColor : #F8F9FA;
-    --cardBgColor : #FFFFFF;
-    --primaryTxt : #000000;
-    --secTxt : #6C757D;
-    --successMsg : #00ff3c;
-    --warnMsg : #FFC107;
-    --errorMsg : #ff0019;
-    --primaryBtn : #007BFF;
-    --secondaryBtn : #00C4CC;
-}
+:root {
+    /* Buttons and Interactive Elements */
+    --color-primary: #ff4500; /* Electric Blue */
+    --color-secondary: #e63e00;
+    
+  
+    /* Background Colors */
+    --color-background-main: #f8f8f8; /* Soft Gray */
+    --color-background-card: #FFFFFF;
+    --color-nav : #ff4500; 
+  
+    /* Text Colors */
+    --color-text-primary: #343A40; /* Dark Gray */
+    --color-text-secondary: #6C757D; /* Medium Gray */
+  
+    /* Alerts and Status Indicators */
+    --color-success: #28A745; /* Green */
+    --color-warning: #FFC107; /* Amber */
+    --color-error: #DC3545; /* Crimson */
+  }
+    
+  
+  *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Helvetica Neue",
+      Helvetica, Tahoma, Arial, sans-serif;
+      
+  }
 
 #registerHd{
     display: flex;
@@ -29,14 +40,14 @@
     left: 0%;
     right: 0%;
     z-index: 2;
-    background-color: var(--mainBgColor);
+    background-color: var(--color-navr);
     
     
     
 }
 main{
     padding: 80px 0;
-    background-color: var(--cardBgColor);
+    background-color: var(--color-background-main);
     min-height: 100vh;
     
 }
@@ -56,7 +67,7 @@ main{
 
 .registerError{
     
-    color: var(--errorMsg);
+    color: var(--color-error);
     margin-top: 16px;
     height: 10px;
 }
@@ -76,7 +87,7 @@ main{
     display: none;
 }
 .loginBtn{
-    color: var(--primaryBtn);
+    color: var(--color-primary);
     text-decoration: underline;
     cursor: pointer;
 }
@@ -101,7 +112,7 @@ main{
 #signUpPh{
     
     margin-top: 5px;
-    color: var(--primaryTxt);
+    color: var(--color-text-secondary);
     font-size: 20px;
 }
 .input-container{
@@ -141,7 +152,7 @@ main{
     margin: 5px;
 }
 .registerBtn{
-    background-color: var(--primaryBtn);
+    background-color: var(--color-primary);
     border: 0;
     border-radius: 2px;
     padding: 10px 0;
@@ -157,7 +168,7 @@ main{
     align-items: center;
     height : 80vh;
     gap: 10%;
-    background-color: var(--mainBgColor);
+    background-color: var(--color-background-card);
     
 }
 .registerContainerUp{

@@ -16,11 +16,10 @@ onAuthStateChanged(auth, (user) => {
 });
 
 let mainElement = document.getElementById("mainContainer");
-let searchIcon = document.getElementById("searchIcon");
+
 let userCurrentLocation = await userLocation();
 let eventsObj = {};
-let addressArr = [];
-let eventDataOfAddress = [];
+
 let userId = JSON.parse(localStorage.getItem("userId"));
 
 
@@ -83,19 +82,7 @@ setUserName(userId);
 const topPicks = document.getElementById("topPicksBox");
 const nearbyEvents = document.getElementById("nearbyEvents");
 
-// fetching category filter
 
-// categoryFilter.addEventListener("change", () => {
-//   fetchEvents((eventDetails) => {
-//     return (
-//       categoryCheck(categoryFilter.value, eventDetails.category) &&
-//       expiryCheck(eventDetails.date) &&
-//       districtCheck(districtFilter.value, eventDetails.venueDistrict)
-//     );
-//   });
-// });
-
-// format time
 
 function formatTimeDate(timeArr,eventDate) {
   let timeUnit = timeArr[0] >= 12 ? "PM" : "AM";
@@ -121,15 +108,7 @@ function expiryCheck(eventDate, eventTime) {
   return false;
 }
 
-// category filter
 
-// function categoryCheck(selectedCategory, category) {
-//   if (selectedCategory === "All Category" || selectedCategory === "")
-//     return true;
-//   return selectedCategory === category ? true : false;
-// }
-
-// view more feature
 
 
 // nearby events check
@@ -180,8 +159,8 @@ async function fetchEvents(callBack) {
             : eventDetails.category === "Culturals"
             ? categoryColors.Culturals
             : categoryColors.Education;
-            addressArr.push(eventDetails.eventAddress.toLowerCase())
-            eventDataOfAddress.push({eventId : event ,eventDate : isValidEvent[1],eventTime : isValidEvent[0],catColor : catColor})
+          
+           
         let contentBox = document.createElement("div");
         contentBox.classList.add("currentEventItems");
 
@@ -257,83 +236,6 @@ async function creatorStatus(userId){
   localStorage.setItem("creatorStatus",status);
 
 }
-
-
-
-
-
-function searchResults(location){
-  document.querySelector("#searchBar").value = "";
-  document.querySelector("#searchResults").innerHTML = "";
-  
-  let count = 0
-  let fragment = document.createDocumentFragment();
-  addressArr.forEach((address,index)=>{
-    if(address.includes(location.toLowerCase())){
-      let card = createEventCard(eventDataOfAddress[index]);
-      fragment.appendChild(card);
-      count++
-    }
-  })
-  if(count !== 0){
-    document.querySelector("#searchResults").appendChild(fragment)
-  }
-  else{
-    document.querySelector("#searchResults").innerHTML = `There are no events in ${location}`;
-  }
-  document.querySelector("#mainContainer").style.display = "none";
-  document.querySelector("#searchContainer").style.display = "block";
-}
-
-function createEventCard(detailsObj){
-  let {eventId,eventDate,eventTime,catColor} = detailsObj;
-  let eventDetails = eventsObj[eventId]["generalInfo"]
-  let contentBox = document.createElement("div");
-        contentBox.classList.add("currentEventItems");
-
-        contentBox.innerHTML = `
-        
-        <div class = "imgContainer">
-            <img src="${eventDetails.eventPoster}" alt="Image description" class="eventPoster">
-        </div>
-        <div class = "contentArea itemsGap" >
-        <h3 class = "eventName itemsGap">${eventDetails.eventName}</h3>
-        <div class = "date itemsGap">
-            <i class="fas fa-calendar-alt"></i>
-            <div class="dateDetails">
-                <span class = "eventDate">${eventDate}</span>
-                <span class="eventTime">${eventTime}</span>
-            </div>
-        </div>
-        <div class = "location itemsGap">
-           <i class="fa-solid fa-location-dot"></i>
-           <span class = "eventAddress">${eventDetails.eventCity}</span>
-        </div>
-        <div class = "ticket itemsGap">
-           <i class="fa-solid fa-ticket"></i>
-           <span class = "eventTicket">${eventDetails.ticketType}</span>
-        </div>
-        
-        <div class = "eventCategory" style =" color:white ;background-color:${catColor}">${eventDetails.category}</div>
-        
-        `;
-        contentBox.addEventListener("click",()=> {
-         
-          window.location.href = `/pages/moreDetails.html?eventId=${encodeURIComponent(eventDetails.eventId)}&eventTime=${eventTime}&eventDate=${eventDate}`
-        })
-  return contentBox;
-}
-
-// search back listener 
-
-document.querySelector("#backHomeBtn").addEventListener("click",()=>{
-  document.querySelector("#mainContainer").style.display = "block";
-  document.querySelector("#searchContainer").style.display = "none";
-  document.querySelector("#searchResults").innerHTML = "";
-})
-
-
-searchIcon.addEventListener("click",()=> searchResults(document.getElementById("searchBar").value));
 
 
 

@@ -1,17 +1,17 @@
 :root {
   /* Buttons and Interactive Elements */
-  --color-primary: #ff4500; /* Electric Blue */
-  --color-secondary: #d1410c;
+  --color-primary: #ff6f00; /* Electric Blue */
+  --color-secondary: #e63e00;
   
 
   /* Background Colors */
   --color-background-main: #f8f8f8; /* Soft Gray */
   --color-background-card: #FFFFFF;
-  --color-nav : #ff4500; 
+  --color-nav : #ff6f00; 
 
   /* Text Colors */
-  --color-text-primary:  #1e0a3c; /* Dark Gray */
-  --color-text-secondary: #343A40; /* Medium Gray */
+  --color-text-primary: #343A40; /* Dark Gray */
+  --color-text-secondary: #6C757D; /* Medium Gray */
 
   /* Alerts and Status Indicators */
   --color-success: #28A745; /* Green */
@@ -266,13 +266,13 @@ background-color: var(--color-secondary);
     color: var(--color-primary);
 }
 .input-container {
-  margin: 20px 0;
+  margin: 10px 0;
 }
 label {
   display: block;
   font-weight: 300;
   font-size: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 textarea {
   resize: none;

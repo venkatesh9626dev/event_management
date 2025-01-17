@@ -25,15 +25,12 @@ https://cdn.jsdelivr.net/npm/geolib@3.3.4/lib/index.min.js
   <body>
     <header class="header">
       <div class="logo">CampusConnect</div>
-      <div class="searchBox">
-        <input type="search" id="searchBar" class="search-bar" placeholder="Search events by location">
-        <i class="fa-solid fa-magnifying-glass" id="searchIcon"></i>
-      </div>
+      
       <div>
         <div class = "navLinkBox">
-          <a href="home.html">Home</a>
-          <a href="dashboard.html">Dashboard</a>
-          <a href="about.html">About Us</a>
+          <a href="home.html" class="nav-links">Home</a>
+          <a href="dashboard.html" class="nav-links">Dashboard</a>
+          <a href="about.html" class="nav-links">About Us</a>
   
         </div>
         
@@ -41,9 +38,18 @@ https://cdn.jsdelivr.net/npm/geolib@3.3.4/lib/index.min.js
       </div>
       
     </header>
-    <main id="mainContainer" class="centerLayout">
-  
+    <main id="mainContainer" >
+      
+      <section class="hero">
+        <h1>Discover Amazing Events <br> <span>On Your Campus</span></h1>
+        <p>Join, organize, and manage events that matter. Connect with your campus community like never before.</p>
+        <div class="cta-buttons">
+          <a href="dashboard.html" class="get-started">Get Started</a>
+          <a href="search.html" class="browse-events">Search Events</a>
+        </div>
+      </section>
      
+     <section class="centerLayout">
       <section id="nearbyEventsContainer">
         <section id="nearbyBox" class="marginAuto">
           <div class="nearbyEventsHead">
@@ -119,6 +125,7 @@ https://cdn.jsdelivr.net/npm/geolib@3.3.4/lib/index.min.js
           </div>
         </section>
       </section>
+     </section>
       
     </main>
     <section id="searchContainer" class="centerLayout">

@@ -81,15 +81,30 @@ function loader(){
       styleElement.setAttribute("rel", "stylesheet");
       styleElement.setAttribute("href", `/assets/style/${pageName}.css`);
       document.head.appendChild(styleElement);
-      styleElement.onload = ()=> variablesObj["dynamicContainer"].innerHTML = pageContent;
+      styleElement.onload = ()=> {
+        variablesObj["dynamicContainer"].innerHTML = pageContent;
+        addScript(pageName)
+      }
     }
     else{
       variablesObj["dynamicContainer"].innerHTML = pageContent;
+      addScript(pageName);
+
     }
 
     
 
-    let isScriptExists = document.querySelector(`script#${pageName}`);
+    
+  } catch (error) {
+    console.error("Error loading the page or assets:", error);
+  }
+};
+
+
+// script adding function
+
+function addScript(pageName){
+  let isScriptExists = document.querySelector(`script#${pageName}`);
 
     // Add JS dynamically
 
@@ -98,7 +113,9 @@ function loader(){
       scriptElement.setAttribute("src", `/assets/script/${pageName}.js?timestamp=${Date.now()}`);
       scriptElement.setAttribute("type", "module");
       scriptElement.setAttribute("id", `${pageName}`);
-      document.head.appendChild(scriptElement);      
+      
+        document.head.appendChild(scriptElement);      
+     
     }
     else{
       isScriptExists.remove();
@@ -106,14 +123,11 @@ function loader(){
       scriptElement.setAttribute("src", `/assets/script/${pageName}.js?timestamp=${Date.now()}`);
       scriptElement.setAttribute("type", "module");
       scriptElement.setAttribute("id", `${pageName}`);
-      document.head.appendChild(scriptElement);
+     
+        document.head.appendChild(scriptElement);      
     }
     
-  } catch (error) {
-    console.error("Error loading the page or assets:", error);
-  }
-};
-
+}
 
 // sidebar functions
 
@@ -236,3 +250,16 @@ function renderMessage(messageObj){
   messageList.scrollTop = messageList.scrollHeight;
 
 }
+
+const observer = new MutationObserver((mutations, observer) => {
+  const element = document.querySelector("#myElement");
+  if (element) {
+    console.log("Element is now in the DOM!");
+    observer.disconnect(); // Stop observing once the element is found
+  }
+});
+
+
+// observe to dynammically added html contents(fetch)
+
+observer.observe(variablesObj["dynamicContainer"], { childList: true, subtree: true });

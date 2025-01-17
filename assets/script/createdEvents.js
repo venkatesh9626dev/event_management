@@ -23,6 +23,8 @@ document.querySelectorAll("[id]").forEach((element)=>{
   variablesObj[element.id] = element
 })
 
+
+
 let authStatus = localStorage.getItem("creatorStatus");
 
 

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Page</title>
+  <link rel="stylesheet" href="../assets/style/search.css">
+  <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  <script src="../assets/script/search.js" type="module" defer></script>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">CampusConnect</div>
+    
+    <div>
+      <div class = "navLinkBox">
+        <a href="home.html" class="nav-links">Home</a>
+        <a href="dashboard.html" class="nav-links">Dashboard</a>
+        <a href="about.html" class="nav-links">About Us</a>
+
+      </div>
+      
+      <button id="logOut">Log Out</button>
+    </div>
+    
+  </header>
+
+  <main>
+    <!-- Search Bar -->
+    <section class="search-bar-container">
+      <input type="text" class="search-bar" id="searchBar" placeholder="Search events by name or location">
+      <button class="search-button" id="searchBtn">Search</button>
+    </section>
+
+    <div class="content">
+      <!-- Filters (Sidebar) -->
+      <aside class="filters-container">
+        <h2>Filters</h2>
+
+        <!-- Filter by Date -->
+        <div class="filter">
+          <label for="filter-date">Filter by Date:</label>
+          <input type="date" id="filter-date" class="filter-items">
+        </div>
+
+        <!-- Filter by Categories -->
+        <div class="filter">
+          <label for="filter-categories">Filter by Categories:</label>
+          <select id="filter-categories" class="filter-items">
+            <option value="">All Categories</option>
+            <option value="culturals">Cultural</option>
+            <option value="sports">Sports</option>
+            <option value="workshop">Workshop</option>
+            <option value="tech">Tech</option>
+          </select>
+        </div>
+
+        <!-- Filter by Ticket Type -->
+        <div class="filter">
+          <label for="filter-ticket">Ticket Type:</label>
+          <select id="filter-ticket" class="filter-items"> 
+            <option value="">All</option>
+            <option value="free">Free</option>
+            <option value="paid">Paid</option>
+          </select>
+        </div>
+
+        <!-- Filter by Price Range -->
+        <div class="filter hidden" id="priceRange">
+          <label for="filter-range">Price Range:</label>
+          <select id="filter-range" class="filter-items">
+            <option value="">All</option>
+            <option value="1000">1000+</option>
+            <option value="500">500+</option>
+            <option value="100">100+</option>
+
+          </select>
+        </div>
+
+        <!-- Apply Filters Button -->
+        <button class="apply-filters-button" id="applyfilterBtn">Apply Filters</button>
+      </aside>
+
+      <!-- Events Section -->
+      <section class="events-container">
+        <h2>Events</h2>
+        <section id="searchResults">
+         
+        </section>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

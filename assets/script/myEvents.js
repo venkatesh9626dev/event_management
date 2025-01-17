@@ -21,6 +21,8 @@ document.querySelectorAll("[id]").forEach((element) => {
   variablesObj[element.id] = element;
 });
 
+fetchEvents();
+
 //fetching events
 
 function fetchEvents() {
@@ -178,4 +180,4 @@ window.fetchSubCategoryDetails = (myEventsArr, subCatObj) => {
   variablesObj["createdEventSub"].style.display = "block";
 };
 
-fetchEvents();
+

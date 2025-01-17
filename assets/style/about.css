@@ -1,13 +1,13 @@
 :root {
     /* Buttons and Interactive Elements */
-    --color-primary: #ff4500; /* Electric Blue */
+    --color-primary: #ff6f00; /* Electric Blue */
     --color-secondary: #e63e00;
     
   
     /* Background Colors */
     --color-background-main: #f8f8f8; /* Soft Gray */
     --color-background-card: #FFFFFF;
-    --color-nav : #ff4500; 
+    --color-nav : #ff6f00; 
   
     /* Text Colors */
     --color-text-primary: #343A40; /* Dark Gray */

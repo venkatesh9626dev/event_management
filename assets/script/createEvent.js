@@ -139,7 +139,8 @@ async function getCollegeName(userId) {
     if (!data.exists()) {
       throw new Error("User College Name not Exists");
     }
-
+    console.log(data.val());
+    
     return data.val();
   } catch (error) {
     console.log(error);
@@ -372,7 +373,7 @@ async function setEventData(data, eventId, userId) {
 
     await fetchEvents();
     await getCreatedEvents(userId);
-    loader(false);
+    
     alert("Event created successfully!");
   } catch (error) {
     console.log(error);

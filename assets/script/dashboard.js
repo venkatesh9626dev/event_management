@@ -251,15 +251,3 @@ function renderMessage(messageObj){
 
 }
 
-const observer = new MutationObserver((mutations, observer) => {
-  const element = document.querySelector("#myElement");
-  if (element) {
-    console.log("Element is now in the DOM!");
-    observer.disconnect(); // Stop observing once the element is found
-  }
-});
-
-
-// observe to dynammically added html contents(fetch)
-
-observer.observe(variablesObj["dynamicContainer"], { childList: true, subtree: true });

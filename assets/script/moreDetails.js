@@ -8,6 +8,8 @@ import {
 
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 
+import { generateUnique10Digit } from "./constant.js";
+
 onAuthStateChanged(auth, (user) => {
   if (!user && window.location.pathname == "/pages/home.html") {
     window.location.replace("/index.html");
@@ -499,7 +501,7 @@ async function updateParticipatedEvents(
           collegeName: collegeName,
           bio: participantBio,
           phoneNumber: participantNumber,
-          entryId:  crypto.randomUUID()          ,
+          entryId:generateUnique10Digit()
         };
 
         await update(eventRef, data);
@@ -549,7 +551,15 @@ document.getElementById("logOut").addEventListener("click", () => {
   signOut(auth).then(() => {
     alert("Logged out");
     localStorage.removeItem("userId");
+    localStorage.removeItem("userMail");
     localStorage.removeItem("authStatus");
+    localStorage.removeItem("roleCheck");
+    localStorage.removeItem("creatorStatus");
+    localStorage.removeItem("eventsObj");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("myEventsObj");
+    localStorage.removeItem("createdEventsObj");
+    sessionStorage.removeItem("currentPage");
     window.location.pathname = "/index.html";
   });
 });

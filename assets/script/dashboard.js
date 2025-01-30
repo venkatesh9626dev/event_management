@@ -159,11 +159,14 @@ function menuBtnChange() {
   signOut(auth).then(() => {
     alert("Logged out");
     localStorage.removeItem("userId");
+    localStorage.removeItem("userMail");
     localStorage.removeItem("authStatus");
     localStorage.removeItem("roleCheck");
     localStorage.removeItem("creatorStatus");
     localStorage.removeItem("eventsObj");
     localStorage.removeItem("userName");
+    localStorage.removeItem("myEventsObj");
+    localStorage.removeItem("createdEventsObj");
     sessionStorage.removeItem("currentPage");
     window.location.pathname = "/index.html";
   });

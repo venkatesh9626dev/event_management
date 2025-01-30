@@ -15,7 +15,8 @@ onAuthStateChanged(auth,(user)=>{
 
 
 let createdEventsObj = JSON.parse(localStorage.getItem("createdEventsObj"))
-let eventsObject = JSON.parse(localStorage.getItem("eventsObject"));
+let eventsObject = JSON.parse(localStorage.getItem("eventsObj"));
+
 
 let variablesObj = {};
 
@@ -42,6 +43,9 @@ async function authStatusCheck(authStatus){
   }
   else if(authStatus === "empty" || authStatus === "rejected"){
     await fetchCreatorAuth();
+  }
+  else{
+    fetchEvents();
   }
 
   
@@ -292,6 +296,7 @@ window.participantsDetailsFetch = (participantsArr)=>{
 
   if(participantsArr.length === 0) {
     variablesObj["detailsBox"].textContent = "There are no participants joined in this event";
+    
     variablesObj["createdEventSub"].style.display = "none";
   variablesObj["createdEventDetails"].style.display = "block";
     return;
@@ -301,7 +306,7 @@ window.participantsDetailsFetch = (participantsArr)=>{
   const tableHeaders = Object.keys(participantsArr[0]);
   
   variablesObj["detailsBox"].innerHTML = `
-    <table>
+    <table id="participantTable">
         <thead>
             <tr>
                 ${tableHeaders.map(header => `<th>${header}</th>`).join("")}
@@ -327,7 +332,7 @@ window.fetchSubCategoryDetails = (eventId)=>{
   
   let eventObj = eventsObject[eventId]["subCategory"];
   
-  console.log(eventObj);
+
   
   let fragment = document.createDocumentFragment()
   for(let subcategory in eventObj){
@@ -356,13 +361,49 @@ window.fetchSubCategoryDetails = (eventId)=>{
   variablesObj["categoryBox"].append(fragment);
   variablesObj["createdEventHome"].style.display = "none";
   variablesObj["createdEventSub"].style.display = "block";
-console.log("loaded");
 
+
+}
+
+// function to download pdf
+
+variablesObj["downloadPdf"].addEventListener("click",downloadPdf)
+
+function downloadPdf(){
+  const { jsPDF } = window.jspdf;
+
+      // Create a new jsPDF instance
+      const doc = new jsPDF();
+
+      // Add table to PDF using AutoTable plugin
+      doc.autoTable({ 
+        html: '#participantTable',
+        styles: {
+          cellPadding: 2, // Reduce padding inside each cell
+          fontSize: 10,   // Adjust font size for smaller content
+        },
+        columnStyles: {
+          0: { cellWidth: 30 }, // Adjust specific column widths
+          1: { cellWidth: 30 },
+          2: { cellWidth: 30 },
+          3: { cellWidth: 30 },
+          4: { cellWidth: 30 },
+          5: { cellWidth: 30 }
+        },
+        headStyles: {
+          cellPadding: 2, // Apply the same padding for header cells
+          fillColor: '#4CAF50',
+          textColor: '#fff',
+        }
+      });
+
+      // Save the PDF
+      doc.save('table.pdf');
 }
 
 
 
 
-fetchEvents();
+
 
 

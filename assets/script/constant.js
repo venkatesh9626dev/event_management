@@ -27,6 +27,12 @@ export function expiryCheck(eventDate, eventTime) {
     return [`${correctTime}:${timeArr[1] || "00"} ${timeUnit}`,formatDate];
   }
 
+  export function generateUnique10Digit() {
+    const timestamp = Date.now().toString(); // Current timestamp in milliseconds
+    const randomPart = Math.floor(Math.random() * 1000).toString().padStart(3, '0'); // Random 3 digits
+    const uniqueNumber = (timestamp + randomPart).slice(-10); // Keep only last 10 digits
+    return uniqueNumber;
+  }
   
   
   

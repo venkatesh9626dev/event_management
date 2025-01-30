@@ -249,3 +249,10 @@ th {
     height: 250px;
     width: 250px;
 }
+
+.headPart{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+

@@ -1,7 +1,7 @@
 import { categoryColors } from "./constant.js";
 import { auth } from "./config.js";
 
-import { formatTime,expiryCheck } from "./constant.js";
+import { expiryCheck } from "./constant.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 
 onAuthStateChanged(auth, (user) => {
@@ -10,7 +10,7 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-let eventsObject = JSON.parse(localStorage.getItem("eventsObject"));
+let eventsObject = JSON.parse(localStorage.getItem("eventsObj"));
 let myEventsObj = JSON.parse(localStorage.getItem("myEventsObj"));
 
 sessionStorage.setItem("currentPage", "createdEvents");

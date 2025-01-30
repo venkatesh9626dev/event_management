@@ -5,6 +5,8 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
 
 import { db, auth } from "./config.js";
+
+import { generateUnique10Digit } from "./constant.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 
 onAuthStateChanged(auth, (user) => {
@@ -36,9 +38,10 @@ const ticketTypeElement = document.getElementById("ticketType");
 const priceElement = document.getElementById("eventPrice");
 const categoryElement = document.getElementById("category");
 const defaultSelectElement = document.getElementById("defaultSelect");
-let collegeName;
+let collegeName = "N|A";
 let userId = JSON.parse(localStorage.getItem("userId"));
-let coordsObj = receiveCoords();
+let coordsObj = await receiveCoords();
+
 
 
 // Error Varibales //
@@ -56,7 +59,7 @@ const categoryError = document.querySelector(".category-name-error");
 
 // creator status check
 
-let authStatus = localStorage.getItem("creatorStatus");
+let authStatus = JSON.parse( localStorage.getItem("creatorStatus"))
 
 async function authStatusCheck(authStatus) {
   if (authStatus === "pending") {
@@ -385,7 +388,7 @@ eventForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   // Gather form data
-  const eventId = crypto.randomUUID();
+  const eventId = generateUnique10Digit();
   const eventPoster = uploadPoster;
   const eventName = nameElement.value;
   const eventDescription = descriptionElement.value;
@@ -546,6 +549,9 @@ eventForm.addEventListener("submit", async (e) => {
       };
     });
 
+    console.log(coords);
+    
+
     let data = {
       generalInfo: {
         eventId: eventId,
@@ -602,7 +608,7 @@ async function fetchEvents() {
     .reverse();
   let sortedObj = Object.fromEntries(sortedArr);
   eventsObject = sortedObj;
-  localStorage.setItem("eventsObject",JSON.stringify(eventsObject))
+  localStorage.setItem("eventsObj",JSON.stringify(eventsObject))
 }
 
 //
@@ -620,15 +626,18 @@ async function myEventsFetch(userId) {
       (a, b) =>
         new Date(eventsObject[a[0]]["generalInfo"]["eventDate"]) -
         new Date(eventsObject[b[0]]["generalInfo"]["eventDate"])
-    )
-    .reverse();
+    );
   let sortedObj = Object.fromEntries(sortedArr);
   myEventsObj = sortedObj;
+  
   localStorage.setItem("myEventsObj",JSON.stringify(myEventsObj))
   if (authStatus === "approved") {
     getCreatedEvents(userId)
   } 
   else {
+    
+    
+  
     document.querySelector(".blurbackground").remove();
   }
   }
@@ -641,8 +650,19 @@ async function myEventsFetch(userId) {
 async function getCreatedEvents(userId) {
   let dbRef = ref(db, `users/userDetails/${userId}/createdEvents`);
   let eventsSnapshot = await get(dbRef);
-  createdEventsObj= (await eventsSnapshot.val()) || {};
+  let eventsList= (await eventsSnapshot.val()) || {};
+
+  let sortedArr = Object.entries(eventsList)
+  .sort(
+    (a, b) =>
+      new Date(eventsObject[a[0]]["generalInfo"]["eventDate"]) -
+      new Date(eventsObject[b[0]]["generalInfo"]["eventDate"])
+  );
+let sortedObj = Object.fromEntries(sortedArr);
+createdEventsObj = sortedObj;
+
   localStorage.setItem("createdEventsObj",JSON.stringify(createdEventsObj))
+  
   document.querySelector(".blurbackground").remove();
 }
 

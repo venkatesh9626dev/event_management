@@ -145,7 +145,7 @@ function fetchEvents(callBack,eventsList) {
       let isValidEvent = callBack(eventDetails);
 
 
-      if (isValidEvent) {
+      if (isValidEvent[0] === "upcoming") {
         let catColor =
           eventDetails.category === "Tech"
             ? categoryColors.tech
@@ -169,7 +169,6 @@ function fetchEvents(callBack,eventsList) {
             <i class="fas fa-calendar-alt"></i>
             <div class="dateDetails">
                 <span class = "eventDate">${isValidEvent[1]}</span>
-                <span class="eventTime">${isValidEvent[0]}</span>
             </div>
         </div>
         <div class = "location itemsGap">

@@ -72,7 +72,8 @@ async function authStatusCheck(authStatus) {
     await fetchCreatorAuth();
   }
   else{
-    collegeName = await getCollegeName(userId)
+    collegeName = await getCollegeName(userId);
+    
   }
 }
 
@@ -142,7 +143,7 @@ async function getCollegeName(userId) {
     if (!data.exists()) {
       throw new Error("User College Name not Exists");
     }
-    console.log(data.val());
+    
     
     return data.val();
   } catch (error) {

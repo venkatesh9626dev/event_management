@@ -7,8 +7,7 @@
     /* Background Colors */
     --color-background-main: #f8f8f8; /* Soft Gray */
     --color-background-card: #FFFFFF;
-    --color-nav : #ff6f00; 
-  
+    --color-nav : linear-gradient(90deg, #141E30, #243B55);   
     /* Text Colors */
     --color-text-primary: #343A40; /* Dark Gray */
     --color-text-secondary: #6C757D; /* Medium Gray */
@@ -40,7 +39,7 @@
     left: 0%;
     right: 0%;
     z-index: 2;
-    background-color: var(--color-navr);
+    background: var(--color-nav);
     
     
     

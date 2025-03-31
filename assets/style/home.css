@@ -7,7 +7,7 @@
   /* Background Colors */
   --color-background-main: #f8f8f8; /* Soft Gray */
   --color-background-card: #FFFFFF;
-  --color-nav : #ff6f00; 
+  --color-nav : linear-gradient(90deg, #141E30, #243B55); 
 
   /* Text Colors */
   --color-text-primary: #343A40; /* Dark Gray */
@@ -46,20 +46,22 @@ a{
   text-decoration: none;
 }
 
-.header {
+
+  .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px 2% 20px 5%;
-    background-color:var(--color-nav);
-    color: black;
+    background: var(--color-nav); /* Dark gradient for a modern look */
+    color: white; /* Ensures text is visible */
     margin-bottom: 20px;
     position: fixed;
     z-index: 100;
     top: 0;
-   left: 0;
+    left: 0;
     width: 100%;
-  color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Adds subtle shadow for depth */
+
   }
   .navLinkBox{
     display: inline-block;
@@ -96,7 +98,7 @@ a{
 /* Hero Section */
 .hero {
   text-align: center;
-  background-color: #003da6; /* Deep Blue */
+  background-color: #f8f9fa; /* Deep Blue */
   color: #ffffff; /* White */
   padding: 50px 20px;
 }
@@ -104,16 +106,22 @@ a{
 .hero h1 {
   font-size: 3.5rem;
   font-weight: 900;
+  background: linear-gradient(90deg, #0565ff 20%, #d341a5 40%, #d341a5 60%, #0565ff 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.hero span {
-  color: var(--color-primary); /* Bright Orange */
-}
 
+#h1Span{
+  background: none; /* Removes inherited gradient */
+  -webkit-background-clip: initial; /* Resets background clip */
+  -webkit-text-fill-color: black; /* Forces text to be black */
+  color: black; /* Fallback */
+}
 .hero p {
   margin: 20px 0;
   font-size: 1.3rem;
-  color: lightgray;
+  color: rgb(0, 0, 0);
 }
 
 /* Hero Section Buttons */
